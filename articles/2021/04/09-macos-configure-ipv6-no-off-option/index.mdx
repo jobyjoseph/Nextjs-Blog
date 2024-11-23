@@ -1,0 +1,29 @@
+---
+title: SOLVED MacOS - No Off Option Under Configure IPv6
+date: 2021-04-09
+slug: macos-configure-ipv6-no-off-option
+description: How to bring No Off option under Configure IPv6 in MacOS
+tags: ["os"]
+---
+
+import Image from "../../../../src/components/image";
+import imgConfigureIPv6 from "./images/configure-ipv6-mac.png";
+import imgIPv6Off from "./images/ipv6-mac-turned-off.png";
+
+Previous day, all of a sudden my client's development site was not accessible. I was getting no access error page returned by CloudFlare. When checked with collegues, IPv6 was the blocker in my Macbook. As a solution, I had to **turn OFF IPv6** in my Mac.
+
+I took _System Preferences > Network_. There I clicked on _Advanced_ option of _Wi-Fi_. Then under _TCP/IP_, I could see _Configure IPv6_ option. The problem is, there was no _Off_ option.
+
+<Image src={imgConfigureIPv6} alt="Configure IPv6" />
+
+## networksetup Command
+
+Then the following solution worked for me. I took the terminal. I ran following command.
+
+```
+networksetup -setv6off Wi-Fi
+```
+
+It turned OFF my IPv6 and then I could see the _Off_ option in dropdown.
+
+<Image src={imgIPv6Off} alt="Configure IPv6 OFF" />

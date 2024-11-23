@@ -1,0 +1,27 @@
+---
+title: "Type of React props.children in TypeScript"
+date: 2023-03-03
+slug: type-of-react-props-children-typescript
+description: "If `props.children` is expected to be a single React element, the type can be specified as `React.ReactNode`."
+tags: ["typescript"]
+---
+
+In TypeScript, the type of `props.children` depends on the usage.
+
+If `props.children` is expected to be a single React element, the type can be specified as `React.ReactNode`.
+
+If `props.children` is expected to be an array of React elements, the type can be specified as `React.ReactNodeArray`.
+
+For example, consider the following functional component:
+
+```typescript
+interface Props {
+  children: React.ReactNode;
+}
+
+function MyComponent(props: Props) {
+  return <div>{props.children}</div>;
+}
+```
+
+Here, `props.children` is expected to be a single React element, and its type is specified as `React.ReactNode`.

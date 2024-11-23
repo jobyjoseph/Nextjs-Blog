@@ -1,0 +1,72 @@
+---
+title: "Printing Text in Terminal Using Java"
+date: 2022-09-11
+slug: printing-text-in-terminal-java
+description: "When writing Java code, if we want to print something in the terminal, we can make use of System.out.println()"
+tags: ["java"]
+---
+
+When writing Java code, if we want to print something in the terminal, we can make use of `System.out.println()`.
+
+Here is a program that prints `"Hello World!"` in the terminal.
+
+```java
+System.out.println("Hello World!");
+```
+
+Here is the output:
+
+```
+Hello World!
+```
+
+## Display Variables
+
+`System.out.println()` can also take variables. We might need to print the output of an expression or the variable for debugging.
+
+Here is a program that adds two numbers and prints the sum:
+
+```java
+int sum = 2 + 3;
+System.out.println(sum);
+```
+
+Here is the output:
+
+```
+5
+```
+
+## println vs print
+
+Similar to `println()`, there is another method called `print()`. The difference is, `println()` automatically adds a new line after printing the message. That is not done by `print()`.
+
+Here is a set of 3 `System.out.println()` statements:
+
+```java
+System.out.println("Apple");
+System.out.println("Banana");
+System.out.println("Orange");
+```
+
+Each printing will be done in separate lines.
+
+```
+Apple
+Banana
+Orange
+```
+
+Whereas, let us try the same three lines using `System.out.print()`:
+
+```java
+System.out.print("Apple");
+System.out.print("Banana");
+System.out.print("Orange");
+```
+
+Here is the output:
+
+```
+AppleBananaOrange
+```

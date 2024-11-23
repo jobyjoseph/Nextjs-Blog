@@ -1,0 +1,35 @@
+---
+title: "Connect To Two Bitbucket Accounts From Mac Using SSH"
+date: 2022-06-30
+slug: connect-two-bitbucket-accounts-mac-ssh
+description: "When working with two bitbucket accounts from same laptop, we need two SSH keys. We can use both SSH keys using config file"
+tags: ["git"]
+---
+
+I have two accounts in Bitbucket. One is my personal account which I registered using my personal email account. Other one is my official account registered using my office email. When I moved from HTTP to SSH in Bitbucket, I had to generate two separate SSH keys for both accounts.
+
+So now I have two SSH keys in my laptop. When trying to push code to my personal account, how can Bitbucket know which SSH key to use? I faced this issue. My already working repo start yelling that I do not have access to the repo.
+
+To teach Bitbucket which SSH key to use with which account, we need to do following steps.
+
+First, create a file in `~/.ssh` folder with name `config`. No extensions!. My SSH keys are stored in `~/.ssh` folder.
+
+Open `config` file in some editor and paste following content:
+
+```
+ #Personal account
+ Host bitbucket.org-jobyjoseph
+     HostName bitbucket.org
+     User git
+     IdentityFile ~/.ssh/id_ed25519
+     IdentitiesOnly yes
+
+ #Official account
+ Host bitbucket.org-jobylitmus7
+     HostName bitbucket.org
+     User git
+     IdentityFile ~/.ssh/ed25519_bitbucket_litmus7
+     IdentitiesOnly yes
+```
+
+Replace `jobyjoseph` and `jobylitmus7` with your Bitbucket user names. Then replace `id_ed25519` and `ed25519_bitbucket_litmus7` with the file names of your SSH files.

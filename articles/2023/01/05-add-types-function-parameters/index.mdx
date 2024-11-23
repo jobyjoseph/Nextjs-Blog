@@ -1,0 +1,25 @@
+---
+title: "Adding Types to Function Parameters in TypeScript"
+date: 2023-01-05
+slug: adding-types-function-parameters-typescript
+description: "We can define types for parameters passed to a JavaScript function using TypeScript"
+tags: ["typescript"]
+---
+
+Here is a normal function in JavaScript:
+
+```javascript
+function add(num1, num2) {
+  return num1 + num2;
+}
+```
+
+We can set type for `num1` and `num2` using a colon.
+
+Here is the equivalent TypeScript code:
+
+```typescript
+function add(num1: number, num2: number) {
+  return num1 + num2;
+}
+```

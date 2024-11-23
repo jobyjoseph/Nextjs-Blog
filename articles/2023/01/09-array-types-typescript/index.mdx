@@ -1,0 +1,60 @@
+---
+title: "Array Types in TypeScript"
+date: 2023-01-09
+slug: array-types-typescript
+description: "TypeScript has an array type. Using array type we can define the type of array elements"
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgArrayType from "./images/array-types.png";
+
+Just like other data types, TypeScript can define the type of an array using different techniques.
+
+## Inferred Array Type
+
+Here is a normal array variable which is initialized with an array.
+
+```typescript
+const fruits = ["Apple", "Banana"];
+```
+
+Here is the type automatically inferred by TypeScript from the assigned array.
+
+```typescript
+const fruits: string[];
+```
+
+## Mixed Data Types
+
+Let us have an array that has elements of different types.
+
+```typescript
+const fruits = ["Apple", 23];
+```
+
+Now the inferred type for `fruits` is:
+
+```typescript
+const fruits: (string | number)[];
+```
+
+It says that the array can contain either a string value or a number value.
+
+## Set Types Explicitly
+
+Say, we need to declare a variable `marks` that will contain an array of marks which are numbers. We can declare the variable with its type like below:
+
+```typescript
+let marks: number[];
+```
+
+Then, later we can assign a number array to `marks`.
+
+```typescript
+marks = [23, 45];
+```
+
+What if we assign a string array to `marks`? TypeScript can throw an error.
+
+<Image src={imgArrayType} alt="Array Type Error" />

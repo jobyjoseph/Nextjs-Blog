@@ -1,0 +1,35 @@
+---
+title: "Generics keyof Constraint in TypeScript"
+date: 2023-02-13
+slug: generics-keyof-constraint-typescript
+description: "`keyof` constraint in TypeScript generics make sure that the value passed is a key of another object."
+tags: ["typescript"]
+---
+
+`keyof` constraint in TypeScript generics make sure that the value passed is a key of another object.
+
+Here is a simple function that returns the value of an object property passed:
+
+```typescript
+function boom(obj: object, key: string) {
+  return obj[key];
+}
+```
+
+After that we are calling the function like below:
+
+```typescript
+boom({}, "age");
+```
+
+Above code does not throw an error. But, it is not valid as we know that key `age` is not there in an empty object.
+
+What if we need to make sure that the passed key is an existing key in the object? We can use `keyof` constraint in Generics.
+
+```typescript
+function boom<T extends object, U extends keyof T>(obj: T, key: U) {
+  return obj[key];
+}
+```
+
+It says that, the second argument should be a key of first argument.

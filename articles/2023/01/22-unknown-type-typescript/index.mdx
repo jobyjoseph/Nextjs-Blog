@@ -1,0 +1,59 @@
+---
+title: "Unknown Type in TypeScript"
+date: 2023-01-22
+slug: unknown-type-typescript
+description: "TypeScript has a type called unknown. It is different from any type."
+tags: ["typescript"]
+---
+
+TypeScript has a type called `unknown`.
+
+We have a variable here of type `unknown`.
+
+```typescript
+let input: unknown;
+```
+
+We give `unknown` type because we do not know the type of value, the user inputs.
+
+## Difference between `any` and `unknown`?
+
+We have a `any` variable and `string` variable below:
+
+```typescript
+let a: any;
+let b: string;
+a = 10;
+b = a;
+```
+
+Above code does not throw error. `any` type can be assigned to another type like `string`.
+
+Now, see the code below:
+
+```typescript
+let a: unknown;
+let b: string;
+a = 10;
+b = a;
+```
+
+Now `b = a` throws error. A variable of `unknown` type is not allowed to assign to another type.
+
+So, `unknown` is more restrictive than `any`.
+
+## How to assign an unknown variable to string variable?
+
+In order to assign a `unknown` type variable to `string` type, we need to explicitly check for string using JavaScript.
+
+```typescript
+let a: unknown;
+let b: string;
+a = 10;
+
+if (typeof a === "string") {
+  b = a;
+}
+```
+
+Now, TypeScript will not throw any error.

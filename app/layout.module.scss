@@ -1,0 +1,66 @@
+.container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  margin: auto;
+
+  .leftSidebar {
+    flex: 0 0 100%;
+    margin-right: 0rem;
+    margin-top: 3rem;
+    order: 2;
+
+    @media screen and (min-width: 821px) {
+      flex: 0 0 20%;
+      margin-right: 4rem;
+      margin-top: 0;
+      order: 0;
+    }
+
+    @media screen and (min-width: 1367px) {
+      margin-right: 6rem;
+    }
+  }
+
+  .main {
+    flex: 1 1 100%;
+    overflow: auto;
+    order: 1;
+
+    @media screen and (min-width: 821px) {
+      flex: 1 1 auto;
+      order: 0;
+    }
+
+    .mainContent {
+      width: 100%;
+    }
+  }
+
+  .rightSidebar {
+    flex: 0 0 100%;
+    margin-left: 0rem;
+    margin-top: 3rem;
+    order: 3;
+
+    @media screen and (min-width: 821px) {
+      flex: 0 0 300px;
+      margin-left: 4rem;
+      margin-top: 0;
+      order: 0;
+    }
+
+    @media screen and (min-width: 1367px) {
+      margin-left: 6rem;
+    }
+  }
+
+  @media screen and (min-width: 821px) {
+    flex-direction: row;
+  }
+}
+
+.adContainer {
+  margin-bottom: 2rem;
+}

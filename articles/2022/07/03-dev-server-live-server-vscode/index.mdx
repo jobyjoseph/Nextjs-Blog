@@ -1,0 +1,43 @@
+---
+title: "Quickly Setup a Development Web Server in Visual Studio Code Using Live Server"
+date: 2022-07-09
+slug: quick-setup-development-web-server-visual-studio-code-live-server
+description: "When working with a website project and we need to host the site in a web server for testing, we can install Live Server extension in VS Code"
+tags: ["web"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+import Image from "../../../../src/components/image";
+import imgLiveServer from "./images/live-server-extension.png";
+import imgLiveServerSearch from "./images/live-server-search.png";
+import imgOpenLiveServer from "./images/open-live-server.png";
+
+<Olink link="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">
+  Live Server
+</Olink> is a Visual Studio Extension that saves a lot of time for me. Initial days,
+when I need to run a website from live server using a url like `http://localhost`,
+I depended on <Olink link="https://www.mamp.info/en/mac/">apache server</Olink>.
+Sometimes I tried Google extension called <Olink link="https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en">
+  200 Ok
+</Olink>.
+
+In order to install this extension, we need to open Visual Studio Code. Then take _Extensions_ tab and search for _Live Server_.
+
+<Image
+  src={imgLiveServerSearch}
+  style={{ maxWidth: "400px" }}
+  alt="Search for Live Server"
+/>
+
+Then choose the one shown below and click the _Install_ button. In my case, I have already installed. That is why it is showing _Uninstall_ button in the screenshot.
+
+<Image src={imgLiveServer} alt="Live Server Extension" />
+
+Once the extension is installed, we can easily open a file using Live Server by right clicking the file and open it with Live Server.
+
+<Image
+  src={imgOpenLiveServer}
+  style={{ maxWidth: "300px" }}
+  alt="Open Live Server"
+/>

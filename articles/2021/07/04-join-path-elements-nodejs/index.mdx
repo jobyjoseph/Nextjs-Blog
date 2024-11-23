@@ -1,0 +1,23 @@
+---
+title: Form File or Directory Path String in Node.js
+date: 2021-07-23
+slug: form-file-path-string-nodejs
+description: Path module in Node.js provides utilities to work with file or directory paths.
+tags: ["nodejs"]
+---
+
+**Path** module in Node.js provides utilities to work with file or directory paths. It can be accessed using:
+
+```javascript
+const path = require("path");
+```
+
+If we need to join different path segments to form a valid path string, we can use `path.join()`.
+
+```javascript
+const filePath = path.join("apple", "banana", "orange"); // apple/banana/orange
+```
+
+The separator used to join the path is platform specific. Based on the OS, `path.join()` automatically handles it.
+
+All the arguments passed to `join()` should be a string. Otherwise, it will throw a _TypeError_.

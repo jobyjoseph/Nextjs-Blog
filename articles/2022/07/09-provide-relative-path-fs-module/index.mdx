@@ -1,0 +1,32 @@
+---
+title: "Provide Relative Path in Node.js FS Module"
+date: 2022-07-23
+slug: provide-relative-path-nodejs-fs-module
+description: "We can use relative path with fs module. We need to use path module along with fs module to achieve this."
+tags: ["nodejs"]
+---
+
+`fs` module is part of Node.js framework. We can read to and write from files using `fs` methods. We discuss how to use relative paths with `fs` module.
+
+## Path module
+
+`path` is another module in Node.js. It is used to resolve paths. We can use `path` to use relative paths with `fs` module.
+
+For that, first import both modules.
+
+```javascript
+import * as fs from "fs";
+import * as path from "path";
+```
+
+Then create the path to file using relative syntax as shown below. This is just an example.
+
+```javascript
+let filePath = path.resolve(__dirname, "../../../path/to/file.txt");
+```
+
+Then we can pass this path to `fs` to read or write as shown below
+
+```javascript
+fs.readFileSync(filePath);
+```

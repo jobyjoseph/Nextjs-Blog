@@ -1,0 +1,29 @@
+---
+title: Fibonacci Series Algorithm
+date: 2020-05-27
+slug: program-fibonacci-series
+description: How to write the logic for fibonacci series using JavaScript
+tags: ["algorithms"]
+---
+
+**Question**
+
+Write a function `fibonacci(n)` that prints the first `n` fibonacci numbers.
+
+**Solution**
+
+```javascript
+function f(n) {
+  if (n <= 2) {
+    return 1;
+  } else {
+    return f(n - 1) + f(n - 2);
+  }
+}
+
+function fibonacci(n) {
+  for (var i = 1; i <= n; i++) {
+    console.log(f(i));
+  }
+}
+```

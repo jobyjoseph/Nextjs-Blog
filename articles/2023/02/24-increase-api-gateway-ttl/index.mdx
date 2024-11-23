@@ -1,0 +1,31 @@
+---
+title: "What is the maximum TTL for AWS API Gateway?"
+date: 2023-02-24
+slug: what-is-the-maximum-ttl-for-aws-api-gateway
+description: "The maximum Time-to-Live (TTL) value for a cache entry in Amazon API Gateway is 3600 seconds (1 hour). This means that if a client sends a request for a resource that has a valid cache entry in API Gateway, and the cache entry has not expired (i.e., its TTL has not elapsed), API Gateway will return the cached response without forwarding the request to the backend."
+tags: ["aws"]
+---
+
+The maximum Time-to-Live (TTL) value for a cache entry in Amazon API Gateway is **3600 seconds (1 hour)**. This means that if a client sends a request for a resource that has a valid cache entry in API Gateway, and the cache entry has not expired (i.e., its TTL has not elapsed), API Gateway will return the cached response without forwarding the request to the backend.
+
+However, it's worth noting that the actual TTL value for a cache entry can be influenced by various factors, such as the cache capacity, the cache eviction policy, and the frequency and popularity of requests for the resource. In some cases, API Gateway may also invalidate cache entries before their TTL expires, for example, if the underlying data changes or if a cache flush is triggered.
+
+## Can I increase the maximum TTL of Amazon API Gateway?
+
+No, it's not possible to increase the maximum Time-to-Live (TTL) value for a cache entry in Amazon API Gateway beyond the maximum value of 3600 seconds (1 hour). This is a hard limit set by AWS, and it cannot be changed.
+
+However, you can still configure the caching behavior of your API in other ways, such as by adjusting the cache capacity, the cache key settings, the cache eviction policy, and the cache key parameters. By fine-tuning these settings, you may be able to optimize the cache performance of your API and achieve a higher cache hit rate, even with the 1-hour TTL limit.
+
+Keep in mind that caching is just one optimization technique that you can use to improve the performance and scalability of your API. Other techniques, such as request throttling, content compression, and load balancing, may also be useful depending on your use case and workload.
+
+## Why Amazon API Gateway has set a hard limit on Max TTL to 3600 seconds?
+
+Amazon API Gateway has set a hard limit on the maximum Time-to-Live (TTL) value for cache entries to 3600 seconds (1 hour) for a few reasons:
+
+1. Performance: Caching is an effective technique to improve API performance by reducing the load on backend systems and speeding up response times. However, caching also requires storage space and processing power, which can become a bottleneck if cache entries are too large or too long-lived. By setting a reasonable maximum TTL value, AWS can balance the benefits of caching with the cost of cache maintenance and eviction.
+
+2. Consistency: Cache entries that are too old may become stale or invalid, leading to inconsistent or incorrect responses for clients. By limiting the TTL to a reasonable timeframe, AWS can help ensure that cache entries remain fresh and up-to-date, without relying on manual cache flushing or invalidation.
+
+3. Cost: AWS charges for API Gateway caching based on the cache capacity, the number of requests, and the cache hit rate. By setting a maximum TTL value, AWS can help customers optimize their cache usage and avoid excessive storage and processing costs, while still providing a valuable caching service.
+
+Overall, the 3600-second TTL limit strikes a balance between cache performance, consistency, and cost, and it has proven to be an effective caching strategy for many API Gateway use cases.

@@ -1,0 +1,36 @@
+---
+title: JavaScript Invocation Context(this) Interview Questions
+date: 2021-04-01
+slug: javascript-types-variables-interview-questions
+description: List of JavaScript interview questions that covers data types and variables.
+tags: ["javascript"]
+---
+
+** Question: **
+
+I have heard that in **hoisting**, the variable declaration is hoisted to top of the script or function. For example, I have a code snippet here:
+
+```javascript
+console.log(sport);
+var sport = "cricket";
+```
+
+After hoisting, I am assuming the code will be like this:
+
+```javascript{numberLines: true}
+var sport;
+console.log(sport);
+sport = "cricket";
+```
+
+If this is how hoisting works, who is actually doing the hoisting and moving the declaration to line 1?
+
+** Answer: **
+
+Actually, nobody is moving the variable declaration code literally to the top. It is a perception based on how the code works.
+
+We know that JavaScript is an interpreted language. That means, each statement in the code is executed line by line. Before the execution, there is a **parsing** step. During this parsing step, the parser go through the full code and does few things like allocating memory for variables, define lexical scope and so on.
+
+So in the original code with just 2 lines, when the parser sees `var` keyword next to `sport` in line 2, it allocates a memory location for `sport` and assign `undefined` value. Note that only allocation happens in parsing step, initialization will not happen.
+
+After parsing, when the actual execution starts, the interpreter is trying to print the value of `sport` in the first line. The JavaScript engine checks if there is any memory allocated for `sport`. Yes, there is one allocated during parsing step. It prints the value at that moment which is `undefined`. Only when the interpreter jumps to second line, the value `"cricket"` is assigned to `sport`. This is how `console.log` is able to use the variable `sport` before it is declared in code.

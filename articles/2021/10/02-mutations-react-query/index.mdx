@@ -1,0 +1,183 @@
+---
+title: "Mutations in React Query"
+date: 2021-10-19
+slug: mutations-react-query
+description: If Queries in React Query are to read data, mutations are for modifying data.
+tags: ["reactQuery"]
+---
+
+Mutations in React Query handles data modification. We use **queries** to read server data. On the other hand, **mutations** helps us to modify data through creation, updation or deletion.
+
+## API For Testing
+
+In order to try mutations, I have created two APIs. One is to return a list of cars and other one to add a new car.
+
+When we do a `GET` request to `/cars` endpoint, we receive a list of cars.
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Mercedes GLS",
+    "description": "Big SUV from Mercedes"
+  },
+  {
+    "id": 2,
+    "title": "BMW 3 Series",
+    "description": "Best sedan from BMW"
+  }
+]
+```
+
+We can add a new car to the list by sending a `POST` request to `/cars` with the new car object.
+
+```json
+{
+  "title": "Mercedes Maybach",
+  "description": "Ultimate luxury"
+}
+```
+
+## Querying Data
+
+As a first step, we create a `Cars` component that list all cars from the API.
+
+```javascript
+function Cars() {
+  const cars = useQuery("cars", async () => {
+    const { data } = await axios.get("http://localhost:9000/cars");
+    return data;
+  });
+
+  return (
+    <>
+      {cars.isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <h1>Cars</h1>
+
+          {cars.data.map((car) => (
+            <div key={car.id}>
+              <h2>{car.title}</h2>
+              {car.description}
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+Here, we are just using a normal `useQuery` invocation to get the list of cars from the API. Nothing related to mutations!
+
+## Creating an Item
+
+We are going to add a new item to the server. We add a new form to the component to collect car details.
+
+```javascript
+<form onSubmit={createCar}>
+  <input type="text" onChange={(e) => setTitle(e.target.value)} />
+  <input type="text" onChange={(e) => setDescription(e.target.value)} />
+  <input type="submit" />
+</form>
+```
+
+As per the above form, we call `createCar` function on form submit. Also, we are storing the form values in the state.
+
+Now, `createCar` logic looks like below.
+
+```javascript
+const createCar = (e) => {
+  e.preventDefault();
+  const newCar = {
+    title,
+    description,
+  };
+  axios.post("http://localhost:9000/cars", newCar);
+};
+```
+
+As we can see, above code adds a new car to the list. But in the UI, we cannot see any change immediately. We need to either reload or refocus on window to view the change. So, how can we tell React Query to refresh the list immediately after content update?
+
+We can make use of `invalidateQueries()` method. Let us add that method in the success handler of axios.
+
+```javascript
+const createCar = (e) => {
+  // ...
+  // highlight-start
+  axios.post("http://localhost:9000/cars", newCar).then(() => {
+    queryClient.invalidateQueries("cars");
+  });
+  // highlight-end
+};
+```
+
+What is happening here is that, after the content is updated in the server, we are invalidating the query with the key `"cars"`. That forces React Query to fetch the list of cars again.
+
+Now wait! Everything looks perfect. What is the role of mutation now?
+
+## useMutation Hook
+
+In the code so far, we did a happy path of creating a new car. Now we need to do additional enhancements as listed below.
+
+- Disable the submit button while the API request is running
+- Show _Saved!_ text in the button after the new car is added
+- and so on..
+
+If we are going with axios, we need to bring extra variables and flags to handle these situations. Mutations in React Query make things easy.
+
+In order to use mutation, first import `useMutation` hook from React Query.
+
+```javascript
+import { useMutation } from "react-query";
+```
+
+Using `useMutation` hook, we create a new mutation object. First argument of the hook is a callback function that returns a promise. This promise when resolved, calls the create car API. Second argument is an object that can contain predefined keys like `onSuccess` which is used to handle different situations like API error or success. We add the following code directly inside `Cars` component.
+
+```javascript
+function Cars() {
+  //...
+
+  const mutation = useMutation(
+    (newCar) => {
+      return axios.post("http://localhost:9000/cars", newCar);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("cars");
+      },
+    }
+  );
+
+  //...
+}
+```
+
+Next we need to use the `mutation` object. For that, we use `mutate()` method inside `createCar` function.
+
+```javascript
+const createCar = (e) => {
+  e.preventDefault();
+  const newCar = {
+    title,
+    description,
+  };
+  mutation.mutate(newCar);
+};
+```
+
+Now we implemented the same functionality of adding a new car from the previous section using mutation.
+
+## Using Mutation Properties
+
+We are going to be more user friendly. We are going to show a _Saved!_ text in the button, once mutation succeeds.
+
+Right now the button in form takes the default `Submit` text. Lets place that text conditionally.
+
+```javascript
+<input type="submit" value={mutation.isSuccess ? "Saved!" : "Submit"} />
+```
+
+We used the `isSuccess` property from the `mutation` object. You can play with the other properties and make your application more efficient and friendly.

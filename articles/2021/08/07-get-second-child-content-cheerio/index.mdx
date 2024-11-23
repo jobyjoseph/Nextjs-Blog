@@ -1,0 +1,22 @@
+---
+title: How To Get Content of Second Child Using Node.js and Cheerio
+date: 2021-08-07
+slug: get-content-second-child-cheerio-nodejs
+description: We can obtain the content of second child's content using nth-child(2) filter
+tags: ["nodejs"]
+---
+
+When crawling a web page, we obtained below data.
+
+```html
+<div id="productDetails">
+  <span>MacBook Air 13"</span>
+  <span>$999</span>
+</div>
+```
+
+Using `cheerio`, we need to take the content of **second** span. Here is how:
+
+```javascript
+$("#productDetails span:nth-child(2)").text();
+```

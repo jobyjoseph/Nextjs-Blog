@@ -1,0 +1,31 @@
+---
+title: Add Meta Description in Next.js Page
+date: 2021-07-21
+slug: add-meta-description-nextjs-page
+description: When we work with next.js we can add a header element like meta description using Head component from next/head.
+tags: ["nextjs"]
+---
+
+Meta description tag is added to a page for SEO. Next.js framework comes with the `<Head/>` component. In a Next.js page, we can import it using:
+
+```javascript
+import Head from "next/head";
+```
+
+Then, inside the component we can use it like:
+
+```javascript
+<Head>
+  <meta name="description" content="Description content" />
+</Head>
+```
+
+When Next.js renders the page, the content inside `<Head />` tag will be placed under html `<head/>`. We can also add other elements like `<title>` inside `<Head />`.
+
+In case of a dynamic page, usually the meta description content is taken from page frontmatter.
+
+```javascript
+<Head>
+  <meta name="description" content={frontMatter.summary} />
+</Head>
+```

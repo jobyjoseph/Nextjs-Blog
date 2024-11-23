@@ -1,0 +1,217 @@
+---
+title: React Context API Interview Questions
+date: 2021-01-19
+slug: react-context-api-interview-questions
+decription: Prepare for React interview and learn about React context API
+tags: ["react"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question**
+
+What is the purpose of context API in react?
+
+**Solution**
+
+If a child component at nth level require a property from a parent component at any level, the information needs to be passed one level by level through props. In an application with lot of nested components, it is difficult.
+
+Context API helps to directly send an information from a parent component to a child component at any level.
+
+**Question**
+
+There are 4 components below which are nested one inside other. The innermost component `D` is displaying the user name from outermost component `A`.
+
+```javascript
+// Component D
+class D extends Component {
+  render() {
+    return <div>{this.props.user}</div>;
+  }
+}
+
+// Component C
+class C extends Component {
+  render() {
+    return (
+      <div>
+        <D user={this.props.user} />
+      </div>
+    );
+  }
+}
+
+// Component B
+class B extends Component {
+  render() {
+    return (
+      <div>
+        <C user={this.props.user} />
+      </div>
+    );
+  }
+}
+
+// Component A
+export class A extends Component {
+  state = {
+    user: "Backbencher",
+  };
+
+  render() {
+    return (
+      <div>
+        <B user={this.state.user} />
+      </div>
+    );
+  }
+}
+```
+
+Update the code to use Context API to pass user name from component A to component D.
+
+**Solution**
+
+First step is to create a context. So in component A module or file, create a user context like below.
+
+```javascript
+const userContext = React.createContext();
+```
+
+Now in the parent component `A`, wrap all children in `userContext.Provider` tag and supply the value _"Backbencher"_ to be passed to component D.
+
+```javascript
+<userContext.Provider value={this.state.user}>
+  <B />
+</userContext.Provider>
+```
+
+Now we have set everything to pass the user name from component A. Next is to consume it in component D. In order to consume the userContext in component D, we need to export it from A and import it in D. Here, since A and D are in same file, that is not required.
+
+Inside component D, we can consume the user name with following syntax.
+
+```javascript
+class D extends Component {
+  render() {
+    return (
+      <userContext.Consumer>
+        {(user) => {
+          return <div>{user}</div>;
+        }}
+      </userContext.Consumer>
+    );
+  }
+}
+```
+
+**Question**
+
+Class component, `ProviderComponent` provides two context values.
+
+```javascript
+export const NameContext = React.createContext();
+export const AgeContext = React.createContext();
+
+export class ProviderComponent extends Component {
+  render() {
+    return (
+      <NameContext.Provider value="Backbencher">
+        <AgeContext.Provider value="23">
+          <ConsumerComponent />
+        </AgeContext.Provider>
+      </NameContext.Provider>
+    );
+  }
+}
+```
+
+We have `ConsumerComponent` with following code.
+
+```javascript
+export class ConsumerComponent extends Component {
+  render() {
+    return <div></div>;
+  }
+}
+```
+
+Complete `ConsumerComponent` to consume the context values and display the name and age.
+
+**Solution**
+
+First step is to import the context in `ConsumerComponent`.
+
+```javascript
+import { NameContext, AgeContext } from "./ClassContext1";
+```
+
+Next we need to write the callback functions to retreive the values from context consumers. Here is the render code in `ConsumerComponent`.
+
+```javascript
+render() {
+  return (
+    <NameContext.Consumer>
+      {(name) => {
+        return (
+          <AgeContext.Consumer>
+            {(age) => (
+              <div>
+                Name: {name}, Age: {age}
+              </div>
+            )}
+          </AgeContext.Consumer>
+        );
+      }}
+    </NameContext.Consumer>
+  );
+}
+```
+
+The consuming part looks very length due to nested functions. If we use useContext hook in React, it will be more shorter.
+
+**Question**
+
+Here is a code snippet from a Context consumer component.
+
+```javascript
+import { NameContext, AgeContext } from "./ProviderComponent";
+
+export class ConsumerComponent extends Component {
+  render() {
+    return (
+      <NameContext.Consumer>
+        {(name) => {
+          return (
+            <AgeContext.Consumer>
+              {(age) => (
+                <div>
+                  Name: {name}, Age: {age}
+                </div>
+              )}
+            </AgeContext.Consumer>
+          );
+        }}
+      </NameContext.Consumer>
+    );
+  }
+}
+```
+
+Rewrite the `ConsumerComponent` using `useContext` React hook.
+
+**Solution**
+
+Hooks can be used only in a functional component. The `ConsumerComponent` can be re-written as:
+
+```javascript
+function ConsumerComponent() {
+  const name = useContext(NameContext);
+  const age = useContext(AgeContext);
+
+  return (
+    <div>
+      Name: {name}, Age: {age}
+    </div>
+  );
+}
+```

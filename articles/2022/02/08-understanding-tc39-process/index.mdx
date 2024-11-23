@@ -1,0 +1,61 @@
+---
+title: "Understanding TC39 Process"
+date: 2022-02-08
+slug: understanding-tc39-process
+description: "TC39 is the 39th technical committee of an organization called ECMA International. ECMA(European Computer Manufacturers Association) is a standardizing body like ISO. TC39 is the committee that designs ECMAScript."
+tags: ["javascript"]
+---
+
+TC39 is the 39th technical committee of an organization called **ECMA International**. ECMA(European Computer Manufacturers Association) is a standardizing body like ISO. TC39 is the committee that designs ECMAScript.
+
+## TC39 Members
+
+The TC39 committee is made up of people who are sent by member organizations that are **companies** and **non-profits** who are part of ECMA. The companies include **browser manufacturers** also. So the TC39 committee members either work for or are associated with these companies that are part of ECMA International.
+
+## Proposal Progress
+
+A new feature or a proposal to ECMAScript can be suggested by anyone. The proposal then goes through 5 stages before standardization, starting with _stage 0_. To move the proposal from one stage to next stage, approval from TC39 is required.
+
+### Stage 0
+
+Stage 0 is also know as **strawperson** stage. This is the start for submitting a proposal. A proposal is submitted in a free-form way. The submission can be done either by a TC39 member or a non-member through this [discourse](https://es.discourse.group/) group or connecting through [Matrix](https://github.com/tc39/how-we-work/blob/HEAD/matrix-guide.md) chat room.
+
+### Stage 1
+
+TC39 Committee owns proposals at **stage 1 and beyond**. At stage 1, a **champion** is identified for a proposal who takes care of the advancement of the proposal. During this stage following things happen:
+
+- Identify the need of the proposal and a general shape of the solution
+- Create illustrative examples of the usage
+- Discuss key algorithms and abstractions required for this proposal
+- Identify cross-cutting concerns, implementation challenges and complexities
+- Create a publicly available repository for the proposal that captures above requirements
+
+We can view the proposals that are in stage 1 [here](https://github.com/tc39/proposals/blob/main/stage-1-proposals.md). In the list of proposals, you can also see the name of author and champion.
+
+### Stage 2
+
+By the time a proposal reaches Stage 2, the initial specification for the proposal should be ready. During this stage, the TC39 precisely describe the syntax and semantics using the formal specification.
+
+So, if a proposal reaches Stage 2, it means that the committee is expecting this proposal to be included in the standard eventually.
+
+You can view the list of proposals that are in Stage 2 in [TC39 Proposals](https://github.com/tc39/proposals) repository.
+
+### Stage 3
+
+If a proposal enters Stage 3 means,
+
+- the specification is complete for this proposal
+- Designated reviewers assigned by TC39 team have signed off on the current specification
+- All ECMAScript editors have approved the spec
+
+We start seeing this specification implemented in some browsers. The feedback from implementation is then used to further refine the proposal.
+
+### Stage 4
+
+Whenever a new feature is added to the standard, corresponding test scripts are added to [Test262](https://github.com/tc39/test262). For a stage 4 proposal, the test scripts should be complete. If you are interested, you can see the report of running the test suites [online](https://test262.report/).
+
+There should be atleast two compatible implementations which pass the acceptance test. Also, a pull request is sent to [ecma262](https://github.com/tc39/ecma262) repo with updated spec text. All ECMAScript editors needs to approve this pull request.
+
+After all the approvals, the proposal is shipped as part of the standard. Now, the JavaScript engines like SpiderMonkey or V8 will start implementing these features.
+
+Once a proposal reaches Stage 4, it will be included in the specification. **ECMAScript General Assembly** approves the new standard in July every year.

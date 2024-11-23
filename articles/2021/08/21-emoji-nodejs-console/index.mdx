@@ -1,0 +1,50 @@
+---
+title: How To Print Emoji in Node.js Console
+date: 2021-08-21
+slug: print-emoji-nodejs-console
+description: Emojis can be added to Nodejs console using node-emoji npm package. Later, we can get the emoji icon from a rich list of icons.
+tags: ["nodejs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgConsoleEmoji from "./images/console-emoji.png";
+
+While running tools like `yarn`, we have seen emojis in Node.js console. If we want to print emojis in our project, `node-emoji` package can help. First, install it.
+
+```javascript
+yarn add node-emoji
+```
+
+Then, we can use it like below:
+
+```javascript
+var emoji = require("node-emoji");
+console.log(emoji.get("coffee")); // ☕
+```
+
+A complete list of emojis present in the package can be viewed in this link https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json.
+
+Now its time to play. Let me try a Merry Christmas!.
+
+```javascript
+var emoji = require("node-emoji");
+
+const christmas_tree = emoji.get("christmas_tree");
+const santa = emoji.get("santa");
+const tada = emoji.get("tada");
+const sled = emoji.get("sled");
+const bell = emoji.get("bell");
+const confetti_ball = emoji.get("confetti_ball");
+
+console.log(
+  `\n${christmas_tree}${bell} Merry Christmas! ${sled} ${tada} ${santa}\n`
+);
+```
+
+Here is the output:
+
+<Image
+  src={imgConsoleEmoji}
+  alt="Console emoji"
+  style={{ maxWidth: "400px" }}
+/>

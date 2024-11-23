@@ -1,0 +1,95 @@
+---
+title: "Design Tambola Cell Using HTML And CSS"
+date: 2022-04-02
+slug: tambola-cell-using-html-css
+description: ""
+tags: ["css"]
+---
+
+import Image from "../../../../src/components/image";
+import imgEmptySquare from "./images/empty-square.png";
+import imgCellWithNumber from "./images/cell-with-number.png";
+import imgCalledNumber from "./images/called-number.png";
+
+A tambola sheet consist of 3 rows and 9 columns. We are going to develop a cell in tambola using HTML and CSS.
+
+## Outline
+
+Each cell is constructed using a `div` tag. A class `tambola-cell` is given to the `div` for styling.
+
+```html
+<div class="tambola-cell"></div>
+```
+
+Let us set the width and height of the cell to be 40px and a border color of black, `#000`.
+
+```css
+.tambola-cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000;
+}
+```
+
+<Image
+  src={imgEmptySquare}
+  alt="Empty tambola cell"
+  style={{ maxWidth: "60px" }}
+/>
+
+A cell in tambola game can be in different states:
+
+- Empty cell
+- Cell with a number that is not called
+- Cell with a number that is called
+
+We completed the design of empty cell. Next we need to design a cell with a number.
+
+## Number Styling
+
+The tambola number should be big and readable. Let us update our HTML first.
+
+```html
+<div class="tambola-cell">90</div>
+```
+
+The number also needs to be centered vertically and horizontally.
+
+```css
+.tambola-cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+```
+
+Here is how the cell with number looks like.
+
+<Image
+  src={imgCellWithNumber}
+  alt="Cell With Number"
+  style={{ maxWidth: "60px" }}
+/>
+
+When the user marks a cell as called, we can give a green background to the cell. We add a new class `called-number` to mark the cell as _called_.
+
+```html
+<div class="tambola-cell called-number">90</div>
+```
+
+Here is the CSS for green background.
+
+```css
+.called-number {
+  background: #66bb6a;
+}
+```
+
+Here is the output of a called number.
+
+<Image src={imgCalledNumber} alt="Called Number" style={{ maxWidth: "60px" }} />

@@ -1,0 +1,349 @@
+---
+title: React Basic Interview Questions
+date: 2021-01-19
+slug: react-basic-interview-questions
+decription: Prepare for React interview by going through this basic React interview questions.
+tags: ["react"]
+---
+
+**Question**
+
+What is virtual DOM? How virtual DOM boosts React performance?
+
+**Solution**
+
+Like the actual DOM, the virtual DOM is a node tree that lists elements, their attributes and content as objects and properties. `render()` method in ReactDOM creates a node tree from React components and updates this tree in response to mutations in the data model caused by actions.
+
+Whenever anything is changed, the entire UI is first re-rendered in virtual DOM representation. The difference between earlier virtual DOM representation and current one is calculated. The real DOM is updated with what has actually changed. Updating virtual DOM is very fast compared to real browser re-render. Hence performance is improved.
+
+**Question**
+
+In a React project, we add reference to 2 files. One is _react.js_ and other one is _react-dom.js_. Why we have two include 2 files, instead of one?
+
+**Solution**
+
+React component library is used in websites and also to create mobile apps using React Native. React.js file is a small file which does the job of creating components. Therefore it is used in both web and React-Native projects. In web, the components are then rendered in browser using react-dom.js. So the 2 files are separated for reusability.
+
+**Question**
+
+We have a JSX code snippet below.
+
+```javascript
+const content = (
+  <div>
+    <h1>Backbencher</h1>
+  </div>
+);
+```
+
+Write the pure JavaScript code after JSX is converted to JavaScript.
+
+**Solution**
+
+```javascript
+const content = React.createElement(
+  "div",
+  {},
+  React.createElement("h1", {}, "Backbencher")
+);
+```
+
+**Question**
+
+Explain the parameters of `React.createElement()` method.
+
+**Solution**
+
+`React.createElement()` accepts three arguments.
+
+```javascript
+createElement(tag, attributes, children);
+```
+
+The fist parameter is tag or component to be rendered. Second parameter accepts an object. The key value pair of the object forms the attribute list of the tag. Third parameter can be a string or other component to be nested inside current tag or component. Here is an example.
+
+```javascript
+React.createElement("div", { id: "hello" }, "Backbencher");
+```
+
+turns out to be
+
+```html
+<div id="hello">Backbencher</div>
+```
+
+**Question**
+
+What is JSX? What is the advantage of using it?
+
+**Solution**
+
+JSX is a syntax extension for JavaScript. It is created to write React components easily. Without JSX, it is very difficult to write big React components in pure JavaScript.
+
+**Question**
+
+Write an example of React functional component.
+
+**Solution**
+
+In React, functional component is a JavaScript function that returns a React element.
+
+```javascript
+function Banner() {
+  return <h1>Backbencher</h1>;
+}
+```
+
+**Question**
+
+What are `props` in a component?
+
+**Solution**
+
+When React sees an element representing a user-defined component, it passes JSX attributes and children to this component as a single object. That object, we address as `props`.
+
+**Question**
+
+What is a pure function?
+
+**Solution**
+
+A pure function does not alter its input. It always return the same value for the same input. In React, a component needs to be a pure function with respect to its props. That means for a particular props, the rendered component will always be same.
+
+**Question**
+
+We have a function component here.
+
+```javascript
+function Banner(props) {
+  return <h1>{props.name}</h1>;
+}
+```
+
+Convert above code to class component.
+
+**Solution**
+
+```javascript
+class Banner extends React.Component {
+  render() {
+    return <h1>{this.props.name}</h1>;
+  }
+}
+```
+
+**Question**
+
+Here we have a class component.
+
+```javascript
+class Banner extends React.Component {
+  state = {
+    text: "",
+  };
+
+  incrementCount = () => {
+    this.state.text = "Backbencher";
+  };
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.incrementCount}>Click</button>
+        <h1>{this.state.text}</h1>
+      </div>
+    );
+  }
+}
+```
+
+Here when the button is clicked, it should display "Backbencher" text. But that is not happening. What is the cause?
+
+**Solution**
+
+Here `state` is updated in wrong way. `state` value needs to be updated using `this.setState()`. Only then the UI will be re-rendered.
+
+The `incrementCount` needs to be updated as
+
+```javascript
+incrementCount = () => {
+  this.setState({
+    text: "Backbencher",
+  });
+};
+```
+
+**Question**
+
+Is `setState()` method synchronous or asynchronous?
+
+**Solution**
+
+`setState()` method is asynchronous.
+
+**Question**
+
+Following code is giving unexpected result.
+
+```javascript
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+```
+
+What could be the reason? How can we fix it?
+
+**Solution**
+
+Since `setState()` is asynchronous, setting new state based on previous state can go wrong sometimes. In such scenarios, we can use callback function syntax to set state.
+
+```javascript
+this.setState((prevState, props) => {
+  return {
+    counter: prevState.counter + props.increment,
+  };
+});
+```
+
+**Question**
+
+In a class component, we have set initial state as:
+
+```javascript
+state = {
+  name: "Backbencher",
+  age: 23,
+};
+```
+
+We then update the state with following code:
+
+```javascript
+this.setState({
+  age: 24,
+});
+```
+
+What will be the current value of state object?
+
+**Solution**
+
+States are merged in class components. So the state value will be:
+
+```javascript
+{
+  name: "Backbencher",
+  age: 24
+}
+```
+
+**Question**
+
+Here we have a class component:
+
+```javascript
+class Banner extends React.Component {
+  state = {
+    country: "India",
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  logMessage() {
+    console.log(this.state.country);
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.logMessage}>Click</button>
+      </div>
+    );
+  }
+}
+```
+
+When the button is clicked, it is showing an error message instead of displaying _India_.
+
+```
+Uncaught TypeError: Cannot read property 'state' of undefined
+```
+
+What is the reason and how we can solve it?
+
+**Solution**
+
+Here `logMessage` function is called when the button is clicked. Since the function is not an arrow function, the value of `this` inside the function is `undefined`. We are trying to extract the value of `state` from `undefined`. That results in TypeError.
+
+We can solve this by explicitly binding `logMessage` to the component class using `bind` method.
+
+```javascript
+constructor(props) {
+  super(props);
+  this.logMessage = this.logMessage.bind(this);
+}
+```
+
+We can also change `logMessage` to an arrow function to solve this issue.
+
+```javascript
+logMessage = () => {
+  console.log(this.state.country);
+};
+```
+
+**Question**
+
+How can we conditionally render JSX in React?
+
+**Solution**
+
+One technique is to use `if` operator. We cannot use `if...else` inside JSX. But we can dynamically return React elements based on a condition.
+
+```javascript
+if (isLoggedIn) {
+  return <Member />;
+} else {
+  return <Guest />;
+}
+```
+
+Another technique is to use logical operators to implement inline `if`.
+
+```javascript
+<div>{count > 10 && <ShowCount />}</div>
+```
+
+We can implement inline `if...else` using JavaScript ternary operator.
+
+```javascript
+{
+  isLoggedIn ? <Member /> : <Guest />;
+}
+```
+
+**Question**
+
+If a component need not render anything, what can we do?
+
+**Solution**
+
+`render()` method or the functional component can return `null`.
+
+**Question**
+
+Why we provide a `key` attribute to list of items?
+
+**Solution**
+
+Keys help React to understand which items are changed, added or removed.
+
+**Question**
+
+What is a controlled component in React?
+
+**Solution**
+
+In a controlled component, the value of an input form element is controlled by React.

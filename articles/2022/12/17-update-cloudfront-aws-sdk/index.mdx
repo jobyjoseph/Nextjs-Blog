@@ -1,0 +1,49 @@
+---
+title: "Update Cloudfront Distribution Using Node.js AWS SDK"
+date: 2022-12-16
+slug: update-cloudfront-distribution-using-nodejs-aws-sdk
+description:
+tags: ["aws"]
+---
+
+AWS provides `aws-sdk` npm package to work with AWS services. Below function `updateCloudfrontTTL()` updates the `MaxTTL` value of default behavior to `0`.
+
+```javascript{numberLines: true}
+const AWS = require("aws-sdk");
+
+async function updateCloudfrontTTL(distributionId) {
+  const cf = new AWS.CloudFront();
+
+  const params = await cf
+    .getDistributionConfig({ Id: distributionId })
+    .promise();
+
+  params.IfMatch = params.ETag;
+
+  delete params.ETag;
+
+  params.Id = distributionId;
+
+  params.DistributionConfig.DefaultCacheBehavior.MaxTTL = 0;
+
+  const res = await cf.updateDistribution(params).promise();
+
+  return {
+    id: res.Distribution.Id,
+    arn: res.Distribution.ARN,
+    url: `https://${res.Distribution.DomainName}`,
+  };
+}
+```
+
+Line 4: Create CloudFront object
+
+Line 6: Get the current configuration of a distribution
+
+Line 10: Set current `ETag` value to `IfMatch`. This step is mandatory.
+
+Line 16: Set `MaxTTL` to 0. In similar manner you can update whatever you want.
+
+Line 18: Finally, invoke `updateDistribution()` method to actually update the settings in AWS.
+
+Line 20 - 23: shows how to read values from the response object.

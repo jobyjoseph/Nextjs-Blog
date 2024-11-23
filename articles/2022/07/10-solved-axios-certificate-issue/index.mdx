@@ -1,0 +1,48 @@
+---
+title: "Solved: Unable to Verify the First Certificate in Axios Request"
+date: 2022-07-23
+slug: solved-unable-to-verify-first-certificate-axios-request
+description: "Axios needs to verify the certificate to request for an https url. We can provide the certificate information as httpAgent."
+tags: ["web"]
+---
+
+When browsers access a HTTPS url, it first establishes a secure channel using a certificate. All the major certificates are recognized by modern browsers. If a browser does not recognize a certificate, it will ask the user "do you trust this certificate?".
+
+Axios is a common library used to make AJAX requests from browser. When done from a browser, browser handles the certificate management for axios. But, when we use axios from server or from tools like AWS Lambda, it cannot fetch the response. It throws an error saying `"unable to verify the first certificate"`.
+
+## Quick Fix
+
+First import `https` from Node.js.
+
+```javascript
+import * as https from "https";
+```
+
+Create an Https agent using `https.Agent()` method.
+
+```javascript
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+```
+
+Then make the axios call using the above `httpsAgent`.
+
+```javascript
+const { data } = await axios.get(url, { httpsAgent });
+```
+
+Here we are saying axios to ignore the certificate part. Just get the data from url. This can work in most of the cases. Always it is good to verify the source using valid certifcate.
+
+## Better Approach
+
+If we have the certificates available, we can tell axios to use them to verify the url source.
+
+```javascript
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+  cert: fs.readFileSync(certificatePath),
+});
+```
+
+In the above step we pass the path to certificate file as `cert` attribute. It can be `.crt` or `.pem` file.

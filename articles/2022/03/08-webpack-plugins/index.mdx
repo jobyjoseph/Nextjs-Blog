@@ -1,0 +1,92 @@
+---
+title: "Plugins In Webpack And HTML Webpack Plugin"
+date: 2022-03-11
+slug: webpack-plugins
+description: "Plugins on the other hand, bring extra capability. Example can be dynamically creating a HTML file with all bundle files referenced in it. Another example can be minifying the output bundle for better page speed."
+tags: ["webpack"]
+---
+
+import { Link } from "gatsby";
+
+Loaders and Plugins provide wings to Webpack. We learned about <Link to="/articles/webpack-loaders">Webpack Loaders</Link> earlier. They help webpack to work with files other than JavaScript or JSON. Plugins on the other hand, bring extra capability. Example can be dynamically creating a HTML file with all bundle files referenced in it. Another example can be minifying the output bundle for better page speed.
+
+## Using a Plugin
+
+In order to use a Webpack plugin in our project, we need to follow below steps:
+
+1. The plugin needs to be installed using `npm` or `yarn`
+2. The plugin needs to be required in `webpack.config.js` file
+3. Most of the plugins support options to customize its usage. So, provide any options we have
+4. Since a plugin can be used multiple times in a configuration file, each time the plugin needs to be instantiated using `new` operator before using.
+5. The plugin instance needs to be pushed to `plugins` config array
+
+To understand how a plugin works, let us try a commonly used plugin which is `html-webpack-plugin`.
+
+## HTML Webpack Plugin
+
+So far, if we need to test the generated bundle file in a HTML page, we might have created a HTML file in `./dist` folder. Then, we might have added the bundle reference using `script` tag. All these manual work needs to be done again after each bundle creation. `html-webpack-plugin` makes our life easy in this case.
+
+We are going to install and use `html-webpack-plugin` as per the steps mentioned in the previous section.
+
+First, install the plugin using:
+
+```
+yarn add -D html-webpack-plugin
+```
+
+Next, require the plugin in `webpack.config.js` file using `require()` function.
+
+```javascript
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+```
+
+Next, we need to add an instance of `HtmlWebpackPlugin` constructor to `plugins` option. For that, create a `plugins` property in `module.exports` if not present. Then add our plugin instance to it. Note that, `plugins` config is an array which will contain all the used plugins as its elements.
+
+```javascript
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // highlight-line
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })], // highlight-line
+};
+```
+
+As you can see, we supplied a `template` option to the plugin. With that, we are telling the plugin to take the HTML file in `src/index.html`, inject generated bundles and then place it under `./dist` folder.
+
+We need to create the `index.html` in `src` folder now. Create the file and copy the below simple html content.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Webpack</title>
+  </head>
+  <body></body>
+</html>
+```
+
+We are now ready to test our plugin. Go to the terminal and run `yarn build`. Assuming, the build command is already setup to run `webpack`.
+
+After building, a new file `index.html` is created for me under `./dist` folder. Here is the content.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Webpack</title>
+    <script defer src="main.js"></script>
+  </head>
+  <body></body>
+</html>
+```
+
+You can see the `<script defer src="main.js"></script>` line added dynamically by webpack plugin.
+
+Hope you all received a taste of how webpack plugin works.

@@ -1,0 +1,76 @@
+---
+title: "Values"
+date: 2022-09-10
+slug: values
+description: "Examples of values in JavaScript are 34, 'Apple', 23.89, true"
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "basics"
+sortorder: 5
+---
+
+Values in JavaScript represents different data forms that can be used directly or stored somewhere in memory. Here are few examples:
+
+```javascript{numberLines: true}
+34
+7.23
+
+"Backbencher.dev"
+
+true
+false
+
+null
+undefined
+
+["Apple", "Banana"]
+
+{
+  age: 23
+}
+```
+
+Line 1 and 2 are number values. In JavaScript, there is no distinction between numbers with decimals or without decimals. `34` and `7.23` are just **numbers**.
+
+Line 4, `"Backbencher.dev"` is an example of **string** value. String in JavaScript can be represented using double quotes(`""`), single quotes(`''`) or back tick marks(` `` `).
+
+```
+"Backbencher.dev"
+'Backbencher.dev'
+`Backbencher.dev`
+```
+
+Line 6 and 7 contains `true` and `false`. They are the only examples of **boolean** values. The term boolean came from the name of its inventor George Boole. These values are used for decision making, like if one condition is true, then do something or else, do something else.
+
+Line 9 and 10 contains `null` and `undefined`. They are used to represent emptiness. In JavaScript, when a memory is allocated to store something and if we try to read the contents of the memory before storing an item, we get `undefined`. On the other hand, if we have a function in JavaScript that should always return an object, and for some reasons if that function does not have an object to return, it can return `null` to represent intentional absense of an object.
+
+Line 12 represent an **array** in JavaScript. They store items in contigous memory locations. That means you can assume `"Apple"` and `"Banana"` are stored in nearby memory locations. Each items in the array are positioned by an index starting from `0`. So `"Apple"` is in index `0` and `"Banana"` is in position `1`.
+
+Line 14 to 16 form an **object**. In an object, values are stored in named positions. Here, the value `23` is stored in the named postion `age`.
+
+## How Values Are Used
+
+Values are used in our program to accomplish tasks. For example, if we need to add two item prices, we need their prices as numbers. Then only we can add the total:
+
+```javascript
+23.12 + 3.50 = 26.62
+```
+
+If we need to alert a message in JavaScript, we need a string value.
+
+```javascript
+alert("How are you?");
+```
+
+If we need to take a decision making between two choices, we need boolean values.
+
+```javascript
+if (marks < 40) {
+  // fail
+} else {
+  // pass
+}
+```
+
+`marks < 40` evaluates to either `true` or `false`.

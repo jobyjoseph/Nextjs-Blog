@@ -1,0 +1,18 @@
+---
+title: "SOLVED: Unable to Delete Disabled CloudFront Distributions"
+date: 2022-12-05
+slug: solved-unable-delete-disabled-cloudfront-distributions
+description: I am not getting the disabled button option even after disabling a cloudfront distribution.
+tags: ["aws"]
+---
+
+import Image from "../../../../src/components/image";
+import imgCloudfrontIds from "./images/cloudfront-ids.png";
+
+In order to delete a CloudFront Distribution, first it needs to **disabled**.
+
+Immediately after disabling a CloudFront distribution, we **cannot delete it**. The change needs to be propogated to all nodes. After all nodes are cleared, we can see the date in **Last modified** column.
+
+<Image src={imgCloudfrontIds} alt="Disabling cloudfront ids" />
+
+If you can see the date means, you can delete that cloudfront distribution.

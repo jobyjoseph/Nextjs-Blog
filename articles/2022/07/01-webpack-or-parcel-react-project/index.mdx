@@ -1,0 +1,47 @@
+---
+title: "Webpack Or Parcel In React Project"
+date: 2022-07-08
+slug: webpack-or-parcel-in-react-project
+description: "Do I need to use Webpack or Parcel in my React project? We are trying to find an answer to that"
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+Webpack and Parcel are two tools to bundle files in a React project. We are trying to compare both of them and make better decisions in our React project.
+
+> For busy readers, if you are building a big React project or needs to suggest a bundler for an upcoming big project, Webpack is the choice.
+
+## Zero Configuration
+
+The main highlight of **Parcel** bundler is that we can start using Parcel just like that. No configurations are required. But, from Webpack 5 onwards, we can use Webpack also with zero configuration.
+
+Typically there will be a `webpack.config.js` Webpack config file in a project. In some projects, there will be multiple config files. Then, based on the environment, we take different type of builds.
+
+So regarding configuration, both are good and easy to start. But as more and more customiztion is required in the bundle, we need to go with Webpack.
+
+## Code-Splitting
+
+Both performs code splitting. But, Parcel throws out all the output files to a single folder. So sometimes the output folder is a big mess of CSS, JS and html files.
+
+On the other hand, we can tell Webpack to group CSS, JS, Images or HTML to separate folders and keep the project more structured.
+
+## Bundling Speed
+
+Parcel is slow for the first build. Then it picks up.
+
+Webpack takes more time based on the configurations we write.
+
+Both tools support live hot reload in their own way.
+
+## Community Support
+
+That is everything for a serious project. If something goes wrong, there should be a strong community to support. Webpack is a clear winner there.
+
+If you are looking for a Webpack plugin, 99% it will be there. Sometimes more than one will be available. You just have to pick the one with more stars.
+
+Parcel is a great starter for development, teaching or proof of concepts. In the long run, everyone needs Webpack.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

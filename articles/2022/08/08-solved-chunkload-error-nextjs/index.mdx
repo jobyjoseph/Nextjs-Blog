@@ -1,0 +1,19 @@
+---
+title: "SOLVED: Next.js ChunkLoadError: Loading chunk node_modules_next_dist_client_dev_noop_js failed"
+date: 2022-08-25
+slug: solved-chunkloaderror-loading-chunk-failed
+description: "While working with Next.js you might face this unhandled runtime error: ChunkLoadError: Loading chunk node_modules_next_dist_client_dev_noop_js failed"
+tags: ["nextjs"]
+---
+
+While working with Next.js you might face this unhandled runtime error:
+
+```
+ChunkLoadError: Loading chunk node_modules_next_dist_client_dev_noop_js failed.
+```
+
+This is a bug from Next.js side. You can try few things if you face this issue.
+
+**Solution:**
+
+Next.js creates a `.next` folder while building. It stores all the required bundle files to run Next.js. **Delete** this folder from the root of your project. Rebuild your project. Clear browser cache and try again.

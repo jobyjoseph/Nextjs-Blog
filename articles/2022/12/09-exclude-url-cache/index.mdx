@@ -1,0 +1,24 @@
+---
+title: "How to Exclude URL from CloudFront Cache Using Serverless.js file"
+date: 2022-12-06
+slug: exclude-url-cloudfront-cache-serverless-file
+description: There are many ways to exclude a particular url path from Cloudfront cache. We learn how to do it from serverless.js
+tags: ["web"]
+---
+
+There are many ways to exclude a URL from caching in CloudFront. One method can be used appropriate maxage response headers. If you are using Serverless framework, you might be using either `serverless.yml` or `serverless.js` file.
+
+In `serverless.js` file, you can mention the path of url and exclude it from caching using below technique.
+
+```javascript
+inputs: {
+    cloudfront: {
+        distributionId: <DISTRIBUTION_ID>,
+        "/path-to-url": {
+        minTTL: 0,
+        maxTTL: 0,
+        defaultTTL: 0,
+    },
+    //...
+}
+```

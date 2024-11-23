@@ -1,0 +1,68 @@
+---
+title: "useContext() React Hook Interview Questions"
+date: 2022-08-25
+slug: usecontext-react-hook-interview-questions
+description: "Here is a list of React interview questions based on useContext() hook. useContext() hook is used to get the context value in a functional component"
+tags: ["react"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+When should we use React Context instead of prop-drilling?
+
+> _prop-drilling_ refers to the technique where we pass a value from one component to nested components through props.
+
+**Answer:**
+
+If we have a value that could be accessed anywhere from the application, we can consider **Context**. Few examples that fit to this condition is:
+
+- Dark or light theme for a site
+- Global site level theme settings
+- User authentication status like is guest or is registered.
+
+If the value shared by a component is specific to that component and its children, it is good to use prop-drilling. That improves code readability and the developer can easily identify from where this value is coming.
+
+<Divider />
+
+**Question:**
+
+Here we have a set of 5 React components that is nested one inside other. Component `A` is passing a value to component `E` through prop-drilling.
+
+```javascript
+const E = (props) => <h1>{props.fruit}</h1>;
+const D = (props) => <E fruit={props.fruit} />;
+const C = (props) => <D fruit={props.fruit} />;
+const B = (props) => <C fruit={props.fruit} />;
+const A = (props) => <B fruit={props.fruit} />;
+
+<A fruit="Apple" />;
+```
+
+How can we rewrite the same code using `useContext()`?
+
+**Answer:**
+
+```javascript
+import React, { useContext } from "react";
+
+const FruitContext = React.createContext();
+
+const E = (props) => {
+  const fruit = useContext(FruitContext);
+  return <h1>{fruit}</h1>;
+};
+
+const D = (props) => <E />;
+const C = (props) => <D />;
+const B = (props) => <C />;
+
+const A = (props) => (
+  <FruitContext.Provider value="Apple">
+    <B />
+  </FruitContext.Provider>
+);
+
+export default A;
+```

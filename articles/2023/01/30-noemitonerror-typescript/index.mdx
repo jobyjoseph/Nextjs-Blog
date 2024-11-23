@@ -1,0 +1,37 @@
+---
+title: "noEmitOnError Configuration in TypeScript"
+date: 2023-01-30
+slug: noemitonerror-configuration-typescript
+description: "`noEmitOnError` is a compiler option in `tsconfig.json` file. If the value of this property is set to `true`, TypeScript will not generate output JavaScript file if there is any TypeScript error."
+tags: ["typescript"]
+---
+
+`noEmitOnError` is a compiler option in `tsconfig.json` file. If the value of this property is set to `true`, TypeScript will not generate output JavaScript file if there is any TypeScript error.
+
+```json
+{
+  "compilerOptions": {
+    //...
+    "noEmitOnError": true
+  }
+}
+```
+
+Here is a TypeScript file that has an error:
+
+```typescript
+const input = document.getElementById("age");
+const value = input.value;
+```
+
+Here, TypeScript throws an error in second line because `input` can have a `null` value if the element does not exist. That will be an issue when we try to access `value` of `null`.
+
+By default when we compile, even though TypeScript shows error in console, it generates output JavaScript with below code:
+
+```javascript
+"use strict";
+const input = document.getElementById("age");
+const value = input.value;
+```
+
+If we set `noEmitOnError` to `true`, the out JavaScript is not generated.

@@ -1,0 +1,25 @@
+---
+title: "Prevent Creating New Folder by Create React App Command"
+date: 2023-02-15
+slug: prevent-creating-new-folder-by-create-react-app-command
+description: "We can use `create-react-app` command to setup a React project with all the necessary tools. We can even setup a React project with TypeScript support."
+tags: ["react"]
+---
+
+We can use `create-react-app` command to setup a React project with all the necessary tools. We can even setup a React project with TypeScript support.
+
+As per the official documentation, the command to spin-up a new React project in `my-app` folder is:
+
+```
+npx create-react-app my-app
+```
+
+Above command creates a new folder `my-app` and all the project files inside it. But, in some cases we do not want the command to create new folder. We already have a project folder, where we need the project files to be generated.
+
+In that case, navigate to the folder and use below command:
+
+```
+npx create-react-app .
+```
+
+The dot(`.`) makes all the difference. Now, a new folder is not created.

@@ -1,0 +1,147 @@
+---
+title: "Optional Semicolons"
+shortTitle: "Optional Semicolons"
+date: 2022-09-27
+slug: optional-semicolons
+description: "Like sentences in English language, a complete meaningful line in JavaScript is called a statement. Just like periods separate sentences, semicolons separate statements in JavaScript."
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "lexical-structure"
+sortorder: 12
+---
+
+Like sentences in English language, a complete meaningful line in JavaScript is called a statement. Just like periods separate sentences, semicolons(`;`) separate statements in JavaScript.
+
+```java
+const a = 10; console.log(a);
+```
+
+We normally write one statement per line as shown below:
+
+```javascript
+const a = 10;
+console.log(a);
+```
+
+## Optional Semicolons
+
+When we write one statement per line, we can omit the semicolon if we want.
+
+```java
+const a = 10
+console.log(a)
+```
+
+JavaScript will automatically figure out the statments based on the rules of the language.
+
+## Figuring out Statements
+
+Consider the below code:
+
+```javascript
+let age = 20;
+console.log(age);
+```
+
+Will the above code work? Yes. JavaScript usually treats line breaks as semicolons only if it can't parse the code without adding an implicit semicolon.
+
+In the above code, JavaScript starts grouping from first line as if each line is a piece of lego.
+
+```
+let
+let age
+let age =
+let age = 20
+let age = 20 console
+```
+
+So here is how the parser thinks:
+
+It takes the first word `let` and asks, "Can `let` and `age` come together?". The answer is "yes". Like wise, it keeps on adding the blocks.
+
+"Can `let`, `age` and `=` come together?" Yes!
+
+"Can `let`, `age`, `=` and `20` come together?" Yes!
+
+"Can `let`, `age`, `=`, `20` and `console` come together?" No!. If it is a `No`, JavaScript automatically inserts a semicolon between `20` and `console`.
+
+This is how JavaScript figure out different statements.
+
+Here is a tricky code snippet:
+
+```java
+let b = 10
+let a = b
+(a).toString()
+```
+
+What is the output for above code?
+
+You might expect the value `'10'` as output. But, you might face the error `ReferenceError: Cannot access 'a' before initialization`. It is because, JavaScript treated above code as:
+
+```javascript
+let b = 10;
+let a = b(a).toString();
+```
+
+As a best practice, it is always good to put semicolons in the code.
+
+There are three exceptions to this semicolon insertion rule.
+
+### First Exception
+
+What is the output of below code?
+
+```java
+function fun() {
+  return
+  6
+}
+console.log(fun())
+```
+
+We expect the output to be `6` because `return 6` forms a valid statement. But JavaScript returns from the function as soon as it sees the `return` keyword. Therefore the output will be `undefined`.
+
+This special type of working is not only for `return`. `throw`, `yield`, `break` and `continue` also work like this. If there is continuation for these keywords, ensure that there is no line break in between.
+
+### Second Exception
+
+What is the output of below code?
+
+```java
+let a = 10
+console.log(a)
++
++
+a
+console.log(a)
+```
+
+Your guess might be `10` and `11`. Instead, above code prints `10` and `10`. Unary increment(`++`) and decrement(`--`) operators do not work as expected without semicolons. Always the unary operator(`++`) and the operand(`a`) should be in the same line.
+
+### Third Exception
+
+Arrow functions which were introduced in ES6, needs to be in the same line.
+
+```java
+let
+a
+=
+()
+=>
+10
+console.log(a())
+```
+
+Above code throws `SyntaxError: Unexpected token '=>'` error. Instead if we edit the above code, just to keep the arrow function in the same line, things will start working. Here is the updated code:
+
+```java
+let
+a
+=
+() => 10
+console.log(a())
+```
+
+Above code prints `10` in the console.

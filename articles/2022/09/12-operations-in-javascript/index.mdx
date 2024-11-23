@@ -1,0 +1,72 @@
+---
+title: "Operations in JavaScript"
+date: 2022-09-10
+slug: operations-in-javascript
+description: "In JavaScript we can perform different operations like arithmetic operations and logical operations."
+tags: ["javascript"]
+---
+
+In JavaScript we can perform different operations like arithmetic operations and logical operations.
+
+## Arithmetic Operations
+
+We can add two or more numbers using `+` operator.
+
+```javascript
+2 + 3; // 5
+2.3 + 1.4; // 3.7
+```
+
+We can subtract one number from another using `-` operator.
+
+```javascript
+5 - 3; // 2
+2.3 - 1.4; // 0.9
+```
+
+> `2.3 - 1.4` in JavaScript returns `0.8999999999999999`. Why? That is a separate topic.
+
+## Concatenation
+
+When we use `+` operator with two strings, we can concatenate them.
+
+```javascript
+"Hello" + "Apple"; // "HelloApple"
+```
+
+## Operator and Operands
+
+Consider following operation statement:
+
+```javascript
+2 + 3;
+```
+
+In that `2` and `3` are called operands. `+` is called operator.
+
+In the above statement, `+` has two operands. Therefore, plus(`+`) is a **binary operator**.
+
+## Negation Operator
+
+Negation refers to opposite. If I have a value `true`, then negating it results in `false`.
+
+```javascript
+!true; // false
+```
+
+Any truthy value in JavaScript can be negated to `false`. Example:
+
+```javascript
+!1; // false
+!"Apple"; // false
+![]; // false
+```
+
+Similarly any falsy value can be negated to `true`. Example:
+
+```javascript
+!0; // true
+!""; // true
+```
+
+In case of negation operator, there is only one operand involved. Therefore `!` operator is an **unary operator**.

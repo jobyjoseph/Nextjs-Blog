@@ -1,0 +1,81 @@
+---
+title: "Hot Reloading Using Webpack Dev Server"
+date: 2022-03-19
+slug: hot-reloading-using-webpack-dev-server
+description: "While developing our project using webpack, it is difficult to build each time after every change in code. It is also time consuming to refresh our browser to see the change in output. Webpack Dev Server is a solution for this problem. It brings watch functionality and hot module reload feature during development."
+tags: ["webpack"]
+---
+
+While developing our project using webpack, it is difficult to build each time after every change in code. It is also time consuming to refresh our browser to see the change in output. **Webpack Dev Server** is a solution for this problem. It brings **watch** functionality and **HMR(Hot Module Reload)** feature during development.
+
+## Project Setup
+
+To try **watch mode** and **HMR**, we need a source file to test. For that, under `/src` folder, create an `index.js` file with below content.
+
+```javascript
+console.log("Hi!!");
+```
+
+With the default webpack configuration, when we build the project, an output `main.js` file is created at `/dist` folder.
+
+Next, create an `index.html` file in `/dist` folder to run the `main.js` file. Even though there is `HTMLWebpackPlugin` to generate the HTML file, we are manually creating the file for demo purpose. Fill the HTML file with below content.
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script src="./main.js"></script>
+  </head>
+  <body></body>
+</html>
+```
+
+So we have now everything in place to welcome `webpack-dev-server`.
+
+## Webpack Dev Server Setup
+
+First we need to install `webpack-dev-server` using npm or yarn.
+
+```
+yarn add -D webpack-dev-server
+```
+
+`webpack-dev-server` works closely with Webpack. It can read webpack configuration file and understand the meaning of options written there.
+
+Once the dev server is installed, we need to tell the server about the location of output files. In our case, we need to tell the server to serve files from `/dist` folder. For that, add `devServer` property to `webpack.config.js` file.
+
+```javascript
+module.exports = {
+  devServer: {
+    static: "./dist",
+  },
+};
+```
+
+By default, webpack dev server runs the site at `http://localhost:8080`. If we want to change the default values, there are `host` and `port` options for `devServer` setting.
+
+## Running Dev Server
+
+Let us add a script command in `package.json` to run the dev server.
+
+```javascript
+ "scripts": {
+    "build": "webpack",
+    "dev": "webpack serve --open" // highlight-line
+  }
+```
+
+We can also provide `webpack-dev-server --open` as the `dev` command.
+
+Now run the `dev` command in terminal.
+
+```
+yarn dev
+```
+
+If everything went well, we should see our default browser opening `http://localhost:8080` in browser. If we open the browser console, we can also see `Hi!!` message.
+
+The terminal will be in waiting mode, listening for any changes in source files. Let us change the message to `"Hello"`. As soon as we save the file, Webpack Dev Server automatically builds and refresh our page. We can also see the updated message in console.
+
+Hope you got a basic understanding of Webpack Dev Server and how to start with it.

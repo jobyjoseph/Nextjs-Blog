@@ -1,0 +1,352 @@
+---
+title: Quiz - Variables in JavaScript
+date: 2021-02-09
+slug: javascript-quiz-variables
+description: Take a simple quiz related to JavaScript variables.
+tags: ["javascript"]
+---
+
+import Answer from "../../../../src/components/answer";
+import QuestionItem from "../../../../src/components/questionitem";
+import Question from "../../../../src/components/question";
+import Option from "../../../../src/components/option";
+import Explanation from "../../../../src/components/explanation";
+import Divider from "../../../../src/components/divider";
+
+<QuestionItem>
+
+<Question>
+
+**Question 1:**
+
+What is the output?
+
+```javascript
+var a;
+console.log(a);
+```
+
+</Question>
+
+<Option>
+
+`Reference Error: a is not defined`
+
+</Option>
+<Option isAnswer="yes">
+
+`undefined`
+
+</Option>
+<Option>
+
+`0`
+
+</Option>
+<Option>
+
+`""`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/> `a` is a variable that is declared in JavaScript using `var` keyword. Any variable that is declared is set with `undefined` value by default.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 2:**
+
+What is the output?
+
+```javascript
+let a;
+console.log(a);
+```
+
+</Question>
+
+<Option>
+
+`Reference Error: a is not defined`
+
+</Option>
+<Option isAnswer="yes">
+
+`undefined`
+
+</Option>
+<Option>
+
+`0`
+
+</Option>
+<Option>
+
+`""`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/> `a` is a variable that is declared in JavaScript using `let` keyword. Any variable that is declared is set with `undefined` value by default.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 3:**
+
+What is the output?
+
+```javascript
+const a;
+console.log(a);
+```
+
+</Question>
+
+<Option isAnswer="yes">
+
+`SyntaxError: Missing initializer in const declaration`
+
+</Option>
+<Option>
+
+`undefined`
+
+</Option>
+<Option>
+
+`SyntaxError: Unexpected identifier`
+
+</Option>
+<Option>
+
+`""`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/>
+`const` keyword is used to declare a constant variable in JavaScript. The value initialized to a constant variable cannot be changed later. For the same reason, a constant variable should be initialized at the time of declaration itself. Otherwise, a syntax error is thrown.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 4:**
+
+What is the output?
+
+```javascript
+var a = 10;
+
+{
+  var a = 20;
+}
+
+console.log(a);
+```
+
+</Question>
+
+<Option>
+
+`undefined`
+
+</Option>
+<Option>
+
+`SyntaxError: a is already registered`
+
+</Option>
+<Option isAnswer="yes">
+
+`20`
+
+</Option>
+<Option>
+
+`10`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/>
+A variable declared using `var` is either in global scope or in function scope. Here, both `a`'s are in global scope. And also, redeclaring a `var` variable using `var` is allowed. So the last assignment of 20 is the final value stored in variable `a`.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 5:**
+
+What is the output?
+
+```javascript{numberLines: true}
+var a = 3;
+var a;
+console.log(a);
+```
+
+</Question>
+
+<Option isAnswer="yes">
+
+`3`
+
+</Option>
+<Option>
+
+`undefined`
+
+</Option>
+<Option>
+
+`null`
+
+</Option>
+<Option>
+
+`""`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/>
+JavaScript executes the code, line by line. Before executing the code, JavaScript engine parses the code to identify the scope, allocate memory, catch syntax errors and so on.
+
+During this parsing step, line 1 results in a memory allocation for variable `a`. The assignment of 3 does not happen during parsing. That is part of second step, that is execution. When line 2 is parsed, again a variable with name `a` needs to be created. Since it is already created, the parser does nothing and move on. So finally, after the parsing step, JavaScript engine optimizes the code without line 2.
+
+```javascript
+var a = 3;
+console.log(a);
+```
+
+That is why the output is 3.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 6:**
+
+What is the output?
+
+```javascript
+var a;
+let a;
+console.log(a);
+```
+
+</Question>
+
+<Option>
+
+`""`
+
+</Option>
+<Option>
+
+`0`
+
+</Option>
+<Option>
+
+`undefined`
+
+</Option>
+<Option isAnswer="yes">
+
+`SyntaxError: Identifier 'a' has already been declared`
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/>
+`let` and `const` are two new keywords introduced in ES6. They are used to declare new variables. Both `let` and `const` throw `SyntaxError` if the variable is already declared either using `var`, `let` or `const`.
+
+</Explanation>
+</QuestionItem>
+
+<Divider />
+
+<QuestionItem>
+
+<Question>
+
+**Question 7:**
+
+What is the output?
+
+```javascript
+console.log(a);
+var a = 6;
+```
+
+</Question>
+
+<Option isAnswer="yes">
+
+`undefined`
+
+</Option>
+<Option>
+
+`ReferenceError: a is not defined`
+
+</Option>
+<Option>
+
+`6`
+
+</Option>
+<Option>
+
+None of these
+
+</Option>
+
+<Explanation>
+
+**Explanation:** <br/>
+The variable `a` can be used before its declaration. This is called hoisting. But how it is possible? Why `undefined`, not `6`? To understand this, we need to know how JavaScript engine executes our code.
+
+JavaScript is an interpreted language. It executes code line by line. But before starting the line-by-line execution, JavaScript parses through the code. During the parsing step, for each variable declaration, it allocates a memory location. Only, memory allocation happens during the parsing step, and the initialization happens during actual code execution.
+
+In our code sample, when the first line tries to get the value of `a`, it can see that already a variable with `a` is allocated during parsing step. That is why it prints the value `undefined`. Only when the execution reaches line 2, the value of `6` is assigned.
+
+</Explanation>
+</QuestionItem>

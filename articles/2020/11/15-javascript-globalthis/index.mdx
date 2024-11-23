@@ -1,0 +1,37 @@
+---
+title: JavaScript Functions Interview Questions
+date: 2020-11-15
+slug: javascript-globalthis
+decription: globalThis in JavaScript was introduced in ES2020. This is to bring a common global this value across browsers, nodejs and all JavaScript platforms.
+tags: ["javascript"]
+---
+
+import Image from "../../../../src/components/image";
+import imageGlobalThisBrowser from "./images/globalthis-browser.png";
+import imageGlobalThisNode from "./images/globalthis-nodejs.png";
+
+We all know that in a browser, the global object is `window`. In Node.js context, the global object is `global`. In a web worker, the global object is called `self`. ES2020 `globalThis` is trying to solve this different naming convention problem across different run time environments.
+
+We are going to execute below code in a browser and Node.js environment.
+
+```javascript
+console.log(globalThis);
+```
+
+Here is the output in browser.
+
+<Image
+  src={imageGlobalThisBrowser}
+  alt="globalThis in Browser"
+  caption="globalThis value in browser"
+/>
+
+Here is the browser in Nodejs.
+
+<Image
+  src={imageGlobalThisNode}
+  alt="globalThis in Nodejs"
+  caption="globalThis value in Node.js"
+/>
+
+So this addition is a one keyword solution to access global environment in any context.

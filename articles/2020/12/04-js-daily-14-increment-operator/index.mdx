@@ -1,0 +1,28 @@
+---
+title: JS Daily 14 - Increment Operator
+date: 2020-12-04
+slug: js-daily-14-increment-operator
+decription: Learn how post increment and pre increment works in JavaScript
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+var a = 10;
+console.log(a++);
+console.log(++a);
+```
+
+<Divider />
+
+The output is:
+
+```
+10
+12
+```
+
+Post increment operator first prints the value(`10`) and then increments `a` to 11. Pre increment first increments the value and then prints. So the 11 is first incremented to `12` and then printed to console.

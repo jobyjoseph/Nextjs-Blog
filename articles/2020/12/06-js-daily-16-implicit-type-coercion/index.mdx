@@ -1,0 +1,21 @@
+---
+title: JS Daily 16 - Implicit Type Coercion
+date: 2020-12-06
+slug: js-daily-16-implicit-type-coercion
+decription: When a number is added with a string, the output will be a concatenated string.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+console.log( 10 + "2");
+```
+
+<Divider />
+
+Output is `"102"`.
+
+Plus operator `+` in JavaScript can be used for numeric addition or string concatenation. When one of the operands is of **string** type, `+` does concatenation. Therefore, in this example `10` is converted to a string and the output is `"102"`.

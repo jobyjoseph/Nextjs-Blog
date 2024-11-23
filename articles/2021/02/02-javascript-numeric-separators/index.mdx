@@ -1,0 +1,109 @@
+---
+title: Numeric Separators in JavaScript
+date: 2021-02-02
+slug: javascript-numeric-separators
+decription: Numeric separators was introduced to make numbers more readable by creating a visual separation between groups of digits.
+tags: ["javascript"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+Numeric separator(`_`) was introduced to make numbers more readable by creating a **visual separation** between groups of digits. The separator can be used with decimal, binary, hexadecimal or BigInt numbers. This feature was introduced in **ES12**.
+
+It is difficult for humans to read large numbers quickly. What about 1000000000? Is it a billion or 10 million?. Numeric separators make developers' life easy.
+
+```javascript
+const num = 1000_000_000; // Definitely a billion
+```
+
+Numeric separator is purely for visual separation. It does not have any impact in the functionality. In fact, comparing a number with separator and that without it, results in `true`.
+
+```javascript
+console.log(1000_000_000 === 1000000000); // true
+```
+
+## Position of Separator
+
+The numeric separator can appear anywhere **inside** the number. Following are valid usages of numeric separators.
+
+```
+1000_000_000
+123_02
+4567_00
+3_4_5_6
+```
+
+Numeric separator is **not allowed** at the **end** of a number. Therefore, following number is invalid.
+
+```
+123_00_
+```
+
+Also, if a number **starts** with `_`, JavaScript treats it as a variable. In JavaScript, a variable can start with `_`.
+
+```javascript
+const a = _123;
+```
+
+Here `_123` is considered as a variable name. Since that variable is not declared, above code will throw _reference error_.
+
+## Separators in Fractional Part
+
+Numeric separators can be placed in the fractional part of a number.
+
+```
+12.300_00
+1e10_10
+```
+
+## Examples
+
+Here are some examples that consider different use cases of numeric separator.
+
+### Binary Literal
+
+A binary literal in JavaScript is denoted by prefixing a binary number by `0b`. While writing a binary literal, we can place numeric separator to make it more readable.
+
+```javascript
+console.log(0b11_1); // 7
+console.log(0b111); // 7
+```
+
+`111` is the binary equivalent of decimal number `7`.
+
+### Hex Literal
+
+A Hexadecimal literal in JavaScript is denoted by prefixing a hexadecimal number by `0x`. We can include numeric separator in a hexadecimal number.
+
+```javascript
+console.log(0xf_f); // 255
+console.log(0xa_b === 0xab); // true
+```
+
+Note that the decimal equivalent of `0xFF` is `255`.
+
+### BigInt Literal
+
+A BigInt literal can contain a numeric separator.
+
+```javascript
+const a = 1_309_89n;
+console.log(typeof a); // "bigint"
+console.log(a.toString()); // "130989"
+```
+
+If we place an underscore `_` between the number and final `n`, it will throw an error.
+
+```javascript
+const a = 1_309_89_n;
+```
+
+Above code results in following error:
+
+```
+SyntaxError: Numeric separators are not allowed at the end of numeric literals
+```
+
+## Browser Compatibility
+
+All the major browsers support numeric separators. We can see the precise information by visiting this <Olink link="https://caniuse.com/mdn-javascript_grammar_numeric_separators">CanIuse</Olink> link.

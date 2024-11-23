@@ -1,0 +1,155 @@
+---
+title: Arithmetic Operators in JavaScript
+date: 2020-11-02
+slug: javascript-arithmetic-operators
+decription: Understand the arithmetic operators in JavaScript
+tags: ["javascript"]
+---
+
+Arithmetic Operators are used to perform arithmetic operations on their operands.
+
+## Multiplication
+
+The asteriks(`*`) operator is used to **multipy** two numbers.
+
+```javascript
+console.log(2 * 3); // 6
+```
+
+Since, the multiplication operator can be used **only** with numbers, any **non-numeric** operand results in **Not a Number**(`NaN`).
+
+```javascript
+console.log(2 * "A"); // NaN
+```
+
+## Division
+
+The forward slash(`/`) operator is used to **divide** two numbers.
+
+```javascript
+console.log(6 / 2); // 3
+```
+
+By default all numbers in JavaScript are handled as **floating-point** numbers. Therefore, the division result can contain **decimal** places.
+
+```javascript
+console.log(5 / 3); // 1.6666666666666667
+```
+
+The division operator works only with numbers. If any of the operands is a non-numeric value, the result results in `NaN`.
+
+```javascript
+console.log(5 / "A"); // NaN
+```
+
+In JavaScript, there are two special keywords to mark the both ends of number line, `Infinity` and `-Infinity`. When we try to divide any number by `0`, the result is `Infinity` or `-Infinity` based on the numerator.
+
+```javascript
+console.log(1 / 0); // Infinity
+console.log(-1 / 0); // -Infinity
+```
+
+If the numerator is `0`, the result of division is always `0`.
+
+```javascript
+console.log(0 / 4); // 0
+```
+
+What happens when we divide a `0` by `0`? Will the answer be `0` or `Infinity`? May be, to avoid this debate, JavaScript returns `NaN`, if we try to divide `0` by `0`.
+
+```javascript
+console.log(0 / 0); // NaN
+```
+
+Division operator works only with numbers. If the operands can be converted to a valid number, then JavaScript does automatic conversion before doing the division. If the operands cannot be converted to a valid number, the result will be `NaN`.
+
+```javascript
+console.log(4 / "2"); // 2
+console.log(4 / "A"); // NaN
+```
+
+## Modulo
+
+In order to find the remainder of a division operation, we can use **modulo**(`%`) operator.
+
+```javascript
+console.log(10 % 4); // 2
+```
+
+The **sign** of the result is the sign of the first operand. The remainder will be **negative** if the first operand is negative. The remainder will be **positive** integer, if the first operand is positive.
+
+```javascript
+console.log(5 % 2); // 1
+console.log(-5 % 2); // -1
+console.log(4 % 2); // 0
+```
+
+In JavaScript, modulo operator works with **floating point numbers** also. But most of the time, we use modulo operator with integers.
+
+```javascript
+console.log(5.1 % 2.3); // 0.5
+```
+
+## Subtraction
+
+The subtraction operator(`-`) is used to find the difference between two numbers.
+
+```javascript
+console.log(5 - 3); // 2
+```
+
+Subtraction operator works only with numbers. So if any of the operands cannot be converted to a number, the result will be `NaN`.
+
+```javascript
+console.log(5 - "A"); // NaN
+```
+
+## Addition
+
+In JavaScript, `+` is used to add two numbers. The operator `+` is overloaded. That means, it behaves differently based on the type of operands. If both the operands are numbers, `+` performs addition.
+
+```javascript
+console.log(3 + 4); // 7
+```
+
+If any of the operands is not a number, then the result is calculated based on following rules.
+
+If **both the operands are strings**, it performs concatenation.
+
+```javascript
+console.log("Apple" + "Banana"); // "AppleBanana"
+```
+
+In any other case, **type conversion** is required. `+` operator gives more priority to **string concatenation**. If either of the operands is a string or an object that can be converted to a string, all operands are converted to string and string concatenation is performed. In all other cases, that is if both operands are not strings or can be converted to strings, addition operation is performed.
+
+Let us consider different cases.
+
+If one of the operand is a string, other operands are also converted to string and string concatenation is done.
+
+```javascript
+console.log("A" + 2); // "A2"
+```
+
+If one of the operand is an object, that can be converted to a string, the string concatenation occurs.
+
+```javascript
+console.log([2, 3] + 5); // "2,35"
+```
+
+If none of the operands can be converted to a string, addition occurs. `null` and `undefined` cannot be converted to a string.
+
+```javascript
+console.log(3 + null); // 0
+console.log(3 + undefined); // NaN
+```
+
+When addition is done, all operands are converted to numbers. `null` converts to 0 and `undefined` converts to `NaN`.
+
+The `+` operator has **left-to-right** associativity. Consider the following statement.
+
+```javascript
+console.log(2 + 4 + "Hello"); // "6Hello"
+console.log(2 + (4 + "Hello")); // "24Hello"
+```
+
+First line first performs number addition of `2` and `4`. The result `6` is then concatenated with `"Hello"`. Whereas in the second line the default associativity is altered using paranthesis.

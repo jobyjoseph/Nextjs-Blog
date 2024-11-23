@@ -1,0 +1,21 @@
+---
+title: "What is tmpdir() Function in Node.js"
+date: 2023-02-25
+slug: what-is-tmpdir-function-nodejs
+description: "In Node.js, the os module provides a method called tmpdir() which returns the operating system's default directory for temporary files."
+tags: ["nodejs"]
+---
+
+In Node.js, the `os` module provides a method called `tmpdir()` which returns the operating system's **default directory for temporary files**.
+
+Here's an example of how to use `tmpdir()` in a Node.js script:
+
+```javascript
+const os = require("os");
+const tmpdir = os.tmpdir();
+console.log(tmpdir);
+```
+
+When you run this script, it will output the path to the temporary directory on your operating system. On most Unix-based systems (such as macOS and Linux), the default temporary directory is `/tmp`. On Windows, the default temporary directory is typically `C:\Users\<username>\AppData\Local\Temp`.
+
+You can use the `tmpdir()` method to create temporary files or directories, such as for caching or storing intermediate results. Keep in mind that files in the temporary directory may be automatically deleted by the operating system at any time, so you should not rely on them for long-term storage.

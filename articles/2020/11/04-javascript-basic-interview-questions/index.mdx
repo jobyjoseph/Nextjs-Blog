@@ -1,0 +1,80 @@
+---
+title: JavaScript Basic Interview Questions
+date: 2020-11-04
+slug: javascript-basic-interview-questions
+decription: Here is a list of basic JavaScript Interview questions every UI engineer should go through before an interview.
+tags: ["javascript"]
+---
+
+import Image from "../../../../src/components/image";
+import imageFnConsole from "./images/printing-fn-console.png";
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+How are functions stored in memory by JavaScript? Here we have a function `sum()`.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+How `sum()` function is stored in memory?
+
+** Answer: **
+
+JavaScript allocates a memory block, just like a memory is allocated for a variable. The definition of the function is then stored inside the variable. That is why if we print the value of `sum` in console, it prints out the full source code of the function.
+
+```javascript
+console.log(sum);
+```
+
+Here is the console output:
+
+<Image
+  src={imageFnConsole}
+  style={{ maxWidth: "200px", display: "block", margin: "auto" }}
+  alt="Printing function in console"
+/>
+
+<Divider />
+
+** Question: **
+
+Is JavaScript single threaded or multi-threaded?
+
+** Answer: **
+
+JavaScript is single threaded. That means, it can execute one and only one part of the code at a time. If a code block calls a function, the block needs to wait until the function finishes its execution.
+
+<Divider />
+
+**Question:**
+
+What is the difference between `undefined` and `null` in JavaScript?
+
+**Answer:**
+
+`undefined` denotes a variable that is declared, but not yet initialized. In JavaScript, if we declare a variable and prints it value, the output will be `undefined`.
+
+```javascript
+var a;
+console.log(a); // undefined
+```
+
+On the other hand, `null` represents an intentional absense of an object. For example, the `match()` method in JavaScript returns all matches of a regular expression as an array.
+
+```javascript
+var str = "some things are awesome";
+var res = str.match(/some/g);
+console.log(res); // ["some", "some"]
+```
+
+We can see that the `match()` method returns an array, which is an object. So we expect an object from `match()` method. But what if, there is no match? In that case, `null` is returned to denote intentional absense of an object.
+
+```javascript
+var str = "some things are awesome";
+var res = str.match(/boom/g);
+console.log(res); // null
+```

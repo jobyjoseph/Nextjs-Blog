@@ -1,0 +1,26 @@
+---
+title: JS Daily 7 - Block Scoped Let
+date: 2020-11-27
+slug: js-daily-7-block-scoped-let
+decription: This simple example shows how block scoping works in JavaScript using let keyword.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+var a = 10;
+{
+  let a = 20;
+}
+console.log(a);
+```
+
+<Divider />
+
+Output is **10**.
+
+First a variable `a` is declared in global scope using `var` and initialized with value `10`. Then, a new block scoped variable `a` is declared using `let` and assigned with value `20`. The block scoped variable works only within the block(ie inside the curly brackets`{}`).
+So, again outside the block, the printed `a` is the global `a` with value `10`.

@@ -1,0 +1,301 @@
+---
+title: TypeScript Interview Questions Part 1 - Basics, Types
+date: 2021-05-27
+slug: typescript-interview-questions-basics-types
+description: TypeScript is a **static type checker**. JavaScript is an untyped language. We can declare a variable and later assign any type to it. Here is a list of interview questions that cover basic types.
+tags: ["typescript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+What is TypeScript? How it is used in a project?
+
+** Answer: **
+
+TypeScript is a **static type checker**. JavaScript is an untyped language. We can declare a variable and later assign any type to it. TypeScript ensures that a variable declared to hold a certain type, does not hold any other data type. TypeScript does the type check without running the code. That is called static type checking.
+
+In a project, we write TypeScript code in files ending with `.ts` extension. We install TypeScript package and later compile our TypeScript files using `tsc` command. The output of compilation will be a pure JavaScript file.
+
+<Divider />
+
+** Question: **
+
+Are all JavaScript files, valid TypeScript files?
+
+** Answer: **
+
+Yes. A valid JavaScript code is also a valid TypeScript code.
+
+<Divider />
+
+** Question: **
+
+We have an object `obj` that contains two properties, `name` and `age`.
+
+```javascript
+const obj = {
+  name: "John",
+  age: 24,
+};
+```
+
+`name` can contain only string value and `age` can contain only number value. How can we define a type for `obj`?
+
+** Answer: **
+
+TypeScript type for the object can be defined using `interface`.
+
+```typescript
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+Then it can be applied to the object like:
+
+```typescript
+const obj: User = {
+  name: "John",
+  age: 24,
+};
+```
+
+<Divider />
+
+** Question: **
+
+Here we have a function `sum()` that takes two arguments.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+sum(2, 3, 4);
+```
+
+But, at the time of invocation, we are passing 3 arguments. TypeScript does not like that and it throws error. Still, it updates the output JavaScript file. How can we tell TypeScript, not to update output JavaScript file if there is any error in TypeScript code?
+
+** Answer: **
+
+We can make use of `--noEmitOnError` flag. Add this flag along with `tsc` command.
+
+```shell
+tsc --noEmitOnError test.ts
+```
+
+Now, if there is any error in `test.ts`, the output file `test.js` is not created or updated.
+
+<Divider />
+
+** Question: **
+
+Here is a simple TypeScript code that uses ES6 syntax.
+
+```typescript
+const myName: string = "John";
+```
+
+After TypeScript compilation the output JavaScript code is in ES5 syntax.
+
+```javascript
+var myName = "John";
+```
+
+How can we create output in ES6 syntax?
+
+** Answer: **
+
+By default, TypeScript tries to convert the code to ES3. But, we can control the target version of JavaScript using `--target` flag. We can produce ES6 output by following command.
+
+```shell
+tsc --target es2015 test.ts
+```
+
+Above command produces following JavaScript code where we can see ES6 `const` keyword.
+
+```javascript
+const myName = "John";
+```
+
+<Divider />
+
+** Question: **
+
+Here is the code written in a TypeScript file:
+
+```typescript
+let a = "Hello";
+a = 10;
+```
+
+When TypeScript compiler runs this code, will it throw any error?
+
+** Answer: **
+
+Yes. It will throw following error:
+
+```shell
+Type 'number' is not assignable to type 'string'.
+```
+
+Even though we have not explicitly set the type of variable `a`, TypeScript infers the type as string by observing the first initialization. That is why an error is thrown when a number is assigned to `a` in the second line.
+
+<Divider />
+
+** Question: **
+
+Does the following TypeScript code throw any error?
+
+```typescript
+let a: string = "Hello";
+let b: any = 10;
+a = b;
+```
+
+** Answer: **
+
+No. Above code does not throw any error. Here, variable `b` is of `any` type. So, it can be assigned to or from any variables.
+
+<Divider />
+
+** Question: **
+
+How can we declare a variable that stores a number array in TypeScript?
+
+** Answer: **
+
+An array type is specified by adding square brackets(`[]`) to the type. In this case we need to declare a number array. So we can use `number[]` type.
+
+```typescript
+var numArr: number[] = [2, 4, 6];
+```
+
+<Divider />
+
+** Question: **
+
+Here we have a function that accepts 2 numbers and return its sum.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+Write the above function with defined types.
+
+** Answer: **
+
+The input and output of a function can be typed. In our case, both the inputs need to be of number type and the output needs to be also of number type. It can be done as below in TypeScript.
+
+```typescript
+function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+<Divider />
+
+** Question: **
+
+What is contextual typing in TypeScript?
+
+** Answer: **
+
+TypeScript has the ability to understand the type of a variable based on context. Here is an example.
+
+We have an array of strings.
+
+```javascript
+const arr = ["Apple", "Banana", "Grapes"];
+```
+
+Later, we loop through each item using `map()` method.
+
+```javascript
+arr.map((fruit) => {
+  console.log(fruit.toUppercase());
+});
+```
+
+As we can see, we have written `toUppercase()` instead of `toUpperCase()`. TypeScript can understand that each item in the array is of type string. So, it sets the type of `fruit` as string. That is called **Contextual Typing**.
+
+In the above example, TypeScript clearly mentions the error like below:
+
+```shell
+Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+```
+
+<Divider />
+
+** Question: **
+
+What is the purpose of writing below configuration in the `tsconfig.json` file?
+
+```json
+{
+  "declaration": true
+}
+```
+
+** Answer: **
+
+That is to create a type definition file. During build process using `tsc` command, along with generating a JavaScript file, TypeScript also creates a type definition file. So, if we use the output JavaScript file in a non-typescript project, only the JavaScript file is used. But if we are using the output JavaScript file in a TypeScript project, this type definition file is considered to define the types in JavaScript file.
+
+Consider the following TypeScript file `index.ts`:
+
+```typescript
+interface Color {
+  red: number;
+  green: number;
+  blue: number;
+}
+
+const color: Color = {
+  red: 10,
+  green: 20,
+  blue: 30,
+};
+
+console.log(color);
+```
+
+If `"declaration"` is `true`, two files are created as output, `index.js` and `index.d.ts`. The JavaScript file will contain only the JavaScript code. `*.d.ts` is the type definition file. It contains code for TypeScript to set types in `index.js`.
+
+```javascript
+// index.js
+"use strict";
+var color = {
+  red: 10,
+  green: 20,
+  blue: 30,
+};
+console.log(color);
+```
+
+```typescript
+// index.d.ts
+interface Color {
+  red: number;
+  green: number;
+  blue: number;
+}
+declare const color: Color;
+```
+
+<Divider />
+
+** Question: **
+
+What is the purpose of `--target`, `--module` and `--watch` flags when used along with `tsc` command?
+
+** Answer: **
+
+When we use `tsc` command, TypeScript code is converted to JavaScript. The version of the generated JavaScript file can be set using `--target` flag. By default, TypeScript compiles to ES3. That might result in huge size for JavaScript file due to extra code added for backward compatibility.
+
+`--module` allows to set the module system. If our code is going to be run by Node.js, we have to explicitly set the module flag to `commonjs`.
+
+`--watch` flag enables watch mode. If watch mode is enabled, any change in TypeScript file gets compiled and reflects in JavaScript file.

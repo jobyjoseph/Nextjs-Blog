@@ -1,0 +1,226 @@
+---
+title: TypeScript Interview Questions Part 2 - Variables, Arrays, Objects
+date: 2021-05-28
+slug: typescript-interview-questions-variables-arrays-objects
+description: TypeScript interview questions on variables, arrays and objects
+tags: ["typescript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+We have a JavaScript code that declares 3 variables and later assigns value to those variables.
+
+```typescript
+let car;
+let model;
+let isSedan;
+car = "BMW";
+model = 2018;
+isSedan = true;
+```
+
+How can we add types to the declared variables using TypeScript syntax?
+
+** Answer: **
+
+We can add type information along with each variable declaration as shown below.
+
+```typescript
+let car: string;
+let model: number;
+let isSedan: boolean;
+car = "BMW";
+model = 2018;
+isSedan = true;
+```
+
+`string`, `number` and `boolean` written above are called **Type Annotations**.
+
+<Divider />
+
+**Question:**
+
+Here we have a variable declaration with no explicit type definition.
+
+```typescript
+let planet = "Earth";
+planet = 3434;
+```
+
+Does the above code throws an error in TypeScript?
+
+**Answer:**
+
+Yes, above code throws error in TypeScript. When we do initialization along with declaration, TypeScript sets the type of variable as the assigned type. So, in our case, the type of `planet` is `string`. Therefore, it is not allowed to assign a number type to `planet`. Above code shows following error by TypeScript.
+
+```shell
+Type 'number' is not assignable to type 'string'.
+```
+
+<Divider />
+
+** Question: **
+
+When I tried running below code, I am getting an error.
+
+```typescript
+const PI = 3.14;
+PI = 2.14;
+```
+
+The error thrown is:
+
+```shell
+Cannot assign to 'PI' because it is a constant.
+```
+
+What rule of TypeScript did we break?
+
+** Answer: **
+
+Actually TypeScript is a super set of JavaScript. This error is part of native JavaScript. In JavaScript, if we try to reassign to a const variable, it throws above error.
+
+<Divider />
+
+** Question: **
+
+Here is an array in JavaScript that contains mixed data types. In the second line, we are pushing a boolean value to the array.
+
+```javascript
+const arr = [23, "Apple", 35];
+arr.push(true);
+```
+
+Does that work?
+
+** Answer: **
+
+No, it does not work. Even though `arr` contains mixed types, TypeScript is not treating it as an array that can accept any data types. TypeScript is seeing it as an array that can accept only either `string` or `number`. The equivalent syntax in TypeScript is:
+
+```typescript
+const arr: (string | number)[] = [23, "Apple", 35];
+```
+
+That is the reason why `arr` is not accepting boolean value. If we want the array to accept any values, we need to explicitly mention that while declaring.
+
+```typescript
+const arr: any[] = [23, "Apple", 35];
+```
+
+<Divider />
+
+** Question: **
+
+Here we have an empty array.
+
+```typescript
+const arr = [];
+```
+
+Can we push values of any types to this array?
+
+** Answer: **
+
+Yes. Here, TypeScript implicitly provides the type as `any` to the array elements.
+
+<Divider />
+
+** Question: **
+
+What is the meaning of following TypeScript code?
+
+```typescript
+const arr: [number, string, number] = [23, "Brooklyn", 57123];
+```
+
+** Answer: **
+
+This is an example of Tuple. Tuple is an array of fixed length. Here we are defining a tuple and the type of each element in the tuple.
+
+<Divider />
+
+** Question: **
+
+Here is a valid assignment to a variable in JavaScript.
+
+```javascript
+obj = {
+  car: "BMW",
+  model: 2021,
+};
+```
+
+Please write down the type definition while declaring `obj` variable.
+
+** Answer: **
+
+If both properties `car` and `model` are mandatory in `obj`, the TypeScript type definition looks like below.
+
+```typescript
+let obj: { car: string; model: number };
+```
+
+If any of the properties in the object is optional, it can be represented using question mark `?`.
+
+```typescript
+let obj: { car: string; model?: number };
+```
+
+<Divider />
+
+** Question: **
+
+Here is a typescript code. Will it throw an error?
+
+```typescript{numberLines: true}
+let obj: { car: string; model?: number };
+obj = {
+  car: "BMW",
+  type: "Sedan"
+};
+```
+
+** Answer: **
+
+Yes, it will throw an error. `type` is not part of defined type. Therefore, line 4 throws an error.
+
+<Divider />
+
+** Question: **
+
+Here we have a TypeScript code.
+
+```typescript
+let obj1: { car: string; model?: number };
+let obj2: { car: string; model?: number };
+obj1 = {
+  car: "BMW",
+};
+obj2 = {
+  car: "Mercedes",
+};
+```
+
+How can we improve above code?
+
+** Answer: **
+
+The type of `obj1` and `obj2` are same. We can define an interface and reuse it.
+
+```typescript
+interface Car {
+  car: string;
+  model?: number;
+}
+
+let obj1: Car;
+let obj2: Car;
+obj1 = {
+  car: "BMW",
+};
+obj2 = {
+  car: "Mercedes",
+};
+```

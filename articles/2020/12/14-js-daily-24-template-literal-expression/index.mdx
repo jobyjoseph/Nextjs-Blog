@@ -1,0 +1,23 @@
+---
+title: JS Daily 24 - Template Literal Expression
+date: 2020-12-14
+slug: js-daily-24-template-literal-expression
+decription: We can have function invocations directly inside a template literal
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const fun = () => "Backbencher";
+const str = `My name is ${ fun() }`;
+console.log(str);
+```
+
+<Divider />
+
+The output is `"My name is Backbencher"`.
+
+ES6 introduced template literals. A template literal is enclosed in backticks(` `` `). Inside template literals, we can place JavaScript expressions using `${}`. Here, in our example, we invoked a function `fun()` which returns `"Backbencher"`. That returned value is substituted in the string literal.

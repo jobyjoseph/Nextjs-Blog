@@ -1,0 +1,102 @@
+---
+title: Next.js Interview Questions - Getting Started
+date: 2021-03-19
+slug: nextjs-interview-questions-getting-started
+description: Here is a collection of next.js interview questions to starting preparing for interviews.
+tags: ["nextjs"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+What is Next.js?
+
+**Answer:**
+
+Next.js is a full stack framework created on top of React library. Next.js uses React as its view library. On the other hand, Next.js helps to develop APIs easily.
+
+<Divider />
+
+**Question:**
+
+What are the main capabilities that Next.js offers?
+
+**Answer:**
+
+Few features of Next.js saves a lot of time in a project. They are:
+
+- Development build system
+- Production ready build
+- Pre-rendering static HTML for fast page loading
+- Server Side Rendering(SSR) of React
+- Easy routing along with handling dynamic routes
+- API routes
+
+<Divider />
+
+**Question:**
+
+Does _Create React App_ and Next.js do the same thing?
+
+**Answer:**
+
+Create-React-App is basically React with an integrated build system. So it acts like a good boilerplate. We don't have to worry about setting up Webpack, Babel and other dependent packages, just to run React. Other than that, if we require extra functionalities like routing, server side rendering and so on, we need to add packages on top of Create-React-App.
+
+Next.js is a full stack React framework. It comes bundled with efficient build system, server side rendering, routing, API routing and lot more features that scores in production environment.
+
+<Divider />
+
+**Question:**
+
+How can we get started with a Next.js application?
+
+**Answer:**
+
+One way is to use `npx` command.
+
+```
+npx create-next-app
+```
+
+`create-next-app` package is maintained by the creators of Next.js. Above command opens up an interactive session, using which a starter application can be setup. The `create-next-app` is part of the Next.js monorepo and the same framework test cases are run on the package also. This ensures that `create-next-app` works smoothly with all releases of Next.js.
+
+Equivalent `yarn` command is:
+
+```
+yarn create next-app
+```
+
+We can also install different packages manually and start a Next.js project.
+
+```
+yarn add next react react-dom
+```
+
+<Divider />
+
+**Question:**
+
+In a Next.js what does following commands do?
+
+```
+next
+next build
+next start
+```
+
+**Answer:**
+
+`next` will build and run the project in development mode. Hot reloading support will be there in development mode.
+
+`next build` will build the project for production use. `next start` will then run the production ready output from build step.
+
+<Divider />
+
+**Question:**
+
+Can we host a Next.js in a web server like nginx?
+
+**Answer:**
+
+In Next.js, we are not talking about static html files. There will be requests than gets processed in the server. So we need an application server that runs Nodejs, to deploy and run a Next.js application.

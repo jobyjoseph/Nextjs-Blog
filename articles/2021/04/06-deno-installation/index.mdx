@@ -1,0 +1,52 @@
+---
+title: How to Install Deno
+date: 2021-04-06
+slug: deno-installation
+description: Learn how deno can be installed and run a javascript file.
+tags: ["deno"]
+---
+
+[Deno](https://deno.land/) is a JavaScript Runtime that is built on V8 JavaScript engine and the Rust programming language. It is built by Ryan Dahl, the author of Node.js.
+
+At the time of writing, Deno just launched v1.0. Let us try to install Deno in our laptop.
+
+My machine is a Macbook Pro. The official site lists many options to install Deno in different operating systems.
+
+First, open the terminal. Execute the following command.
+
+```
+curl -fsSL https://deno.land/x/install/install.sh | sh
+```
+
+When we install above command, Deno asks us to add some variables to the environment.
+
+```
+...
+Manually add the directory to your $HOME/.bash_profile (or similar)
+  export DENO_INSTALL="/Users/<username>/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"
+Run '/Users/joby/.deno/bin/deno --help' to get started
+```
+
+As per the instructions, open `.bash_profile` file in any editor. Add below 2 lines as the last lines of the file.
+
+```
+export DENO_INSTALL="/Users/<username>/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+```
+
+Replace `<username>` with your machine username.
+
+Now Deno is successfully installed in your machine. We can verify the installation by typing following command in terminal.
+
+```
+deno --version
+```
+
+We can see the following output if everything went well.
+
+```
+deno 1.0.2
+v8 8.4.300
+typescript 3.9.2
+```

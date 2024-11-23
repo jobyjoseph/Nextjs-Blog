@@ -1,0 +1,255 @@
+---
+title: Operators in JavaScript
+date: 2021-02-04
+slug: javascript-operators
+decription: Operators are characters or a group of characters which can perform certain operations in JavaScript.
+tags: ["javascript"]
+---
+
+import Version from "../../../../src/components/version";
+
+Operators are characters or a group of characters which can perform certain operations in JavaScript. Example, `+` is a character which can be used to perform an addition in JavaScript.
+
+The values on which the operator acts upon are called **operands**. Example, in case of an addition like `3 + 4`, `3` and `4` are operands.
+
+### Contents
+
+- [Binary and Unary Operators](#binary-unary-operators)
+- [Optional Chaining](#optional-chaining)
+- [typeof](#typeof)
+
+## Arithmetic Operators
+
+Arithmetic operators perform arithmetic or numerical manipulations on the operands. Basic arithmetic operators are
+
+1. Multiplication - `*`
+2. Division - `/`
+3. Modulo - `%`
+4. Addition - `+`
+5. Subtraction - `-`
+
+## Binary and Unary Operators <a name="binary-unary-operators" />
+
+In case of adding two numbers, the `+` operator requires two operands. Then only it can work. Such operators are called **Binary** operators.
+
+Some operators like negation(`!`) requires only one operand. Example:
+
+```javascript
+!false; // true
+```
+
+Such operators are called **Unary** operators.
+
+Binary and Unary are a way to classify all operators in JavaScript based on the number of operands required. Operators can also be grouped based on the operations they perform. Example: Conditional operators check if a particular condition is satisfied or not. Arithmetic operators perform mathematical calculations.
+
+## Optional Chaining(`?.`) <Version number="11" /> <a name="optional-chaining" />
+
+Optional Chaining operator(`?.`) helps to safely read the value of a deeply nested object property. It returns `undefined`, if anyone of the nested object is nullish(`null` or `undefined`).
+
+Let us take an example to understand this operator. Here is a JavaScript object.
+
+```javascript
+const obj = {
+  name: "Backbencher",
+  age: 34,
+};
+```
+
+Assume above object is returned from an API. The developer's assumption was the response contained a field for `address` also like below.
+
+```javascript
+const obj = {
+  name: "Backbencher",
+  age: 34,
+  address: {
+    city: "Kakkanad",
+    pincode: 682030,
+  },
+};
+```
+
+The developer tries to read the value of pincode using:
+
+```javascript
+const pincode = obj.address.pincode;
+```
+
+Since the actual response does not have `address` property, `obj.address` is `undefined`. Trying to access `pincode` property of `undefined` throws error as show below.
+
+```
+TypeError: Cannot read property 'pincode' of undefined
+```
+
+To avoid this error developers write a chain of type check like:
+
+```javascript
+const pincode = obj && obj.address && obj.address.pincode;
+```
+
+Above code safely executes and assign `undefined` to `pincode`. But, as the depth of object increases, the code becomes unnecessarily lengthy.
+
+**Optional Chaining** operator helps to do this undefined check easily. Here is how above pincode statement is written using optional chaining.
+
+```javascript
+const pincode = obj?.address?.pincode;
+```
+
+### Optional Chaining with method calls
+
+Here is an object in JavaScript.
+
+```javascript
+const profile = {
+  name: "Backbencher",
+};
+```
+
+Assuming, there is a method `show()` in `profile` object, we are calling the method.
+
+```javascript
+profile.show();
+```
+
+Since `show()` method does not exist, above statement throws an error:
+
+```
+TypeError: profile.show is not a function
+```
+
+So here, we need to call a method **if only it exists**. In that case, we can ensure a valid method using `?.` and then call it.
+
+```javascript
+profile.show?.();
+```
+
+What if the `profile` object already contain a property `show` like below.
+
+```javascript
+const profile = {
+  name: "Backbencher",
+  show: 34,
+};
+```
+
+Here, even if we use optional chaining operator, we are trying to execute a number property `show` as a method. That results in `TypeError`.
+
+```
+TypeError: profile.show is not a function
+```
+
+### Optional Chaining with functions
+
+Here we are talking about normal functions. These functions are either created as a function expression or function declaration. If we need to safely check if such a function exists, before invoking it, use it like below.
+
+```javascript
+window.theFunction?.();
+```
+
+Why `window.`? Any global function declared is added as a method to `window` object. Accessing a non-existent property of an object does not throw error. It simply returns `undefined`. So it is safe to check the function existence from `window` object.
+
+If we try to use optional chaining directly on the function name like `theFunction?.()`, we need to make sure that `theFunction` variable is already declared. Otherwise, the statement throws a `ReferenceError`.
+
+Above code was checking if the function exists. Next case is, when we expect an object as return value from a function. We need to first check if the returned value is not nullish and then access the object properties.
+
+```javascript
+function baaz() {
+  return {
+    name: "Backbencher",
+  };
+}
+console.log(baaz()?.name); // "Backbencher"
+```
+
+Above code does not throw error if `baaz()` returns `undefined`.
+
+### Optional Chaining with callback functions
+
+Here we have a higher order function `hoc()` that accepts a callback function `cb`.
+
+```javascript
+function hoc(cb) {
+  cb();
+}
+```
+
+If we call `hoc()` without passing the callback function, it will throw an error.
+
+```javascript
+hoc(); // TypeError: cb is not a function
+```
+
+Optional chaining operator can check if `cb` is nullish or not before executing it. The updated function definition looks like below.
+
+```javascript
+function hoc(cb) {
+  cb?.();
+}
+```
+
+Now, after placing the optional chaining operator, what if we explicitly pass a non function value to `hoc()` like below.
+
+```javascript
+hoc(6); // TypeError: cb is not a function
+```
+
+Again, it throws `TypeError` which is expected. It is because optional chaining operator checks only for nullish values. `6` is not nullish. Therefore JavaScript engine tried to execute it as a function, which resulted in `TypeError`.
+
+### Optional Chaining with expressions
+
+Properties of an object can be accessed using dot(`.`) or square brackets(`[]`). When using square brackets, we can use expressions along with optional chaining operator.
+
+```javascript
+obj?.["a" + "b"];
+```
+
+Above statement checks if `obj` is nullish. If not, it returns the value of `obj[ab]`.
+
+### Setting values using optional chaining
+
+We cannot use optional chaining operator on the left hand side of assignment operator. That means, if we would like to first check if the element is there or not, and then assign a value, we cannot use optional chaining operator. That throws `SyntaxError`.
+
+```javascript
+const obj = {
+  name: "Backbencher"
+}
+
+obj?.age = 23; // SyntaxError: Invalid left-hand side in assignment
+```
+
+### Optional chaining with arrays
+
+We can check if a particular array element is not nullish and then access it using optional chaining operator.
+
+```javascript
+const arr = ["Backbencher", { address: "Kerala" }];
+
+console.log(arr[1]?.address); // "Kerala"
+```
+
+Above code first checks `arr[1]`, ie the second element is not nullish. Since here the second element is an object, we could read the value of `address`.
+
+### Conditional assignment using optional chaining
+
+If the left hand side is nullish, optional chaining operator does not evaluate right hand side.
+
+```javascript
+var a;
+var b;
+a?.[(b = 2)];
+console.log(b); // undefined
+```
+
+Since `a` is `undefined` in above code, the expression `b = 2` will not be evaluated. Otherwise, the value of `b` will be set to `2`.
+
+## typeof <a name="typeof" />
+
+`typeof` is an unary operator in JavaScript. It returns the type of the operand supplied to it.
+
+```javascript
+console.log(typeof 42); // "number"
+
+var str = "Backbencher";
+console.log(typeof str); // "string"
+```
+
+> `typeof undefined` is `undefined` and `typeof null` is `object` instead of `null`. That is actually a bug in JavaScript implementation happened years ago.

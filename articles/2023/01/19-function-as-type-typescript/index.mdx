@@ -1,0 +1,45 @@
+---
+title: "Function Type in TypeScript"
+date: 2023-01-19
+slug: function-type-typescript
+description: "We can mark a variable to store only functions using Function type in TypeScript."
+tags: ["typescript"]
+---
+
+We can mark a variable to store only functions using Function type in TypeScript.
+
+## Setting Function Type
+
+Here is how we set `Function` type:
+
+```typescript
+let a: Function;
+```
+
+Here is a valid assignment:
+
+```typescript
+a = function () {};
+```
+
+Here is an invalid assignment:
+
+```typescript
+a = 10;
+```
+
+Now TypeScript compiler says:
+
+```
+Type 'number' is not assignable to type 'Function'.
+```
+
+## Function Type with more specifics
+
+Here is a Function type that accepts two numbers and return a number.
+
+```typescript
+let a: (num1: number, num2: number) => number;
+```
+
+Now `a` can accept only a function that has two number parameters and that returns a number type. No other function formats are accepted.

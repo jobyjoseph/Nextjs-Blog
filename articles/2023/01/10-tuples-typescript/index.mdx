@@ -1,0 +1,31 @@
+---
+title: "Tuple Type in TypeScript"
+date: 2023-01-10
+slug: tuple-type-typescript
+description: "Vanilla JavaScript does not contain tuple data type. TypeScript brings Tuple Type."
+tags: ["typescript"]
+---
+
+Vanilla JavaScript does not contain tuple data type. TypeScript brings Tuple Type.
+
+## What is Tuple?
+
+It is an array with fixed length and fixed value. Example:
+
+```typescript
+const role = [4, "teacher"];
+```
+
+Above array elements have a meaning. `4` is role id and `"teacher"` is role description. Any other array values like, `[4, "teacher", true]` is invalid.
+
+We cannot create a tuple in vanilla JavaScript.
+
+## Defining a Tuple in TypeScript
+
+Here is how we can set a tuple type using TypeScript.
+
+```typescript
+let role: [number, string];
+```
+
+Above type says, `role` can have an array whose length should be 2. Also, the first element should be a number and second one a string.

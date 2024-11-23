@@ -1,0 +1,933 @@
+---
+title: Arrays
+date: 2020-11-03
+slug: arrays
+decription: Understand how JavaScript arrays work. Learn in depth about Array literal, Array declaration, Array memory allocation and various Array instance methods.
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "basics"
+sortorder: 6
+---
+
+import Answer from "../../../../src/components/answer";
+
+Arrays in JavaScript represent a **list of values**. The values can be **any valid data type** in JavaScript. Here is an example of array with elements, that are of different data types.
+
+```javascript
+[23, "Backbencher", true, 89.65];
+```
+
+## Array Literal
+
+Array Literal is a list of zero or more expressions, each of which represents an array element, wrapped in square brackets(`[]`).
+
+```javascript
+["Apple", 23, true, {}];
+```
+
+#### Skip elements
+
+While creating an array literal, elements can be skipped using commas. The skipped locations are filled by `undefined`.
+
+```javascript
+const arr = [2, , , 3];
+console.log(arr); // [2, undefined, undefined, 3]
+```
+
+#### Trailing comma
+
+Trailing comma in an array is ignored. It does NOT create an `undefined` element at the last.
+
+```javascript
+const arr = [2, 4, 6];
+console.log(arr); // [2, 4, 6]
+```
+
+Trailing commas can create errors in older browsers. So it is better not to use it.
+
+In order to improve the readability of code, explicitly put `undefined` in place of skipped elements.
+
+**Question:**
+
+What is the length of following array?
+
+```javascript
+[, , ,];
+```
+
+<Answer>
+
+The length of the array is **3**.
+
+Here the array evaluates to `[undefined, undefined, undefined]`
+
+</Answer>
+
+## Array Declaration
+
+There are multiple ways in which we can declare an array in JavaScript.
+
+### Square Brackets(`[]`)
+
+An array in JavaScript can be declared using square brackets(`[]`). All the list items are wrapped inside a pair of square bracket.
+
+```javascript
+const arr = [2, 4, 6];
+```
+
+#### Empty array
+
+An array without any element is called an empty array. An empty array is declared using an empty pair of square bracket.
+
+```javascript
+const arr = [];
+```
+
+### Array() Constructor
+
+An array in JavaScript can also be declared using `Array()` constructor. The arguments passed as input to the constructor forms the array elements.
+
+```javascript
+const arr = new Array("Apple", "Orange");
+console.log(arr); // ["Apple", "Orange"];
+```
+
+#### Single number argument
+
+When we pass a single number as argument to `Array()`, it treats the number as **array length**.
+
+```javascript{numberLines: true}
+const arr = new Array(2);
+console.log(arr.length); // 2
+console.log(arr); // [undefined, undefined]
+```
+
+Here line 3 prints an array with 2 elements. Note that it did not create an array `[2]`, with number 2 as its element.
+
+If the single argument passed to the `Array()` constructor is a non-number, that argument is taken as an array element.
+
+```javascript
+const arr = new Array("Backbencher");
+console.log(arr); // ["Backbencher"]
+```
+
+#### Empty array
+
+An empty array is created using `Array()` constructor by not passing any arguments.
+
+```javascript
+const arr = new Array();
+console.log(arr); // []
+```
+
+### Array() Function
+
+`Array()` is an overloaded function in JavaScript. It works both as a function and constructor. All things which can be done using `Array()` constructor can be implemented using `Array()` function.
+
+```javascript
+const arr = Array("Apple", "Orange");
+console.log(arr); // ["Apple", "Orange"];
+```
+
+#### Single number argument
+
+When we pass a single number as argument to `Array()` function, it treats the number as **array length**.
+
+```javascript
+const arr = Array(2);
+console.log(arr.length); // 2
+console.log(arr); // [undefined, undefined]
+```
+
+#### Empty array
+
+An empty array is created using `Array()` function by not passing any arguments.
+
+```javascript
+const arr = Array();
+console.log(arr); // []
+```
+
+### Array.of()
+
+`Array.of()` creates a new array from passed arguments.
+
+```javascript
+const arr = Array.of("Apple", "Banana");
+console.log(arr); // ["Apple", "Banana"]
+```
+
+#### Difference between Array()
+
+When passed a single number argument to `Array()`, it creates an empty array of length equal to the passed number. Where as, when passed a single number argument to `Array.of()`, it creates an array with only that number as its element.
+
+```javascript
+console.log(Array(3)); //[undefined, undefined, undefined]
+console.log(Array.of(3)); // [3]
+```
+
+## Read Array Elements
+
+All elements in an array is stored as a list of items with numeric indices. The index starts from **0**. An element of the array can be read by passing the index of the element.
+
+```javascript
+const arr = ["Mercedes", "BMW", "Audi"];
+console.log(arr[0]); // "Mercedes"
+```
+
+#### Read non-existent element
+
+When tried to read a non-existent element from an array, it returns `undefined`.
+
+```javascript
+const arr = ["Mercedes", "BMW", "Audi"];
+console.log(arr[1000]); // undefined
+```
+
+#### Index as string
+
+Arrays are internally stored as objects. More details on that is given later. It is possible to read an element from array by passing the index as type string.
+
+```javascript
+const arr = ["Mercedes", "BMW", "Audi"];
+console.log(arr["1"]); // "BMW"
+```
+
+## Set Array Elements
+
+Array elements can be set by initializing at the time of declaration itself. The square bracket(`[]`) syntax or `Array()` syntax can be used for that.
+
+```javascript
+const arr1 = ["Apple", "Banana"];
+const arr2 = new Array("Apple", "Banana");
+const arr3 = Array("Apple", "Banana");
+```
+
+All the above 3 techniques are valid in JavaScript.
+
+Once an array is declared, the elements in the array can be set using square brackets and element index.
+
+```javascript
+const arr = [];
+arr[0] = "Apple";
+arr[1] = "Banana";
+console.log(arr); // ["Apple", "Banana"]
+```
+
+When an element is set in an array, the array automatically ensures that the length of the array is one greater than the largest index.
+
+```javascript
+const arr = [];
+arr[1] = "Second";
+arr[5] = "Sixth";
+console.log(arr.length); // 6
+```
+
+## Memory Allocation
+
+Normally in a programming language, arrays allocate a contigous block of memory with fixed length. But in JavaScript, arrays are **just Object types** with special constructor and methods. So internally, JavaScript engine cannot go with contigous memory approach for arrays. It treats an array like an object(hash) internally.
+
+#### Dynamic nature of arrays
+
+JavaScript approach of handling arrays as objects is required to handle dynamic nature of arrays. In JavaScript, we can keep on adding elements to an existing array using `push()` method.
+
+```javascript
+const arr = [];
+arr.push("Backbencher");
+arr.push("JavaScript");
+console.log(arr); // ["Backbencher", "JavaScript"]
+```
+
+Different data types in JavaScript like Boolean, Number, String and so on, occupy different memory sizes. In JavaScript, it is possible to update an element of an array to different data type.
+
+```javascript
+const arr = ["Backbencher", "JavaScript"];
+arr[1] = 72;
+console.log(arr); // ["Backbencher", 72]
+```
+
+Here, the second element of the array is changed from a string type to number type. If arrays are storing elements in contigous memory locations, then we need to shift elements in memory when the data type changes. But since arrays are internally treated as objects, it is easy to make data type changes in an array.
+
+#### Array declaration
+
+When declaring an array using `Array()` constructor function, we can specify the size of the array.
+
+```javascript
+const arr = new Array(1000);
+```
+
+When JavaScript engine executes above line of code, is it allocating 1000 memory locations? **No**. JavaScript cannot do that because it does not know what type of values are going to be in the array. JavaScript is actually creating an `Array` object and setting the `length` property of that object to `1000`.
+
+> Every array(instance of `Array()`) has a property `length` which indicates the size of the array.
+
+> One of the easy way to delete all elements of an array is to set the `length` property of the array to `0`.
+
+#### Sparse arrays
+
+Arrays in JavaScript are sparse. That means, we can create an array with non-contigous elements.
+
+```javascript
+const arr = [];
+arr[1] = "First element";
+arr[5] = "Second element";
+```
+
+When JavaScript engine executes above code, it creates an array object with two keys, `1` and `5` and corresponding values are stored. Sparse array approach in JavaScript saves memory usage, since it allocates memory only for elements that have data.
+
+What if we try to print the value of `arr[3]`? It prints `undefined`. That is not because JavaScript is filling all gaps with `undefined`. It is because JavaScript is designed to return `undefined` when we access a non-existent property of an object.
+
+In the above code snippet, when we assign a value to index 5, JavaScript automatically sets the value of `arr.length` to 6. That means, JavaScript always sets the `length` property value greater than the largest index value of the array.
+
+## Array() Function
+
+`Array()` is a function in JavaScript. It is a built-in function, that means the definition of the function is already written inside JavaScript engine.
+
+```javascript
+console.log(typeof Array); // "function"
+```
+
+### Using Array()
+
+`Array()` is an overloaded function in JavaScript. That means, we can use `Array()` function in multiple ways.
+
+#### Array() as constructor
+
+`Array()` function can be used as a constructor function. That means, we can use `Array()` function with `new` operator to create different array objects.
+
+```javascript
+const arr = new Array("Apple", "Orange");
+console.log(arr); // ["Apple", "Orange"]
+```
+
+#### Array() as normal function
+
+We can also create array objects simply by calling `Array()` function without `new` keyword.
+
+```javascript
+const arr = Array("Apple", "Orange");
+console.log(arr); // ["Apple", "Orange"]
+```
+
+### Array Properties
+
+A function in JavaScript is also an object. Every object in JavaScript has properties. Since `Array()` is also a function, it has properties. There are 6 own properties for `Array()` function. These are **static properties**. So, in order to use these properties or methods, we do not have to create an instance of `Array()` function.
+
+#### Array.length
+
+As per ECMAScript specification, the value of this property is set to `1`.
+
+```javascript
+console.log(Array.length); // 1
+```
+
+#### Array.name
+
+Any function in JavaScript has a property `name`, which returns the name of the function.
+
+```javascript
+console.log(Array.name); // "Array"
+```
+
+That is straight forward. The name of the `Array()` function is `"Array"`.
+
+#### Array.prototype
+
+`Array.prototype` stores an object. This object has all properties and methods which will be inherited by all array instances in JavaScript.
+
+When we create an array like `["Apple", "Banana"]`, whatever properties and methods present for that array object comes from `Array.prototype` object. If we need to add a new method to be inherited by all arrays, we just have to add it as a method to `Array.prototype` object.
+
+We are covering all properties and methods of `Array.prototype` later.
+
+#### Array.isArray()
+
+`isArray()` method returns `true`, if the argument passed to it is an array. If the argument is not an array, `isArray()` returns `false`. This is one of the way in which we can find if a value or variable is an array or not.
+
+```javascript
+console.log(Array.isArray([2, 4, 6])); // true
+console.log(Array.isArray("[2, 4, 6]")); // false
+```
+
+#### Array.from()
+
+`Array.from()` creates a **new, shallow-copied array** from an array-like or iterable object.
+
+Arrays are a type of object. Therefore, copying an array results in copying by reference.
+
+```javascript{numberLines: true}
+const arr = ["Apple", "Banana"];
+const arr2 = arr;
+arr2[1] = "Kiwi";
+console.log(arr[1]); // "Kiwi"
+```
+
+We changed the value of `arr2`, but it also updated the second element of `arr1`. That is because in line 2, only the reference of `arr` is copied to `arr2`. So, both `arr2` and `arr` points to same array. If we actually want to copy the elements of `arr` to `arr2`, use `Array.from()`.
+
+```javascript
+const arr = ["Apple", "Banana"];
+const arr2 = Array.from(arr);
+arr2[1] = "Kiwi";
+console.log(arr[1]); // "Banana"
+```
+
+##### What is shallow copy?
+
+Shallow means not deep. Say, our source array contains nested array.
+
+```javascript
+const source = ["A", "B", ["C", "D"]];
+```
+
+Here `source` is pointing to an array. Also, the third element of `source`(`source[2]`) is pointing to another array `["C", "D"]`. Let us copy the `source` array to another `destination` array using `Array.from()`.
+
+```javascript
+const destination = Array.from(source);
+```
+
+Now `destination` is not pointing towards `source` array. Instead now the shallow(first level) elements of `source`, ie `"A"`, `"B"` and memory reference of `["C", "D"]` are copied to a new location where `destination` is pointing to. Note that the location of nested array `["C", "D"]` is not changing. The third element of `source` and `destination` still points to the original `["C", "D"]`. This is shallow copy. Let us see it in action.
+
+```javascript
+const source = ["A", "B", ["C", "D"]];
+const destination = Array.from(source);
+destination[2][0] = "Apple";
+console.log(source); // ["A", "B", ["Apple", "D"]]
+```
+
+We can see that the `source` array is also updated.
+
+##### Using Array.from()
+
+`Array.from()` accepts 3 arguments.
+
+1. _ArrayLike object_ which will be converted to an array. This argument is mandatory.
+2. _Map Function_ which is called with each elements of the array like object. This argument is optional.
+3. _this_ specifies the value of `this` inside `Array.from()`
+
+###### With one argument
+
+`Array.from()` accepts an array or any array-like objects like Map or Set and returns a new array.
+
+```javascript
+const set = new Set(["Apple", "Banana"]);
+console.log(Array.from(set)); // ["Apple", "Banana"]
+```
+
+###### With two arguments
+
+Each elements of the input object is passed to the map function one by one. `Array.from()` returns an array with each elements created using the return value of the map function.
+
+```javascript
+const mapFunction = (element) => {
+  return 0;
+};
+
+const set = new Set(["Apple", "Banana"]);
+console.log(Array.from(set, mapFunction)); // [0, 0]
+```
+
+Irrespective of the input, the map function always return `0`. That is why the result is an array with 2 zeros.
+
+###### With three arguments
+
+Third argument passed to `Array.from()` acts as the `this` value inside the map function(second argument).
+
+```javascript
+const mapFunction = function (element) {
+  console.log(this);
+  return 0;
+};
+
+const customThis = { name: "Backbencher" };
+
+const set = new Set(["Apple", "Banana"]);
+console.log(Array.from(set, mapFunction, customThis)); // [0, 0]
+```
+
+And the output is:
+
+```
+[object Object] {
+  name: "Backbencher"
+}
+[object Object] {
+  name: "Backbencher"
+}
+[0, 0]
+```
+
+If the third argument is not there, `this` will have value of global object.Arrow functions do not respect `this`. That is why `mapFunction` is written in ES5 way.
+
+#### Array.of()
+
+As discussed earlier, `Array.of()` creates and returns a new array from the arguments passed to the method.
+
+## Array Instance Methods
+
+The `Array()` constructor function has got a property called `prototype`. `Array.prototype` stores an object value. Any method of this `prototype` object is inherited by all instances of `Array()`. Example, if `Array.prototype` has a method called `boom()`, then `[2, 4, 7].boom()` is a valid method call.
+
+### concat()
+
+`concat()` method of an array is used to merge the array with other arrays or values. It does not change existing array, instead it returns a new array.
+
+```javascript
+const arr1 = [1, 3, 5];
+const arr2 = [2, 4, 6];
+const result = arr1.concat(arr2);
+console.log(result); // [1, 3, 5, 2, 4, 6]
+```
+
+Above code does not alter `arr1` and `arr2`
+
+#### Concatenation order
+
+`concat()` method does the concatenation in the supplied order of input.
+
+```javascript
+const arr = [1];
+const arg1 = [2];
+const arg2 = [3];
+const arg3 = [4];
+const result = arr.concat(arg1, arg2, arg3);
+console.log(result); // [1, 2, 3, 4]
+```
+
+#### Concatenate non-array value
+
+It is possible to concatenate a non-array value with an array using `concat()`.
+
+```javascript
+const arr = [1, 3, 5];
+const result = arr.concat(true);
+console.log(result); // [1, 3, 5, true]
+```
+
+#### Shallow copy of an array
+
+`concat()` creates a new array instance and returns it. So, if we call `concat()` method without any arguments, a shallow copy of the array is returned.
+
+```javascript
+const arr = [1, 3, 5];
+const copy = arr.concat();
+console.log(copy == arr); // false
+console.log(copy); // [1, 3, 5]
+```
+
+Above code logged `false`, because `copy` and `arr` is pointing to different array instances.
+
+#### Nested arrays
+
+`concat()` method does shallow copy. Any object elements of input arrays are copied by reference.
+
+```javascript
+const arr1 = [["Apple"]];
+const arr2 = [2, 4];
+const result = arr1.concat(arr2);
+console.log(result); // [["Apple"], 2, 4]
+```
+
+Here `arr1[0]` stores an object. So, `result[0]` is pointing to the same object. Any change in `result[0]` will affect `arr1[0]` and vice versa.
+
+```javascript
+// ...
+result[0][0] = "Banana";
+console.log(arr1);
+[["Banana"]];
+```
+
+Also note that, when there is nested arrays, `concat()` does not flatten the array. It simply merges the input.
+
+### copyWithin()
+
+`copyWithin()` method **shallow copies** part of an array to another location in the same array. The method returns the updated array. The original array is not affected.
+
+```javascript
+const arr = [2, 4, 6, 8];
+const result = arr.copyWithin(0, 2, 3);
+console.log(result); // [6, 4, 6, 8]
+```
+
+#### Parameters
+
+1. **target**: zero based index to start pasting the sequence of elements
+2. **start**(Optional): zero-based index at which to start copying elements from
+3. **end**(Optional): Zero-based index at which to end copying elements from
+
+#### With only target
+
+When `copyWithin()` method is used by passing only the first argument, default value is taken for second and third argument.
+
+For second argument, ie **start**, the default value is `0`. For third argument, ie **end**, the default value is the length of the array.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result = arr.copyWithin(2);
+console.log(result); // ["A", "B", "A", "B", "C"]
+```
+
+#### With a negative target
+
+If a negative value is given as **target**, the copying starts from the end of array. Eg: If the value of target is `-2`, then the copying starts from the second last element of the array.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result1 = arr.copyWithin(-1);
+console.log(result1); // ["A", "B", "C", "D", "A"]
+
+const result2 = arr.copyWithin(-2);
+console.log(result2); // ["A", "B", "C", "A", "B"]
+```
+
+#### When start is before target
+
+When the `start` position is before `target`, the copy sequence is trimmed to maintain original array length.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result = arr.copyWithin(2, 0);
+console.log(result); // ["A", "B", "A", "B", "C"]
+```
+
+In the above code, we need to start copying from index `2`. And we have a copy sequence starting from index `0`. So, we might think, the output will be `["A", "B", "A", "B", "C", "D", "E"]`. But `copyWithin()` will keep the array length intact. So it trims elements `"D"` and `"E"` to keep the original array length of `5`.
+
+#### With negative start
+
+If the second argument for `copyWithin()` is a negative number, the copy sequence start position is counted from end.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result = arr.copyWithin(2, -1);
+console.log(result); // ["A", "B", "E", "D", "E"]
+```
+
+Here the last element, `"E"` is taken to paste in index `2`. It is because we gave the second argument as `-1`.
+
+#### Third argument, end
+
+The third argument `end`, of `copyWithin()` is the zero based index at which to end copying elements from. `copyWithin()` copies upto, but not including `end`.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result = arr.copyWithin(2, 1, 2);
+console.log(result); // ["A", "B", "B", "D", "E"]
+```
+
+Observe that element at position `2`, ie `"C"` is not copied.
+
+#### With negative end
+
+If `end` value is negative, the position is calculated from end.
+
+```javascript
+const arr = ["A", "B", "C", "D", "E"];
+const result = arr.copyWithin(2, 1, -2);
+console.log(result); // ["A", "B", "B", "C", "E"]
+```
+
+`end` value of `-2` means, two elements from the end of the array ie `"D"` and `"E"` is skipped. So elements `"B"` and `"C"` is copied.
+
+### entries()
+
+`entries()` method returns a new Array Iterator object. The iterator contains the key-value pair of each elements in the array.
+
+```javascript
+const arr = ["Apple", "Banana"];
+const iterator = arr.entries();
+console.log(iterator.next().value); // [0, "Apple"]
+console.log(iterator.next().value); // [1, "Banana"]
+console.log(iterator.next().value); // undefined
+```
+
+### every()
+
+`every()` method checks if **all the elements** in the array satisfies a particular condition. The method returns a **Boolean** value. It returns `true` if all the elements satisfy the condition.
+
+```javascript
+const arr = [2, 4, 6];
+const result = arr.every((ele) => ele % 2 === 0);
+console.log(result); // true
+```
+
+Above code checks if all the elements of `arr` are even numbers. Each element in the array goes through the callback function to `every()`. In any iteration, if the callback function returns `false`, `every()` returns `false`.
+
+#### With an empty array
+
+Irrespective of the condition, `every()` returns `true` for an empty array.
+
+```javascript
+const arr = [];
+const result = arr.every((ele) => false);
+console.log(result); // true
+```
+
+Why `true` for an empty array? Here we are talking about _vacuous truth_. If we say "All students should remain silent", the statement stands `true` even if there are no students.
+
+### fill()
+
+The `fill()` method changes all elements in an array to a **static value**. It returns a **new array**.
+
+```javascript
+const arr = [1, 3, 5, 7];
+console.log(arr.fill(6)); // [6, 6, 6, 6]
+```
+
+#### Without any arguments
+
+If we call `fill()` method without any arguments, all elements in the array are replaced by `undefined`.
+
+```javascript
+const arr = [1, 3, 5, 7];
+console.log(arr.fill()); // [undefined, undefined, undefined, undefined]
+```
+
+#### Start index
+
+`fill()` method accepts a second argument which indicates `start` index. If we specify an array start index, only elements from that index is replaced.
+
+```javascript
+const arr = [1, 3, 5, 7];
+console.log(arr.fill(6, 2)); // [1, 3, 6, 6]
+```
+
+#### End index
+
+`fill()` method accepts a third argument which indicates `end` index. Default value of `end` is the length of the array. That means, by default, all elements from `start` is replaced.
+
+```javascript
+const arr = [1, 3, 5, 7];
+console.log(arr.fill(6, 1, 3)); // [1, 6, 6, 7]
+```
+
+The `end` index is not inclusive. In the above code, we gave index `3`. But, the elements at index `1` and `2` are replaced.
+
+### filter()
+
+`filter()` method **creates a new array** with all elements that satisfies a particular condition. That condition is tested by passing a callback function to `filter()` method.
+
+```javascript
+const arr = [1, 2, 3, 4, 5, 6];
+const result = arr.filter((ele) => ele % 2 === 0);
+console.log(result);
+[2, 4, 6];
+```
+
+Above code checks if each element is an even number. The callback function returns `true` if the number is even. Therefore, the final `result` contains an array of even numbers.
+
+#### Callback function execution
+
+The callback function is executed **once** for each element of the array.
+
+```javascript
+const arr = [2, 4, 6, 8, 10];
+const filteredArray = arr.filter(() => true);
+console.log(filteredArray); // [2, 4, 6, 8, 10]
+```
+
+In the above code, the callback function always returns `true`. That is why the contents `arr` and `filteredArray` are same. The result also testifies that the callback function is called only once with each elements.
+
+#### Callback function return value
+
+`filter()` method takes an element to new array, if the callback function returns a **truthy value**. Truthy values are those values in JavaScript that can be converted to a boolean `true` when a boolean value is expected. As an example, all numbers except `0` are truthy values. `0` is considered as a falsy value.
+
+```javascript
+const arr = [-2, -1, 0, 1, 2];
+const filteredArray = arr.filter((ele) => ele);
+console.log(filteredArray); // [-2, -1, 1, 2];
+```
+
+Here, the callback function is simply returning the array element. When it comes to third element, ie `0`, `filter()` method does not copy the element to the new array.
+
+#### Callback with deleted or unallocated indices
+
+```javascript
+const arr = [1, , , 2];
+const filteredArray = arr.filter(() => true);
+console.log(filteredArray); // [1, 2]
+```
+
+In the above code, the `filter()` method callback always returns `true`. That means all elements of `arr` are copied to new array `filteredArray`. But, the length of `arr` is 4 and the length of `filteredArray` is 2. That is because, `filter()` method does not take deleted or unassigned elements. In our case the index 1 and 2 in `arr` is unassigned.
+
+Placing empty commas are just for skipping the position. JavaScript is not filling the gap with `undefined`. What if `arr` contains explicitly assigned `undefined` values?
+
+```javascript
+const arr = [1, undefined, undefined, 2];
+const filteredArray = arr.filter(() => true);
+console.log(filteredArray); // [1, undefined, undefined, 2]
+```
+
+In this case, `undefined` values are also copied, since that is explicitly assigned. From this example, we can understand that `filter()` method can be used to convert a sparse array to a condensed array.
+
+#### Callback function arguments
+
+The callback function to `filter()` method has 3 parameters.
+
+1. Value of current element
+2. Index of current element
+3. The original array
+
+```javascript
+const arr = [2, 4, 6, 8];
+const filteredArray = arr.filter((value, index, array) => {
+  console.log(`Value at ${index} is ${value}`);
+  array[index] = value * 2;
+});
+console.log(arr);
+```
+
+Here each callback function execution prints the `value` and `index` to console. In each loop, the `value` is doubled and stored to `array`. Outside the loop, we print the original array `arr`, to check if `array` is directly referenced to `arr`. Here is the output:
+
+```
+"Value at 0 is 2"
+"Value at 1 is 4"
+"Value at 2 is 6"
+"Value at 3 is 8"
+[4, 8, 12, 16]
+```
+
+As we can see, when we updated `array` argument, the original array `arr` is also updated. That means, `arr` and `array` points to the same array.
+
+#### this argument
+
+Other than the callback function, `filter()` method accepts a second argument. Whatever value passed as second argument is taken as the value of `this` inside callback function.
+
+Here is a snippet without the second argument.
+
+```javascript
+const arr = [2, 4, 6];
+arr.filter(function () {
+  console.log(this);
+});
+```
+
+Above code prints `window` object to console 3 times. I purposefully used ES5 anonymous function syntax instead of arrow functions. If we use arrow function, the second argument of `filter()` method does not have any significance.
+
+Now, we are going to explicitly define the value of this using the second argument.
+
+```javascript
+const arr = [2, 4, 6];
+arr.filter(
+  function () {
+    console.log(this);
+  },
+  { name: "Backbencher" }
+);
+```
+
+Above code logs the passed object 3 times in the console.
+
+```
+[object Object] {
+  name: "Backbencher"
+}
+[object Object] {
+  name: "Backbencher"
+}
+[object Object] {
+  name: "Backbencher"
+}
+```
+
+### find()
+
+`find()` method returns the **first** element that satisfies a given condition. The condition check is done by a **callback function** passed to `find()` method.
+
+```javascript
+const arr = [2, 4, 6, 8];
+const result = arr.find((ele) => ele > 5);
+console.log(result); // 6
+```
+
+In the array `arr`, `6` is the first element that is greater than `5`. That is why `result` got the value `6`.
+
+The callback function passed to `find()` method visits the deleted elements also.
+
+### findIndex()
+
+`findIndex()` returns the **index** of **first** element that satisfies a specific condition. The condition is setup using a callback function passed to `findIndex()` method.
+
+```javascript
+const arr = [2, 4, 6, 8];
+const index = arr.findIndex((ele) => ele > 7);
+console.log(index); // 3
+```
+
+In the array `arr`, `8` is the first element that is greater than `7`. So the index of `8` is returned, that is `3`.
+
+### flat()
+
+The `flat()` method of an array flattens the array and **returns a new array**.
+
+```javascript
+const arr = [1, 2, ["A", "B"]];
+console.log(arr.flat()); // [1, 2, "A", "B"]
+```
+
+#### Depth
+
+`flat()` method accepts an optional parameter for depth. Depth specifies the extend to which the array can be flattened.
+
+Here is an array with nested arrays and is 2 level deep.
+
+```javascript
+const arr = [1, 2, ["A", "B", ["C", "D"]]];
+console.log(arr.flat(1)); // [1, 2, "A", "B", ["C", "D"]]
+console.log(arr.flat(2)); // [1, 2, "A", "B", "C", "D"]
+```
+
+Depth value of 1 did not flatten the innermost sub-array. Depth value of 2 flattened all levels.
+
+#### Default depth
+
+The default value of depth parameter is `1`.
+
+```javascript
+const arr = [1, 2, ["A", "B", ["C", "D"]]];
+console.log(arr.flat()); // [1, 2, "A", "B", ["C", "D"]]
+```
+
+#### Complete flatten
+
+Passing `Infinity` as depth in `flat()` method flattens an array completely, irrespective of its nesting.
+
+```javascript
+const arr = ["A", ["B", ["C", ["D", ["E"]]]]];
+console.log(arr.flat(Infinity)); // ["A", "B", "C", "D", "E"]
+```
+
+#### Array holes
+
+`flat()` method skips array holes.
+
+```javascript
+const arr = ["A", , "B"];
+console.log(arr.flat()); // ["A", "B"]
+```
+
+### flatMap()
+
+`flatMap()` is a combination of 2 array methods, `map()` and `flat()`. First, the mapping function is executed on the elements of the array. Then, flattening of the array is done of depth `1`. `flatMap()` returns a **new array**.
+
+```javascript
+const arr = [1, 2, [3, 4]];
+
+// All number elements are made 0
+const result = arr.flatMap((ele) => {
+  if (typeof ele === "number") {
+    return ele * 0;
+  }
+  return ele;
+});
+
+console.log(result); // [0, 0, 3, 4]
+```
+
+Here, the output of the `map()` method will be:
+
+```javascript
+[0, 0, [3, 4]];
+```
+
+On the result, `flat()` method is applied to get:
+
+```javascript
+[0, 0, 3, 4];
+```

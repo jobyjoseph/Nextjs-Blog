@@ -1,0 +1,52 @@
+---
+title: "Running Inline JavaScript Inside Next.js JSX"
+date: 2022-08-31
+slug: running-inline-javascript-inside-nextjs-jsx
+description: "In some cases we need to execute a set of inline JavaScript code only when a particular component is loaded. We can do that using normal script tag"
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgHydrationError from "./images/hydration-error.png";
+
+Next.js supports inserting JavaScript code to our project in various ways. We are going to explore how we can add and run a piece of inline JavaScript code in a Next.js component.
+
+Here we have a piece of JavaScript code:
+
+```javascript
+console.log("This is an inline JavaScript");
+```
+
+I am trying to insert it directly to my Next.js home page like below:
+
+```javascript
+const Home = () => (
+  <div>
+    <h1>Home page - Backbencher.dev</h1>
+    <script>console.log("This is an inline JavaScript");</script>
+  </div>
+);
+```
+
+But when I take the home page, I am seeing an error. It says:
+
+```
+Unhandled Runtime Error
+Error: Text content does not match server-rendered HTML.
+
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+```
+
+<Image src={imgHydrationError} alt="Hydration Error" />
+
+We can take the help of **dangerouslySetInnerHTML** in this case. We need to replace the `script` tag with:
+
+```javascript
+<script
+  dangerouslySetInnerHTML={{
+    __html: `console.log("This is an inline JavaScript");`,
+  }}
+/>
+```
+
+After that we can see the message correctly logged in the console.

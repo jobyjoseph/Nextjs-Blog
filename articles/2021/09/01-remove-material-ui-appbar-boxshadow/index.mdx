@@ -1,0 +1,25 @@
+---
+title: Remove Material UI AppBar Box Shadow
+date: 2021-09-12
+slug: remove-material-ui-appbar-box-shadow
+description: We can remove the default box shadow in Material UI AppBar using elevation attribute. Set elevation to 0 to remove box shadow.
+tags: ["materialUI"]
+---
+
+import Image from "../../../../src/components/image";
+import imageDefaultElevation from "./images/default-appbar-elevation.png";
+import imageMultipleElevations from "./images/multiple-elevations.png";
+
+By default, when we use `AppBar` component from Material UI, there is a thick box-shadow.
+
+<Image src={imageDefaultElevation} alt="Default AppBar elevation" />
+
+We can control the `box-shadow` using `elevation` attribute. Setting the value of `elevation` to `0` removes the box shadow.
+
+```javascript
+<AppBar elevation={0}>//...</AppBar>
+```
+
+Here is how the AppBar looks from elevation 0 to 4. I have set the background to transparent to easily see the elevation difference.
+
+<Image src={imageMultipleElevations} alt="Multiple Elevations" />

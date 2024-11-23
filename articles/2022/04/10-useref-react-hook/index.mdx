@@ -1,0 +1,76 @@
+---
+title: "useRef() React Hook"
+date: 2022-04-19
+slug: useref-react-hook
+description: "useRef() hook helps us to access DOM nodes directly. In React, data-flow is unidirectional. If a child component in React, needs to update something in parent component, the parent needs to pass a reference to child. Child then uses the reference for updating the parent."
+tags: ["react"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+`useRef()` hook helps us to access DOM nodes directly. In React, data-flow is unidirectional. If a child component in React, needs to update something in parent component, the parent needs to pass a reference to child. Child then uses the reference for updating the parent.
+
+## Accessing Parent DOM Node
+
+Here we have two components, `Parent` and `Child`. The `Parent` component contains a `h1` block.
+
+```javascript
+export default function Parent() {
+  return (
+    <div>
+      <h1>Parent Title</h1>
+      <Child />
+    </div>
+  );
+}
+```
+
+The `Child` component just contains a `button`.
+
+```javascript
+function Child() {
+  return <button>Click Me</button>;
+}
+```
+
+Our goal is to change the heading color to red, when we click on the button. For that, our `Parent` component needs to pass _header connection_ to the `Child`. We are going to create that connection using `useRef()`.
+
+In order to use `useRef()`, first we need to import it from `react` package.
+
+```javascript
+import { useRef } from "react";
+```
+
+Next we need to create a ref object.
+
+```javascript
+const headerRef = useRef(null);
+```
+
+But right now, the created `headerRef` object is not connected to any DOM nodes. We are going to connect it to our `h1` tag using `ref` attribute.
+
+```javascript
+<h1 ref={headerRef}>Parent Title</h1>
+```
+
+So now, `headerRef` is our key to do anything on our header. Lets pass this key to our child component.
+
+```javascript
+<Child headerRef={headerRef} />
+```
+
+In the child component, we take the value of our ref object. The current value of a ref object can be taken from `.current` property of ref.
+
+Here is the complete code of child component that changes the header color to red on button click.
+
+```javascript
+function Child(props) {
+  function clickHandler() {
+    props.headerRef.current.style.color = "red";
+  }
+
+  return <button onClick={clickHandler}>Click Me</button>;
+}
+```
+
+You can see the working code in <Olink link="https://codesandbox.io/s/react-hooks-idcwej?file=/src/useRef/accessingDOM.js">CodeSandbox</Olink>.

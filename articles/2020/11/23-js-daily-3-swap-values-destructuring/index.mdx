@@ -1,0 +1,28 @@
+---
+title: JS Daily 3 - Swap Values using Destructuring
+date: 2020-11-23
+slug: js-daily-3-swap-values-destructuring
+decription: Learn how easy it is to swap values of two variables using destructuring.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+let a = 10;
+let b = 20;
+[a, b] = [b, a];
+console.log(a);
+```
+
+<Divider />
+
+Output will be **20**.
+
+This is an example of destructuring in JavaScript. In line 3, the left hand side is not an array. Instead, it is a pattern given to isolate the values of right hand side array.
+
+In line 3, each element of left hand side pattern, ie `a` and `b` are assigned values from the array `[b, a]` in the same order. So the value of `b`, ie 20 is now assigned to variable `a`. And value of `a`, ie 10 is now assigned to variable `b`. Like this, it is now easy to swap values of two variables easily.
+
+> Sometimes, you may have this question: In line 3, first `b` is assigned to `a`. Then next, when `a` is assigned to `b`, then the new value of `a` is assigned to `b`. But that wont happen. The destructuring is completed in one go in a unidirectional manner. So, without much complexity, you can imagine that all the values from right hand side is copied one by one to the variables in left hand side.

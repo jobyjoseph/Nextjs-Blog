@@ -1,0 +1,21 @@
+---
+title: "SOLVED: kex_exchange_identification: Connection closed by remote host"
+date: 2022-12-05
+slug: solved-key-exchange-identification-connection-closed-by-remote-host
+description: When trying to fetch or pull contents from a git server, this issue might come
+tags: ["web"]
+---
+
+I was trying to fetch latest contents from Gitlab repository. All of a sudden I got this error:
+
+```
+kex_exchange_identification: Connection closed by remote host
+Connection closed by 172.65.251.92 port 22
+fatal: Could not read from remote repository.
+```
+
+Fun fact is that, I have been working, pushing and pulling code with this same repository for the past 2 years. From where this error came all of a sudden?
+
+What happened was that my laptop automatically got connected to my companies guest Wifi account. That account is not authorized to access Gitlab repository.
+
+So if you get this error, check your network or check if proper VPN connection is established.

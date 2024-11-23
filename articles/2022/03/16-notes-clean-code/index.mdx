@@ -1,0 +1,41 @@
+---
+title: "Notes: Clean Code By Robert C Martin"
+date: 2022-03-27
+slug: notes-clean-code-robert-c-martin
+description: "Notes taken while reading Clean Code by Robert C Martin"
+tags: ["learning"]
+---
+
+Learning to write clean code is hard work. We need to practice it heavily to achieve that skill.
+
+## 1. Clean Code
+
+We spend most of the time reading code before writing it. So, it is important to write clean code.
+
+## 2. Meaningful Names
+
+Take time to name variables and functions. If we find a better name at later point of time, make the code better by replacing it.
+
+The variable name should reveal the **intent**. Eg: `elapsedTimeInDays`.
+
+Avoid chances of **disinformation** while naming. A variable with name `accountList` gives a perception to developer that it might be a list. If its not, do not provide that name. Simply put `accounts` or `accountGroup`.
+
+Every now and then we use the **search** in files option in our IDE. So having search friendly approach in using variable names and constants will be great. Rather than using `12` as rate of interest, use a constant `RATE_OF_INTEREST` with value `12`. Searching for `RATE_OF_INTEREST` gives the intended result faster than searching for `12`.
+
+**Classes** and **objects** should take the name of a **noun**. Eg: `user`, `account`
+
+**Method** names should take the name of a **verb**. Eg: `save`, `calculateInterest`
+
+## 3. Functions
+
+Functions should be **small**. Try to keep it below 20 lines.
+
+When writing `if-else` block or `while` loop, try to keep each block to one line. That one line can be a function call. The called function's descriptive name improves readability.
+
+**Functions should do only one thing and they should do it well.**
+
+When reading through a function, it should have a **top-down narrative**. When details are mixed with essential concepts, it is difficult to read.
+
+If a function contains `switch` statment, there is a high chance that the function will be big. Also, the switch statment cases might need to be added or removed in the long run. Also, other related functions might also use the same `switch` statement. In this case, we need to try to abstract the switch statement itself in an Abstract Factory. Then make use of the interface in other functions.
+
+Use **descriptive** names for functions. If a function performs what you expected from the name, it is clean code. A long descriptive name is better than a long descriptive comment.

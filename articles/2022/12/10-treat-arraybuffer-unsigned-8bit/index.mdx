@@ -1,0 +1,46 @@
+---
+title: "Treat ArrayBuffer as Unsigned 8bit Integer Array in JavaScript"
+date: 2022-12-06
+slug: treat-arraybuffer-unsigned-8bit-integer-array-javascript
+description: ArrayBuffer is a byte array with contigous memory. If we need to interpret the contents of an ArrayBuffer as unsigned 8 bit integers, we can use Uint8Array.
+tags: ["web"]
+---
+
+We have an ArrayBuffer with 8 bytes.
+
+```javascript
+const a = new ArrayBuffer(8);
+```
+
+If we print `a` now using node.js, this is what we see in console.
+
+```
+ArrayBuffer {
+  [Uint8Contents]: <00 00 00 00 00 00 00 00>,
+  byteLength: 8
+}
+```
+
+`00` is the default value assigned.
+
+If we want to treat the zeros or the binary numbers stored in the array buffer as 8 bit integers, we need to use `Uint8Array`.
+
+```javascript
+const num8array = new Uint8Array(a);
+```
+
+Now we can treat `num8array` as an 8 bit integer array with contigous memory. Here is how we can play with the new array.
+
+```javascript
+num8array[1] = 34;
+console.log(num8array);
+```
+
+The output will be:
+
+```
+Uint8Array(8) [
+  0, 34, 0, 0,
+  0,  0, 0, 0
+]
+```

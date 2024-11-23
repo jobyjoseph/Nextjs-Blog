@@ -1,0 +1,24 @@
+---
+title: "SOLVED: 502 Error The Lambda function returned invalid JSON"
+date: 2022-02-15
+slug: nextjs-serverless-502-error-lambda-invalid-json
+description: "Here is the solution for AWS 502 Lambda error when working Next.js and Serverless framework"
+tags: ["aws"]
+---
+
+In my current project, we are hosting Next.js in AWS using [Next.js Serverless Component](https://github.com/serverless-nextjs/serverless-next.js). It is an eCommerce website. After integrating few APIs in product listing page, some browse pages started throwing below error when directly accessing the **CloudFront url**.
+
+```
+502 ERROR
+The request could not be satisfied.
+The Lambda function returned invalid JSON: The JSON output is not parsable. We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later, or contact the app or website owner.
+If you provide content to customers through CloudFront, you can find steps to troubleshoot and help prevent this error by reviewing the CloudFront documentation.
+```
+
+Initially we thought something was breaking from the backend and the API response was corrupted. But after reading through AWS documentation and understanding the working of Next.js Serverless component to an extend, this is what we found.
+
+Next.js Serverless component is creating **AWS Lambda** function to run server side code. For improved performance, the Lambda functions are copied to **Lambda@Edge** and executed from there.
+
+If a Next.js page contains `getServerSideProps()`, there is a server side execution. This server side execution happens at Lambda@Edge. Lambda@Edge then returns the response from `getServerSideProps()` to CloudFront . This response has a size limit of 1MB set by AWS. So if our response is greater than **1MB**, Lamba@Edge truncates it and pass to CloudFront. Truncation makes the response invalid. When CloudFront tries to parse the invalid response JSON, this error is thrown.
+
+We reduced the size of JSON object by optimizing the returned data from `getServerSideProps()` function and solved the issue.

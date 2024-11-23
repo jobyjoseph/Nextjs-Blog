@@ -1,0 +1,24 @@
+---
+title: JS Daily 18 - Variable Declaration Using Const
+date: 2020-12-08
+slug: js-daily-18-const-variable-declaration
+decription: A const variable in Javascript needs to be initialized at the time of declaration.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const a;
+a = 10;
+a = 20;
+console.log(a);
+```
+
+<Divider />
+
+Above code throws error in line 1. The error says `SyntaxError: Missing initializer in const declaration`.
+
+A `const` variable should be initialized at the time of declaration itself like `const a = 10`.

@@ -1,0 +1,38 @@
+---
+title: How to Create a New Next.js App
+date: 2021-08-16
+slug: create-nextjs-app
+description: New Next.js project can be created using yarn create next-app command. It sets up a boilerplate code for us to start.
+tags: ["nextjs"]
+---
+
+Next.js helps us to create web applications using React. It is an isomorphic application that supports both server side and client side rendering of React.
+
+In order to start a new project in Next.js, Go to a folder in terminal. This is where we are going to create the Next.js project.
+
+Then type one of the following commands.
+
+```
+npx create-next-app
+# or
+yarn create next-app
+```
+
+If you are using `yarn`, yarn needs to be installed globally in your machine.
+
+After hitting enter after above command, Next.js will ask for project name. There we can provide a project name which is going to be the folder in which the app is going to reside.
+
+> In `yarn` command, there is no dash(-) in `create next-app` command when compared to `npx` command.
+
+In my case, I used `yarn`. When I run `yarn create next-app`, the interactive process asks me the project name like below:
+
+```
+yarn create v1.22.5
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+success Installed "create-next-app@11.1.0" with binaries:
+      - create-next-app
+? What is your project named? › my-app
+```

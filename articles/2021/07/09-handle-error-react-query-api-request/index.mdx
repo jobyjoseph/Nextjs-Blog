@@ -1,0 +1,21 @@
+---
+title: Error Handling in useQuery React Query Hook
+date: 2021-07-28
+slug: error-handling-userquery-react-query
+description: If the promise throws an error, the query object provides a isError property to detect that. The query object also provides an error property that contains the actual error object.
+tags: ["reactQuery"]
+---
+
+`useQuery` hook handles promises in React Query. If the promise throws an error, the query object provides a `isError` property to detect that. The query object also provides an `error` property that contains the actual error object.
+
+We can therefore handle loading, error and success cases like below:
+
+```javascript
+return queryUsers.isLoading
+  ? "Loading..."
+  : queryUsers.isError
+  ? queryUsers.error.message
+  : "Success";
+```
+
+Here `queryUsers` contain the query object created by `useQuery()` hook.

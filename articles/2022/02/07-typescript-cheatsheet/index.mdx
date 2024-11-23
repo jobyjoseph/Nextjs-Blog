@@ -1,0 +1,67 @@
+---
+title: "TypeScript Cheat Sheet"
+date: 2022-02-07
+slug: typescript-cheat-sheet
+description: ""
+tags: ["typescript"]
+---
+
+TypeScript is language that brings static type check to JavaScript. Here are few TypeScript points for quick reference.
+
+## Variables
+
+Variable type can be inferred from the initialized value.
+
+```typescript
+let age = 10; // number type
+```
+
+Re-assigning a value to a const variable throws error.
+
+```typescript
+const a = 10; // literal type
+a = 10; // Error
+```
+
+Type of a variable that is declared, but not initialized is `any`
+
+```typescript
+let a; // any type
+```
+
+Annotation can be used to define type explicitly.
+
+```typescript
+let a: string;
+```
+
+## Functions
+
+Types for function arguments and return value can be specified using annotations.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+## Objects
+
+An object `student` contains 2 properties, `name` and `age`. `name` needs to be of string type and `age` needs to be a number.
+
+```typescript
+let student: {
+  name: string;
+  age: number;
+};
+```
+
+We can mark a property as optional by using `?`
+
+```typescript
+let person: {
+  name: string;
+  status: string;
+  spouse?: string;
+};
+```

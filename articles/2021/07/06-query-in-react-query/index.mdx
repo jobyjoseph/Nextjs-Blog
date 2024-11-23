@@ -1,0 +1,28 @@
+---
+title: Get Data From API Using Query in React Query Version 2
+date: 2021-07-25
+slug: get-data-from-api-using-query-in-react-query-version-2
+description: Query in React Query can be used to resolve promises and fetch data from an API. We use useQuery hook to use queries.
+tags: ["reactQuery"]
+---
+
+import Image from "../../../../src/components/image";
+import imgQueryData from "./images/query-data.png";
+
+**Query** in React Query can be used to resolve promises and fetch data from an API. Here, we are fetching data from Github user search API.
+
+First, import `useQuery` hook from `react-query`.
+
+Now, in our functional component use the `useQuery` hook.
+
+```javascript
+const queryUsers = useQuery("gitUsers", () =>
+  fetch("https://api.github.com/search/users?q=joby").then((res) => res.json())
+);
+```
+
+Each time the status of request changes, we could see re-rendering of the component. We can print the value of `queryUsers` in console. The final value of `queryUsers` will be having the Github users.
+
+<Image src={imgQueryData} alt="React Query Data" />
+
+This way of using useQuery will not work in React Query version 3. There we need to use `QueryClientProvider` along with `useQuery`.

@@ -1,0 +1,29 @@
+---
+title: JS Daily 20 - Return From Constructor Function
+date: 2020-12-10
+slug: js-daily-20-return-from-constructor
+decription: If the return value from a constructor function is an object, always that object is returned as the instance object.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function Car(name) {
+  this.name = name;
+  return "BMW";
+}
+
+const carObj = new Car("Mercedes");
+console.log(carObj.name);
+```
+
+<Divider />
+
+The output is `"Mercedes"`.
+
+Here the constructor function `Car()` is explicitly returning a string value. But that is ignored when used with `new` keyword. The newly created instance object is assigned to `carObj`. Therefore `carObj.name` outputs `"Mercedes"`.
+
+> If the returned value is an **object** instead of `"BMW"`, then that object is assigned to `carObj`. The newly created object is ignored.

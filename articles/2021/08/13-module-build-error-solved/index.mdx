@@ -1,0 +1,25 @@
+---
+title: "SOLVED: Node.js Module Build Error"
+date: 2021-08-13
+slug: solved-nodejs-module-build-error
+description: Node.js module build error happens when there is a mismatch in package dependencies.
+tags: ["nodejs"]
+---
+
+import Image from "../../../../src/components/image";
+import imageBuildError from "./images/module-build-error.png";
+
+From my understanding, we can obtain this error in any **npm** project. I got this error when I was working with a _React Query_ project. The issue was launched to the project all of a sudden on a fine day. I had no idea what got changed. For me the error shown in the browser looked weird:
+
+<Image src={imageBuildError} alt="Module Build Error" />
+
+The issue was with the **mismatch** in package dependencies. I was working with React Query version 3. I then installed React Query Devtools version 2, which in turn required React Query version 2.
+
+```javascript
+"dependencies": {
+    "react-query": "^3.19.0",
+    "react-query-devtools": "^2.6.3",
+}
+```
+
+When I removed `react-query-devtools` and did a clean build, things started working.

@@ -1,0 +1,13 @@
+---
+title: "Preview Mode in Next.js"
+date: 2022-03-02
+slug: preview-mode-nextjs
+description: "Preview refers to seeing something before it actually goes live. Using Next.js, we might be creating some standalone web application."
+tags: ["nextjs"]
+---
+
+Preview refers to seeing something before it actually goes live. Using Next.js, we might be creating some standalone web application. Or we might be using Next.js as the frontend for a decoupled CMS system. In any case, if we want to see a draft page how it looks once it is published, we can make use of preview mode in Next.js.
+
+So how Next.js approach Preview feature? Normally, a page in Next.js with a `getStaticProps()` function can be exported as a static HTML file. But, we cannot generate a static file with a draft content. So, what Next.js does is, if the site works in preview mode(there is option to enable it), then `getStaticProps()` is executed every time on page load. So users can just see the preview of the draft content and dispose it.
+
+Preventing static generation in preview mode is also required to see live changes in the CMS system in our Nextjs app. If preview content is statically generated, for every change in CMS draft, we need to rebuild the Next.js app.

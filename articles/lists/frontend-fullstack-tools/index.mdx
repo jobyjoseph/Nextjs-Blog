@@ -1,0 +1,107 @@
+---
+title: "12 Tools for Fullstack Frontend Engineers"
+date: 2022-07-27
+slug: tools-fullstack-frontend-engineer
+description: "Backpack tools for Frontend Fullstack Engineers"
+tags: ["web"]
+---
+
+import Olink from "../../../src/components/olink";
+import Divider from "../../../src/components/divider";
+
+Here is a list of tools I came across during my frontend journey.
+
+## Tool Manager
+
+<Olink bold link="https://volta.sh/">
+  Volta
+</Olink> is a JavaScript tool manager. You are working on two projects. One requires
+Node version 16 and other requires version 14. It is difficult to switch between
+these version even with `nvm`. Install volta in your laptop. Then have the volta
+configuration in your project. Rest happens automatically.
+
+<Divider />
+
+<Olink bold link="https://github.com/nvm-sh/nvm">
+  NVM
+</Olink> stands of Node Version Manager. It helps to switch between different Node.js
+versions in our laptop. It helps to prevent reinstallation of Node.js as per project
+requirements.
+
+<Divider />
+
+<Olink bold link="https://typicode.github.io/husky/">
+  Husky
+</Olink> can run some tasks before we make a commit to Git. Suppose, we want to check
+for ESLint errors in the files we worked, before committing it. Husky can help here.
+
+## Cloud
+
+<Olink bold link="https://aws.amazon.com/">
+  AWS
+</Olink> or Amazon Web Services is a cloud provider. We can setup servers or use
+services provided by Amazon infrastructure. Its suits applications of all scales.
+
+## Code Quality
+
+<Olink bold link="https://eslint.org/">
+  ESLint
+</Olink> analyze and find problems in JS code. It is available in most of the text
+editors and can also be used as part of CI/CD.
+<Divider />
+<Olink bold link="https://prettier.io/">
+  Prettier
+</Olink> is a code formatter. It is a stable formatter used in many big
+projects. Having a `.prettierrc` file in your project ensures uniform code
+formatting across all developers. Otherwise there are chances that a file change
+in Git shows only formatting changes.
+
+## Bundle the Code
+
+<Olink bold link="https://webpack.js.org/">
+  Webpack
+</Olink> is a widely used code bundler. It crunches JS, JSX, SASS or whatever and
+creates a bundle out of it.
+<Divider />
+<Olink bold link="https://facebook.github.io/metro/">
+  Metro
+</Olink> is a JavaScript bundler for React Native applications developed by
+Meta(previously Facebook)
+
+## Testing
+
+<Olink bold link="https://jestjs.io/">
+  Jest
+</Olink> is a JavaScript testing framework. Very popular and supports snapshot testing
+in React.
+
+<Olink
+  bold
+  link="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+>
+  Live Server
+</Olink> is a Visual Studio Code extension that can run a html file from a development
+server. We can right click on a file directly from VS Code and open it using this
+live server.
+
+## Type Check
+
+<Olink bold link="https://flow.org/">
+  Flow
+</Olink> is a static type checker for JavaScript. Stripe used it in their Dashboard.
+Later they <Olink link="https://stripe.com/blog/migrating-to-typescript">
+  moved to TypeScript
+</Olink>
+.
+
+<Divider />
+<Olink bold link="https://www.typescriptlang.org/">
+  TypeScript
+</Olink> does static type checking in JavaScript. It is currently maintained by
+Microsoft and well supported by Visual Studio Code.
+<Divider />
+<Olink bold link="https://github.com/Airtable/typescript-migration-codemod">
+  Airtable Codemod
+</Olink> is an open source code from Airtable to convert codebase from Flow to TypeScript.
+All edge cases are not covered, but a good starting point if you are considering
+to change Flow to TypeScript in one go.

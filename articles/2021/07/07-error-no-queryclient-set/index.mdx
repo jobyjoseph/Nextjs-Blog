@@ -1,0 +1,60 @@
+---
+title: SOLVED - Error No QueryClient Set, Use QueryClientProvider to Set One
+date: 2021-07-26
+slug: error-no-queryclient-set-use-queryclientprovider-to-set-one
+description: When debugged, I found that the React Query version I installed is v3. But, in the Github repo mentioned by instructor, the version is 2. So, I downgraded React Query version and it worked.
+tags: ["reactQuery"]
+---
+
+import Image from "../../../../src/components/image";
+import imgQueryError from "./images/error-no-queryclient-set.png";
+
+I just started learning a React Query course. I installed `react-query` package as instructed. The first video itself in the course, threw an error:
+
+<Image src={imgQueryError} alt="Error React Query" />
+
+When debugged, I found that the React Query version I installed is v3. But, in the Github repo mentioned by instructor, the version is 2. So, I downgraded React Query version and it worked.
+
+I made the code working for React Query v3. The solution is to do what is mentioned in the error message. We need to use `QueryClientProvider`.
+
+For that, first import required modules:
+
+```javascript
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+```
+
+Create a queryClient object:
+
+```javascript
+const queryClient = new QueryClient();
+```
+
+Now we need to create a React component that uses `useQuery`.
+
+```javascript
+function GitUsers() {
+  const queryUsers = useQuery("gitUsers", () =>
+    fetch("https://api.github.com/search/users?q=joby").then((res) =>
+      res.json()
+    )
+  );
+
+  console.log(queryUsers);
+
+  return null;
+}
+```
+
+Next, we wrap `GitUsers` component inside `QueryClientProvider` inside another React component.
+
+```javascript
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <GitUsers />
+    </QueryClientProvider>
+  );
+}
+```
+
+This solved my issue. Hope, it works for you also.

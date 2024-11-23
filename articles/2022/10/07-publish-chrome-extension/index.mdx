@@ -1,0 +1,112 @@
+---
+title: Publishing Google Chrome Extension to Web Store
+date: 2022-10-28
+slug: publishing-google-chrome-extension-web-store
+description: Google web store is the marketplace for Chrome extensions. We can download and install extensions from web store. This article shows how to publish our own extension to Google web store.
+tags: ["web"]
+---
+
+import Olink from "../../../../src/components/olink";
+import Image from "../../../../src/components/image";
+import { Link } from "gatsby";
+import imgTermsConditions from "./images/terms-conditions.png";
+import imgPaymentComplete from "./images/registration-complete.png";
+import imgPublisherDetails from "./images/publisher-details.png";
+import imgExtensionParsed from "./images/parsed-extension.png";
+import imgPrivacyPolicies from "./images/privacy-policies.png";
+import imgSubmitForReview from "./images/submit-for-review.png";
+import imgEmail from "./images/email.png";
+import imgExtensionPage from "./images/extension-page.png";
+
+<Olink link="https://chrome.google.com/webstore/category/extensions">
+  Google web store
+</Olink> is the marketplace for Chrome extensions. We can search for extensions in
+the web store. We can also install extensions in our Chrome browser directly from
+the store. This article explains how to publish our own extension to Google web store.
+
+We are going to publish the Chrome extension we created as part of <Link to="/articles/introduction-google-chrome-extension-development">Introduction to Google Chrome Extension Development</Link>. You can also download the extension code from <Olink link="https://github.com/backbenchercode/Inches-to-Centimeters-Chrome-Extension">Github</Olink>.
+
+This article purely focuses on publishing an extension. It does not cover creating an extension. You can check <Link to="/articles/introduction-google-chrome-extension-development">Introduction to Google Chrome Extension Development</Link> to learn how to start with extension development.
+
+## Prepare Extension
+
+In order to publish an extension, the `manifest.json` should have following properties:
+
+- `name`
+- `version`
+- `icons`
+- `description`
+
+After doing the above checking, zip the entire extension folder. I have created `Inches-to-Centimeters-Chrome-Extension-main.zip` file in my laptop.
+
+## Setup Developer Account
+
+Create a **new gmail account** just to manage the chrome extensions. It is also suggested by Google.
+
+After creating the new gmail account, go to <Olink link="https://chrome.google.com/webstore/devconsole">https://chrome.google.com/webstore/devconsole</Olink>. If you are not logged in, it will prompt you to login.
+
+Once you are signed in, the first step to register is agree to web store terms and conditions.
+
+<Image src={imgTermsConditions} alt="Terms and Conditions" />
+
+Then click the payment button and pay the one time $5 registration fee. After successful payment, you will see below screen:
+
+<Image src={imgPaymentComplete} alt="Payment Complete" />
+
+Click on _Go To Developer Dashboard_. There you can provide your details in the account info.
+
+<Image src={imgPublisherDetails} alt="Publisher Details" />
+
+Following fields are mandatory:
+
+- **Publisher Display Name**
+- **Contact email address**: This email will be displayed under your item's contact information. After adding your email address, you need to verify it.
+- **Privacy Policy**: You can upload the privacy policy text in your website and provide the link here.
+
+Save changes after updating above details.
+
+## Upload Extension
+
+Now that we have provided all necessary account information. We can go to <Olink link="https://chrome.google.com/webstore/devconsole">Google Developer Dashboard</Olink> to upload our extension.
+
+Click on **New Item** button. Follow the instructions to upload your zip file.
+
+> In my case Google was throwing error while uploading. For me uploading worked only when I enabled 2-factor authentication for my developer account.
+
+If everything went well, Google reads the information in our extension manifest file and show us a page like below:
+
+<Image src={imgExtensionParsed} alt="Extension details page" />
+
+Fill all the required and optional fields you like. For **Store Icon**, we can provide the same icon used in the extension of size 128x128.
+
+For screenshot, you can take the screenshot of your extension and make it to a proper size. I took mine and cropped it to 640x400 using photoshop.
+
+After filling all the details in the page, save the changes.
+
+Then move to _Privacy Practices_ page. Fill out the single purpose and permission justification. Then save the changes.
+
+<Image src={imgPrivacyPolicies} alt="Extension details page" />
+
+After completing above steps, we can see the **Submit For Review** button enabled.
+
+<Image
+  src={imgSubmitForReview}
+  alt="Submit for review"
+  style={{ maxWidth: "500px" }}
+/>
+
+Click the review button. Click ok in the subsequent confirmation windows.
+
+The extension is now submitted for review.
+
+## Review and Publishing
+
+If the permissions requested are less, the approval will be faster. My extension did not have any permission requests. It got approved in 2 days. Once the extension is approved, we will receive a mail like below:
+
+<Image src={imgEmail} alt="Published Mail" style={{ maxWidth: "500px" }} />
+
+We can view our published extension by clicking the link in the mail.
+
+<Image src={imgExtensionPage} alt="Extension page" />
+
+Good luck with publishing your extension!

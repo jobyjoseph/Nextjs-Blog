@@ -1,0 +1,60 @@
+---
+title: "Files and Folders to Exclude Using .gitignore in React Project"
+date: 2022-07-31
+slug: files-and-folders-to-exclude-using-gitignore-react-project
+description: "Adding files to .gitignore makes our project clean. Less files are loaded every time while we clone the repo and this results in better deployment"
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+Files or folders added in `.gitignore` file are avoided by Git while tracking. For a typical React project we add following files or folders in `.gitignore`.
+
+## node_modules
+
+Like any other Node projects, we ignore `node_modules/` directory. Including `node_modules` directory increases the project size to a large extend. Other than the size, it is always good to install the packages from `package.json` if a new developer is cloning the project.
+
+## coverage
+
+When we implement code coverage in our project, all the reports are stored in `coverage/` folder. We do not want that to be uploaded to Git server.
+
+## DS_Store
+
+Mac OS creates this file in every folder if we open that folder in `Finder`. DS_Store stands for Desktop Services Store. The file basically stores information about the current folder and other files around it. It does not have any signifance specific to our React project.
+
+## Distribution
+
+`dist/` is the name of a typical directory used to store distribution files. That is the common naming convention. If your project has another name for output folder, give that name in `.gitignore`.
+
+## IDE Specific
+
+If we are working in Visual Studio Code, it automatically creates a `.vscode` directory to store the project settings. Other editors like _Sublime Text_ has its own versions of settings file. We can exclude those files or directories from versioning.
+
+## Logs
+
+Any logs or directories that contains just log information can be ignored. That folder will keep on getting larger and its totally unnecesary to include it in versioning.
+
+Here is an example `.gitignore` file.
+
+```
+.idea/
+.vscode/
+node_modules/
+build
+.DS_Store
+*.tgz
+my-app*
+template/src/__tests__/__snapshots__/
+lerna-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.changelog
+.npm/
+```
+
+Other informations we might add to `.gitignore` are changelogs, snapshots or build zip files.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

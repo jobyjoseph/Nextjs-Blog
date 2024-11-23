@@ -1,0 +1,62 @@
+---
+title: "Code Elimination Tool in Next.js"
+date: 2022-09-07
+slug: code-elimination-tool-nextjs
+description: "When creating a page in Next.js, there are code that runs only in server. There are also code that is added to the bundle and returned to the browser."
+tags: ["nextjs"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+When creating a page in Next.js, there are code that runs only in server. There are also code that is added to the bundle and returned to the browser.
+
+If you are a beginner in Next.js, it might be difficult to separate one from another. Next.js has come up with a <Olink link="https://next-code-elimination.vercel.app/">code elimination tool</Olink> to give more clarity on this.
+
+Let us checkout this application. For that, here is a Next.js _Contact Us_ page code:
+
+```javascript
+const clientSideFunction = () => {
+  return "Apple";
+};
+
+const serverSideFunction = () => {
+  return "Banana";
+};
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      fruit: serverSideFunction(),
+    },
+  };
+}
+
+const ContactUs = () => {
+  return <h1>Contact us page {clientSideFunction()}</h1>;
+};
+
+export default ContactUs;
+```
+
+Here there are two util functions `clientSideFunction()` and `serverSideFunction()`. `clientSideFunction()` is called in the page component and `serverSideFunction()` is called only in `getServerSideProps()`.
+
+When Next.js renders the page, only below code is passed to client.
+
+```javascript
+// This is the code that is bundled for the client-side:
+
+const clientSideFunction = () => {
+  return "Apple";
+};
+const ContactUs = () => {
+  return <h1>Contact us page {clientSideFunction()}</h1>;
+};
+export var __N_SSP = true;
+export default ContactUs;
+```
+
+Main thing to note is that, along with `getServerSideProps()`, `serverSideFunction()` is also removed by Next.js. Next.js is intelligently tree-shaking the dependencies and removing unused code.
+
+<Olink link="https://next-code-elimination.vercel.app/s/AvTEOyz4k">
+  Direct link to above code in eliminator tool
+</Olink>

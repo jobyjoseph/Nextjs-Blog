@@ -1,0 +1,23 @@
+---
+title: JS Daily 9 - String Replace Method
+date: 2020-11-29
+slug: js-daily-9-string-replace
+decription: Replace method in string replaces a string with another string.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const str = "Butterfly likes Butter";
+const result = str.replace("Butter", "Fire");
+console.log(result);
+```
+
+<Divider />
+
+Output is `"Firefly likes Butter"`.
+
+String `replace()` method replaces only the first match. If we need to replace all matches, ES12 comes with `replaceAll()` method.

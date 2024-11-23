@@ -1,0 +1,66 @@
+---
+title: "Setup Webpack Dev Server in React Project"
+date: 2022-04-25
+slug: setup-webpack-dev-server-react
+description: "Webpack Dev Server makes development easier by bringing Hot Module Replacement(HMR) to a React project"
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+import Olink from "../../../../src/components/olink";
+
+We have a React project. We can build the project using Webpack. We can then see the output by running the generated bundle. Each time, when we change anything in the code, we need to repeat the build and reload step. That is quite boring and time consuming during development.
+
+**Webpack Dev Server** helps developers by automatically building the project and reloading the page in browser. So, when we save the code, we can see the change instantly on the browser.
+
+## Some Background
+
+I am working on a personal project, which is a <Link to="/articles/tambola-game-development-part-1">Tambola game</Link>. I have already:
+
+- <Link to="/articles/create-react-starter-webpack-babel">
+    Setup a basic React project using Webpack and Babel
+  </Link>
+- <Olink link="https://github.com/jobyjoseph/Tambola">
+    Versioned the code using Github
+  </Olink>
+- <Link to="/articles/deploy-react-app-amazon-s3-github-actions">
+    Setup CI/CD to deploy project to S3 using Github Actions
+  </Link>
+
+Next step is to setup Webpack Dev Server in my project. That is what I am documenting here. At any time, you can check the status of my development site <Olink link="http://dev-tambola.s3-website-us-west-1.amazonaws.com/">here</Olink>.
+
+## Dev Server Setup
+
+First, we need to install `webpack-dev-server` in our project.
+
+```
+npm install --save webpack-dev-server
+```
+
+### Configuration
+
+Next, we need to update `webpack.config.js` to set dev server options. Append the below code to `module.exports`.
+
+```javascript
+devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 9000,
+  },
+```
+
+Above configuration serves the content from `/dist` folder.
+
+### Running
+
+We want our dev site to run locally on `npm run dev` command. For that, add a `dev` script to `package.json`.
+
+```
+"dev": "webpack-dev-server --open"
+```
+
+The `--open` flag is to open the site in our default browser.
+
+Try running the `dev` command. The site will be served from `http://localhost:9000`. Go and update content of our React component and save the file. Automatically, webpack-dev-server will build and update our page in browser.

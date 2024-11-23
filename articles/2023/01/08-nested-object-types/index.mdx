@@ -1,0 +1,56 @@
+---
+title: "Nested Object Types in TypeScript"
+date: 2023-01-08
+slug: nested-object-types-typescript
+description: "We can define nested object types using Typescript"
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgInvalidAttribute from "./images/invalid-attribute.png";
+
+We can define the structure of a nested object using TypeScript.
+
+```typescript
+const student: {
+  name: string;
+  age: number;
+  address: {
+    street: string;
+    city: string;
+    pin: number;
+  };
+};
+```
+
+Above type defines structure of an object that has a nested object field `address`.
+
+Here is a valid `student`.
+
+```typescript
+const student: {
+  name: string;
+  age: number;
+  address: {
+    street: string;
+    city: string;
+    pin: number;
+  };
+} = {
+  name: "Joby",
+  age: 23,
+  address: {
+    street: "Stoney Peak",
+    city: "San Diego",
+    pin: 92128,
+  },
+};
+```
+
+Any invalid value or property results in error.
+
+<Image
+  src={imgInvalidAttribute}
+  alt="Invalid attribute"
+  style={{ maxWidth: "300px" }}
+/>

@@ -1,0 +1,55 @@
+---
+title: JS Daily 35 - Automatic Semicolon Insertion
+date: 2020-12-25
+slug: js-daily-35-automatic-semicolon-insertion
+decription: It is always safe to use semicolon while writing JavaScript code. Otherwise there is a chance that the compiler misunderstand the meaning of the written code statements.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const a = 10
+const b = a
+(() => console.log(b))()
+```
+
+<Divider />
+
+The output is:
+
+```
+TypeError: a is not a function
+```
+
+If you thought the output as `10`, then it is wrong. It would have been 10, if we explicitly placed semicolon at the end of each line.
+
+```javascript
+const a = 10;
+const b = a;
+(() => console.log(b))(); // 10
+```
+
+When JavaScript tries to automatically insert semi-colon, it follows a process. It take each segment of the code and join them, till a valid expression is formed.
+
+Here the code in line 1 is
+
+```
+const a = 10
+```
+
+JavaScript then tries to place next word next to `10`, like
+
+```
+const a = 10const
+```
+
+Above combination is not valid according to JavaScript rules. So, it automatically inserts a semicolon after 10. Now let us see how it looks when JavaScript tries to attach line 3 at the end of line 2. It looks like this:
+
+```
+const b = a(() => console.log(b))()
+```
+
+Above statement looks valid for JS engine. It tries to execute `a` as a function. That is why, it results in _TypeError_.

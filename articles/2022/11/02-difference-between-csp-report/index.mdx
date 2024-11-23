@@ -1,0 +1,31 @@
+---
+title: "Difference Between Content-Security-Policy-Report-Only and Content-Security-Policy Header"
+date: 2022-11-25
+slug: difference-between-content-security-policy-report-only-and-content-security-policy-header
+description: Content-Security-Policy and Content-Security-Policy-Report-Only are comparitively a new header supported by modern browsers. Let us find out the difference between them.
+tags: ["web"]
+---
+
+`Content-Security-Policy` is comparitively a new header supported by modern browsers.
+
+What does it do?
+
+Say, a web page is having below `Content-Security-Policy` header in the response:
+
+```
+Content-Security-Policy: script-src https://example.com/
+```
+
+And the loaded HTML contains below `<script />` tag:
+
+```html
+<script src="https://not-example.com/js/library.js"></script>
+```
+
+Then, `library.js` is not loaded and executed. `script-src` says that the page can load and execute JavaScript files **only from** `https://example.com`.
+
+So, what is `Content-Security-Policy-Report-Only`?
+
+If in the above case, the response header contains `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy`, `library.js` is loaded and executed. But, in the browser console we can see the policy error.
+
+So in essence, `Content-Security-Policy-Report-Only` executes the script, but warns you about the problematic scripts. `Content-Security-Policy` simply blocks the problematic scripts or files.

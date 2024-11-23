@@ -1,0 +1,41 @@
+---
+title: "Mark Object Property As Optional in TypeScript"
+date: 2023-03-01
+slug: mark-object-property-as-optional-in-typescript
+description: "In TypeScript, you can mark an object property as optional by using a question mark ? after the property name. This indicates that the property is not required and can be omitted when creating or using objects that have this property."
+tags: ["typescript"]
+---
+
+In TypeScript, you can mark an object property as optional by using a question mark `?` after the property name. This indicates that the property is not required and can be omitted when creating or using objects that have this property.
+
+Here's an example:
+
+```typescript
+interface Person {
+  name: string;
+  age?: number;
+}
+
+const person1: Person = {
+  name: "Alice",
+  age: 30,
+};
+
+const person2: Person = {
+  name: "Bob",
+};
+```
+
+In this example, the `Person` interface has an optional `age` property marked with a question mark. The `person1` object includes the `age` property, while the `person2` object omits it.
+
+Note that when accessing an optional property, you should check whether it exists first to avoid runtime errors. You can use the `in` operator or the `typeof` operator to check for the existence of an optional property. For example:
+
+```javascript
+if ("age" in person1) {
+  console.log(person1.age);
+}
+
+if (typeof person2.age === "number") {
+  console.log(person2.age);
+}
+```

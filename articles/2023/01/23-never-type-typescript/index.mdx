@@ -1,0 +1,38 @@
+---
+title: "Never Type in TypeScript"
+date: 2023-01-23
+slug: never-type-typescript
+description: "`never` is a type that a function can return. If you have a function that always throws an error, that function never returns a value."
+tags: ["typescript"]
+---
+
+`never` is a type that a function can return.
+
+If you have a function that always throws an error, that function never returns a value.
+
+```typescript
+function generateError(message: string) {
+  throw new Error(message);
+}
+```
+
+Since above function always throws an error, the function not even returns an `undefined`. So, in cases like this, we can specify the function to return `never`.
+
+```typescript
+function generateError(message: string): never {
+  throw new Error(message);
+}
+```
+
+If you want to verify if the function does not return anything, try below code:
+
+```typescript
+function generateError(message: string) {
+  throw new Error(message);
+}
+
+const result = generateError("My error");
+console.log(result);
+```
+
+Above code does not print anything in console.

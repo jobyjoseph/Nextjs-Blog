@@ -1,0 +1,71 @@
+---
+title: "Object Type in TypeScript"
+date: 2023-01-07
+slug: object-type-typescript
+description: "Object types help to provide shape and structure to objects. It removes accidental creation of new properties and reading from properties that does not exist."
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgIntellisense from "./images/intellisense.png";
+
+Object type refers to the structure of an object.
+
+## Infered Structure
+
+Here is a JavaScript object literal:
+
+```javascript
+const person = {
+  name: "Joby",
+  age: 37,
+};
+```
+
+From the initialized value, TypeScript infers the type as:
+
+```typescript
+const person: {
+  name: string;
+  age: number;
+};
+```
+
+Now, if we try to create a new property, TypeScript throws an error.
+
+```typescript
+person.country = "USA"; // Error
+```
+
+## Generic Object Type
+
+While assigning the object, we can explicitly provide an `object` type.
+
+```typescript
+const person: object = {
+  name: "Joby",
+  age: 37,
+};
+```
+
+But Generic `object` type is not much of use. We normally want the object structure to be well defined. Generic object type helps us to handle situations where we do not know the structure of the object before hand.
+
+Using generic object type also does not perform well with intellisense.
+
+## Object Structure
+
+We can also provide the object type as shown below:
+
+```typescript
+const person: {
+  name: string;
+  age: number;
+} = {
+  name: "Joby",
+  age: 37,
+};
+```
+
+This is explicit type declaration. This performs well in intellisense.
+
+<Image src={imgIntellisense} alt="Intellisense" />

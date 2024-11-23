@@ -1,0 +1,50 @@
+---
+title: "Delete Old Lambda Versions Using Serverless Package"
+date: 2023-09-18
+slug: delete-old-lambda-versions-using-serverless-package
+description: "Serverless by default does not delete any lambda function versions. Deletion can be done using serverless-prune-plugin."
+tags: ["aws"]
+---
+
+In my current project, we are using serverless package for one of the modules to deploy around 20 lambda functions. What happened was for each build, a new version of lambda is created and stored. This resulted in reaching the maximum code storage limit of 75GB pretty soon.
+
+Gitlab pipeline started failing. For few weeks, we wrote a script to delete the lambda versions and ran it whenever required. But that was not a permanent solution. So, we tried **serverless-prune-plugin**.
+
+## Setup
+
+Install the `serverless-prune-plugin`.
+
+```shell
+yarn add serverless-prune-plugin --dev
+```
+
+## Update Serverless Config
+
+Add serverless-prune-plugin to the list of plugins in either `serverless.ts` or `serverless.yml`. Mine was a `.ts`.
+
+```javascript
+plugins: [
+    'serverless-prune-plugin',
+  ],
+```
+
+Since, I had to run this pruning automatically, I added the rules to `custom` attribute in `serverless.ts`.
+
+```javascript
+custom: {
+    prune: {
+      automatic: true,
+      number: 3,
+    },
+  },
+```
+
+## Output
+
+Now when the pipeline runs, it showed that the pruning was successful.
+
+```
+✔ Pruning of functions complete
+```
+
+In my case _75GB_ space got reduced to _45GB_.

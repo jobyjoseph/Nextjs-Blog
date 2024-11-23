@@ -1,0 +1,104 @@
+---
+title: "useContext() Hook in React"
+date: 2022-08-24
+slug: usecontext-hook-in-react
+description: "useContext() hook allows to use React Context API inside functional components."
+tags: ["react"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+In React, data flows very explicitly from one component to another. If a parent component wants to pass a data to child, it can pass it through `props`. Another way to pass value to any nested components is by using **context**.
+
+## Passing Data Using Props
+
+In order to fully understand the advantage of using `useContext()` hook, we need to first understand how we can pass a value from a component to another nested component which is `N` levels deep without `useContext()` hook.
+
+Assume, we have got 5 nested components, `<A/>`, `<B/>`, `<C/>`, `<D/>` and `<E/>`. Component `A` needs to pass a value to `E` which is 5 levels deep. How can we do that?
+
+> Note: One component can pass a value to its **immediate** child through `props`.
+
+So here, in order to pass the value from `A` to `E` we need to follow below steps:
+
+`A` passes the value to `B`
+
+`B` passes the value to `C`
+
+`C` passes the value to `D`
+
+Finally, `D` passes the value to `E`.
+
+We implement above flow like this:
+
+```javascript
+const E = (props) => <h1>{props.fruit}</h1>;
+const D = (props) => <E fruit={props.fruit} />;
+const C = (props) => <D fruit={props.fruit} />;
+const B = (props) => <C fruit={props.fruit} />;
+const A = (props) => <B fruit={props.fruit} />;
+
+export default A;
+```
+
+If we render `A` using `<A fruit="Apple" />`, then component `E` displays `"Apple"` on browser.
+
+<Olink
+  link="https://codesandbox.io/s/react-backbencher-oig74v?file=/src/hooks/useContext/pass-props.js"
+  type="button"
+  background="pink"
+>
+  TRY ONLINE
+</Olink>
+
+We can see that, for `A` to pass one value to `E` everyone in between had to help. When the nesting levels are very large, then this approach turns out to be a big headache. Examples are passing site theme information, locale information or user loggedin status.
+
+> Inside React community, we call this approach of passing values through props as **prop-drilling**.
+
+Prop drilling has another disadvantage. Take the case of a developer who is working on component `B`. He/she can see that the component accepts a prop called `fruit`. Then after searching for where the `fruit` is being used inside `B`, it is frustrating to know that this property is accepted only to pass it further to another child component.
+
+Let us now see how `useContext()` makes this code prettier and more manageable.
+
+## Context
+
+Context API was available in React before hooks. We could implement Context API in class components before hooks came. Here in this article we are discussing how to implement Context API using `useContext()` hook.
+
+Context is like a wormhole. We put something at one side of the hole and it comes out of the other side. In case of the example in previous section, we put `"Apple"` in component `A` and collect it at component `E`.
+
+### useContext() Implementation
+
+First step is to take one wormhole tunnel(context object) from React. This is how we create a context in React:
+
+```javascript
+const FruitContext = React.createContext();
+```
+
+So how `A` can provide a value? We wrap the component `A` with `FruitContext.Provider` and pass whatever value to pass through `value` property.
+
+```javascript
+const A = (props) => (
+  <FruitContext.Provider value={props.fruit}>
+    <B />
+  </FruitContext.Provider>
+);
+```
+
+As we can see `B` is not passing props any more.
+
+We just completed the logic to provide the value from `A`. Now let us go to `E` and receive the value.
+
+```javascript
+const E = (props) => {
+  const fruit = useContext(FruitContext);
+  return <h1>{fruit}</h1>;
+};
+```
+
+Actually, component `E` is using `useContext()` hook. The purpose of this hook is to extract the value from a Context.
+
+<Olink
+  link="https://codesandbox.io/s/react-backbencher-oig74v?file=/src/hooks/useContext/usecontext-hook.js"
+  type="button"
+  background="pink"
+>
+  TRY ONLINE
+</Olink>

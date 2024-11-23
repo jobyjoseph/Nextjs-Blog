@@ -1,0 +1,69 @@
+---
+title: "SOLVED: Refused to connect to URL because it violates the following content security policy directive: 'connect-src none'"
+date: 2022-08-29
+slug: solved-refused-connect-url-because-it-violates-following-content-security-policy-directive-connect-src-none
+description: "connect-src is a new way to bring more security in web pages. It is part of a new Content-Security-Policy HTTP response header."
+tags: ["web"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+Last day, while working on my client project, all of a sudden I saw a new error in console, at least for me it was new. It said "Refused to connect to URL because it violates the following content security policy directive: 'connect-src none'".
+
+I tried to understand it by creating a POC.
+
+First of all `connect-src none` is a new way to bring more security to web pages. It is part of the new **Content-Security-Policy HTTP response header**. Using this new header, we can declaratively bring different levels of security.
+
+> We can try Content-Security-Policy either through HTTP response header or by placing `meta` tag in the page.
+
+I tried using `meta` tag.
+
+## Connect-src Demo
+
+Our aim is to restrict a web page from making AJAX calls.
+
+For that, create a web page `index.html`. Add the below `meta` tag in the page.
+
+```html
+<meta http-equiv="Content-Security-Policy" content="connect-src 'none'" />
+```
+
+Next, we place a `fetch` request in the page:
+
+```javascript
+fetch("http://127.0.0.1:5500/data.json")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+```
+
+Note that my `data.json` is in my same server. When I run my page, I will see below error in console:
+
+```
+Refused to connect to 'http://127.0.0.1:5500/data.json' because it violates the following Content Security Policy directive: "connect-src 'none'".
+```
+
+That means, since I set the value of `connect-src` to `none`, no fetch call can happen from the page.
+
+Now let us change the value of `none` to `self`.
+
+```html
+<meta http-equiv="Content-Security-Policy" content="connect-src 'self'" />
+```
+
+Now I could see the JSON data. Now let us change the API url to an external open API.
+
+```javascript
+fetch("https://jsonplaceholder.typicode.com/todos")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+```
+
+It now throws below error in console.
+
+```
+Refused to connect to 'https://jsonplaceholder.typicode.com/todos' because it violates the following Content Security Policy directive: "connect-src 'self'".
+```
+
+That means, if the value of `connect-src` is `self`, a fetch call will work only if the domains are same.
+
+You can read more about Content Security Policy and its browser support <Olink link="https://content-security-policy.com/">here</Olink>.

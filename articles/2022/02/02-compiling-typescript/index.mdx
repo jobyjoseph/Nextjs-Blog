@@ -1,0 +1,142 @@
+---
+title: "TypeScript Setup & Compilation"
+date: 2022-02-02
+slug: typescript-setup-compilation
+description: "The goal of this article is to learn how to setup and compile a TypeScript program. We use tsc compiler command to perform the compilation. We also learn how to set the level of JavaScript that comes out of TypeScript compiler."
+tags: ["typescript"]
+---
+
+The goal of this article is to learn how to **setup** and **compile** a TypeScript program. We use `tsc` compiler command to perform the compilation. We also learn how to set the **level of JavaScript** that comes out of TypeScript compiler.
+
+## Project Setup
+
+Create a folder anywhere to store the project files. I have created a folder named `ts-intro`. Inside the folder, create 3 files.
+
+1. `package.json`
+2. `tsconfig.json`
+3. `src/index.ts`
+
+#### package.json
+
+We need only one dependency for this project. That is `typescript`. So, here is how our `package.json` looks like.
+
+```json
+{
+  "name": "ts-intro",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "scripts": {
+    "dev": "tsc --watch --preserveWatchOutput"
+  }
+}
+```
+
+The `dev` command will run the TypeScript compiler(`tsc`) along with some options. `--watch` flag watches for any file change and does compilation again if there is any source file change. `--preserveWatchOutput` is to retain the console outputs even after re-compilation.
+Now, that is it about `package.json` file. Let us understand the second file, `tsconfig.json`.
+
+#### tsconfig.json
+
+When we run `tsc` command, if a `tsconfig.json` file is there, TypeScript will parse that file for options. The settings in the file is applied during TypeScript compilation. Here is our `tsconfig.json` file.
+
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ES3"
+  },
+  "include": ["src"]
+}
+```
+
+We are passing 2 compiler options. `outDir` is for output directory. Here, we are telling TypeScript to store the output in `dist` directory. If we does not specify this option, TypeScript by default puts the output JavaScript file alongside the TypeScript files. Keeping a separate output directory makes development easier.
+
+If we want the output JavaScript to support ES3 browsers(Eg: IE6), then we need to set the value of `target` to `ES3`. Note that, more backward compatibility means the generated JavaScript files will contain more code. So, we do not have to set this option to older versions unnecessarily.
+
+By mentioning `"src"` in `include` array, we specify that all our TypeScript files will be in `src` folder. `--watch` flag will be watching for any file changes under the `src` folder.
+
+> We can pass all compiler options as command line flags. But as the project gets bigger, having a separate config file is easier to manage and version.
+
+#### src/index.ts
+
+We are going to write our TypeScript code in this `index.ts` file. First, paste below code to `index.ts` file.
+
+```javascript
+let a = 10;
+```
+
+What we are going to test is:
+
+- Will TypeScript converts this ES6 code with `let` keyword to an ES3 code?
+- Will TypeScript saves the output JavaScript code under `/dist` folder?
+
+Before starting the execution, we need to install the packages. For that navigate to project folder in terminal and run:
+
+```
+npm install
+```
+
+Above command will install `typescript` dependency. Once installation is complete, run the `dev` script using:
+
+```
+npm run dev
+```
+
+I could see `/dist` folder getting created. Inside the `dist` folder, an `index.js` file is present with following code:
+
+```javascript
+var a = 10;
+```
+
+As we can see, TypeScript converted the `let` keyword to `var` for ES3 compatibility. What if we update the `target` value in `tsconfig.json` to `ES6`? Then `let` keyword is kept as such in the output JavaScript file.
+
+##### TypeScript Code
+
+So far we tried only JavaScript code in `index.ts` file. Let us try a simple TypeScript code.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Our aim is to restrict `add()` function to accept only numbers. After compilation the output JavaScript file contains following code:
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+```
+
+Wait! Where is the type check? I was expecting TypeScript to add type checking code like:
+
+```javascript
+function add(a, b) {
+  if (typeof a === "number" && typeof b === "number") return a + b;
+  else return "error";
+}
+```
+
+That will not happen. TypeScript is a **static type checker**. It does not do any code logic modification. Example, how can TypeScript decide what to do if an error occurs? Does it need to return a string with `"error"` or throw some exception. All these confusions will occur. So TypeScript will do only **build time type check with the annotations given to it**.
+
+For example, in the above TypeScript code if we call the function with a string value like below, TypeScript can identify the error at build time itself.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+add("a", "b");
+```
+
+Now TypeScript will throw below error in terminal:
+
+```
+src/index.ts:5:5 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+5 add("a", "b");
+```
+
+## Summary
+
+We learned how to setup a simple project that can compile TypeScript files. We learned how to provide compiler options using `tsconfig.json` file. We understood how Static Type checking works in case of TypeScript. This article can be a starting point for further TypeScript experiments.

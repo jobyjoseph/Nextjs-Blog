@@ -1,0 +1,24 @@
+---
+title: "SOLVED: Serverless Components CLI v1 is no longer bundled with Serverless Framework CLI"
+date: 2022-12-05
+slug: solved-serverless-components-cli-v1-is-no-longer-bundled-with-serverless-framework-cli
+description: When working with nextjs serverless component, you might face this issue while deploying the application. Serverless Components CLI v1 is no longer bundled with Serverless Framework CLI.
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgServerlessCli from "./images/serverless-cli.png";
+
+I am using `@sls-next/serverless-component` to deploy Next.js application to AWS. Everything was working fine.But today when I tried for a new Next.js application, I am seeing below error.
+
+```
+Serverless Components CLI v1 is no longer bundled with Serverless Framework CLI
+```
+
+<Image src={imgServerlessCli} alt="Serverless CLI issue" />
+
+The issue was with respect to the mismatch between the `@sls-next` component and main `serverless` component. I got it resolved by using an older version of `serverless`. I used version 2.72.2.
+
+```
+npx serverless@2.72.2
+```

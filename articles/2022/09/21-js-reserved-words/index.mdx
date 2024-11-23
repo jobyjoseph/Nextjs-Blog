@@ -1,0 +1,140 @@
+---
+title: "Reserved Words"
+shortTitle: "Reserved Words"
+date: 2022-09-25
+slug: reserved-words
+description: "There are few words which are part of JavaScript language. They have specific purpose in the language. Therefore they are also code keywords."
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "lexical-structure"
+sortorder: 10
+---
+
+import Image from "../../../../src/components/image";
+import imgReservedWords from "./images/reserved-words.png";
+import imgObjectProperties from "./images/object-properties.png";
+
+There are few words which are part of JavaScript language. They have specific purpose in the language. Therefore they are also code **keywords**.
+
+These keywords **should not be** used as the names for constants, variables, functions or classes. For example: `for` is an example of reserved word or keyword. If we try to name a variable as `for`, JavaScript will throw error.
+
+```javascript
+var for = 10;
+```
+
+Above code throws `Uncaught SyntaxError: Unexpected token 'for'` error.
+
+<Image
+  src={imgReservedWords}
+  alt="Reserved word error"
+  style={{ maxWidth: "500px" }}
+/>
+
+## Object Properties
+
+Syntactically, it is ok to use reserved words as properties of objects. But it is best to avoid using that.
+
+```javascript
+var obj = {
+  if: 23,
+  for: "hello",
+  while: true,
+};
+```
+
+Even though above object has keywords as its properties, it is perfectly valid.
+
+<Image
+  src={imgObjectProperties}
+  alt="Object properties"
+  style={{ maxWidth: "500px" }}
+/>
+
+## Backward Compatibility
+
+Some keyword like `let` was introduced in ES6. So there can be old code that uses `let` as a variable name. So for backward compatibility, declaring a variable with name `let` is allowed.
+
+```javascript
+var let = 10;
+console.log(let); // 10
+```
+
+So can we declare a variable using `let` and the variable name as `let`? No.
+
+```javascript
+let let = 10; // SyntaxError: Unexpected reserved word 'let'.
+```
+
+Since ES6, JavaScript engine knows the meaning of `let`. Therefore, it does not support variable declaration of `let` with `let` keyword. Same is the case with `class`. Classes were introduced in ES6. So, declaring a variable name `let` is not allowed inside a class.
+
+```javascript
+class Car {
+  let let = 10; // SyntaxError: Unexpected token
+}
+```
+
+## List of Reserved Words
+
+Here is a list of keywords currently used in JavaScript:
+
+```javascript
+as
+const
+export
+get
+null
+target
+void
+async
+continue
+extends
+if
+of
+this
+while
+await
+debugger
+false
+import
+return
+throw
+with
+break
+default
+finally
+in
+set
+true
+yield
+case
+delete
+for
+instanceof
+static
+try
+catch
+do
+from
+let
+super
+typeof
+class
+else
+function
+new
+switch
+var
+```
+
+Here is a list of reserved words for future use:
+
+```javascript
+enum
+implements
+interface
+package
+private
+protected
+public
+```

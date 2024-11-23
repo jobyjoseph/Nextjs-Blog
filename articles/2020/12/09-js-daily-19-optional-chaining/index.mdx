@@ -1,0 +1,25 @@
+---
+title: JS Daily 19 - Optional Chaining
+date: 2020-12-08
+slug: js-daily-19-optional-chaining
+decription: Learn how to use optional chaining operator ?. in JavaScript
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj = {
+  a: false
+};
+
+console.log(obj.a?.());
+```
+
+<Divider />
+
+The output is `TypeError`. It says `TypeError: obj.a is not a function`.
+
+Optional Chaining operator checks for only `null` or `undefined` on the left hand side. In this case `a` has the value `false`. So optional chaining operator continues chaining and it results in calling a function like `false()`. That results in TypeError.

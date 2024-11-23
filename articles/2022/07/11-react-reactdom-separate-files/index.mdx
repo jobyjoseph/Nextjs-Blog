@@ -1,0 +1,45 @@
+---
+title: "Why React and React-DOM Libraries are Kept in Two Separate Packages"
+date: 2022-07-24
+slug: why-react-and-react-dom-libraries-kept-in-two-separate-files
+description: "We might have noticed that, even though React and React-DOM are used together always, we include them from two separate packages. There is a reason why they are kept separate."
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+In a typical React project we import two packages, `react` and `react-dom`.
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+```
+
+If we are using React CDN, again we add reference to two CDN links.
+
+```html
+<script
+  crossorigin
+  src="https://unpkg.com/react@18/umd/react.development.js"
+></script>
+<script
+  crossorigin
+  src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+></script>
+```
+
+Being a React developer for some time, a question might come to our mind. Why these two files are not combined and shipped as a single file?
+
+## React for Components
+
+React library is used to create **components**. A component is a building block of an application. React library has classes and methods for this purpose.
+
+On the other hand, React-DOM deals with **placing** the components on browser. It deals with shadow DOM and other efficient rendering techniques.
+
+Now, if we consider React Native development, we again use React to build the app components. But we use React Native to build and publish the app for mobile devices.
+
+The point I am trying to say is, React, as a component library is reused by several platforms like React Native, React 3D or React Art. That is why it is maintained as a separate project and package.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

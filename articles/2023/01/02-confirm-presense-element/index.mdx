@@ -1,0 +1,21 @@
+---
+title: "Confirm Presense of Value Using TypeScript !"
+date: 2023-01-02
+slug: confirm-presense-value-typescript
+description: "When we assign a HTML DOM object to a variable, the object may or may not exist. We can tell TypeScript that the object will be present for sure using exclamation mark."
+tags: ["typescript"]
+---
+
+Consider following line of code:
+
+```javascript
+const input1 = document.getElementById("num1");
+```
+
+There is a chance that the id `num1` does not exist. Due to that reason, TypeScript will throw an error. Now if we are sure that the element with id `num1` will be present, we can tell that to TypeScript using exclamation mark `!`.
+
+```typescript
+const input1 = document.getElementById("num1")!;
+```
+
+The ending `!` tells that always there will be a value for `document.getElementById("num1")`.

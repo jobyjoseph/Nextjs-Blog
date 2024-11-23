@@ -1,0 +1,27 @@
+---
+title: Enable React Query API Call Based on Response From Another Query
+date: 2021-08-11
+slug: react-query-dependant-queries
+description: If a query A is dependant on query B, we can set the value of enabled configuration of B, with a response value from A.
+tags: ["reactQuery"]
+---
+
+We need to make two API calls in React Query. But, the second API call is dependent on the response of first one. For the purpose of two API requests, we bring two `useQuery` invocations.
+
+```javascript
+const query1 = useQuery("firstQuery", () => {
+  // Return user.id
+});
+
+const query2 = useQuery(
+  "secondQuery",
+  () => {
+    // Fetch user details
+  },
+  {
+    enabled: query1.user?.id,
+  }
+);
+```
+
+In the configuration object of second query, we enable the query only when `user.id` is available. This will help us to prevent unnecessary call by `query2` on component load.

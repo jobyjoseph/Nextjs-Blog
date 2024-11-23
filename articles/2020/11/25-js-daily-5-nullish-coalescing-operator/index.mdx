@@ -1,0 +1,25 @@
+---
+title: JS Daily 5 - Boolean Value With Nullish Coalescing Operator
+date: 2020-11-25
+slug: js-daily-5-nullish-coalescing-operator
+decription: Learn quickly how nullish coalescing operator works in JavaScript
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const a = false;
+const result = a ?? "Hello";
+console.log(result);
+```
+
+<Divider />
+
+Output is `false`.
+
+The nullish coalescing operator (`??`) is a logical operator that returns its right-hand side operand when its left-hand side operand is `null` or `undefined`, and otherwise returns its left-hand side operand.
+
+Default tendency is to return `"Hello"` because `a` is `false`. But `??` is explicitly built for `null` or `undefined`.

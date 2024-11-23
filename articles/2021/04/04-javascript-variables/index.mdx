@@ -1,0 +1,372 @@
+---
+title: Variables in JavaScript
+date: 2021-04-04
+slug: javascript-variables
+description: Learn more about JavaScript variables, declaration and hoisting
+tags: ["javascript"]
+---
+
+import Answer from "../../../../src/components/answer";
+
+In JavaScript, if we need to retain a value for future use, it assigns the value to or stores the value in a **variable**. Variables are **named memory locations**. When we declare a variable in JavaScript, it means that a memory location is allocated to store some value and that location can be accessed using the variable name.
+
+Here is an example of variable declaration.
+
+```javascript
+var name;
+```
+
+Here `name` is pointing towards some memory location in RAM. One of the way to store some value to that memory location is by using assignment operator(`=`).
+
+```javascript
+name = "Backbencher";
+```
+
+## Variable Declaration
+
+In JavaScript, a variable can be declared using any one of the following keywords.
+
+1. `var`
+2. `let`
+3. `const`
+
+### var
+
+`var` can declare either **global scoped** or **function scoped** variables.
+
+```javascript
+var a;
+
+function baz() {
+  var b;
+}
+```
+
+Variable `a` is declared outside of all functions. Hence, `a` is in global scope. Variable `b` is declared inside a function `baz()`. Hence, `b` is in function scope, ie the scope of `baz()`. The variable `b` can be used only inside the function `baz()`.
+
+#### Default value
+
+Default value of a variable declared using `var` is `undefined`.
+
+```javascript
+var a;
+console.log(a); // undefined
+```
+
+#### Variable redeclaration
+
+A variable declared using `var` can be redeclared. It **does not throw any error even in strict mode**.
+
+```javascript{numberLines: true}
+var a = 3;
+var a = 5;
+console.log(a); // 5
+```
+
+JavaScript engine is keeping a track of all variables declared. So in line 2, instead of redeclaring `a`, the engine maps to the memory location created in line 1. In that case, what is the output of below code?
+
+```javascript{numberLines: true}
+var a = 3;
+var a;
+console.log(a);
+```
+
+If you expected `undefined`, it is wrong. The output is `3`. Here also in line 2, it is a redeclaration of variable `a`. JavaScript engine skips that. Since there is no assignment in line 2, previous value(`3`) is retained.
+
+#### Hoisting
+
+Variables declared using `var` are created before executing any code. Before interpreting JavaScript code line by line, JavaScript engine parses through the full code. During this parsing step, the engine allocates memory to variables declared using `var` and assign `undefined`. This behaviour is called **hoisting** of variables.
+
+```javascript{numberLines: true}
+console.log(a); // undefined
+var a;
+```
+
+Here, line 1 is trying to print the value of `a`. But the variable `a` is declared only in line 2. Due to hoisting, when JavaScript engine executes line 1, variable `a` is already created. That is why above code outputs `undefined`.
+
+Since the memory is allocated during parsing step, for a developer it seems like JavaScript is hoisting or moving the variable declaration to the top of current scope, before execution. For example, the JavaScript code we write looks like below.
+
+```javascript
+console.log(a);
+var a;
+console.log(b);
+var b;
+console.log(c);
+var c;
+```
+
+After parsing step, the code looks like below for the JavaScript engine.
+
+```javascript
+var a;
+var b;
+var c;
+console.log(a);
+console.log(b);
+console.log(c);
+```
+
+This can be the reason why this behaviour is called _hoisting_ like in flag hoisting.
+
+During the hoisting process, only the memory allocation is done. Assigning values to the memory location happens only during execution. In that context, what will be the output of following code?
+
+```javascript{numberLines: true}
+console.log(a); // undefined
+var a = 6;
+```
+
+Above code prints `undefined` as output. It is because, the value `6` is assigned to the variable only when the JavaScript engine reaches line 2. Till that time the value of `a` is `undefined`.
+
+#### Variable as global object property
+
+When a variable is declared using `var` in **global scope**, that variable is added as a non-configurable property to the global object.
+
+```javascript
+var myVar = 4;
+console.log(window.myVar); // 4
+```
+
+Here the `myVar` property of `window` **cannot be deleted** using `delete` operator.
+
+```javascript
+var myVar = 4;
+delete window.myVar;
+console.log(window.myVar); // 4
+```
+
+#### Test your knowledge
+
+**Question**
+
+What is the output?
+
+```javascript
+var a = b,
+  b = "A";
+console.log(a, b);
+```
+
+<Answer>
+
+```
+undefined, "A"
+```
+
+Some of you might think the output is `"A", "A"`. But that is not right.
+
+Here, after hoisting, the memory is allocated for `a` and `b` and is assigned with `undefined`. To make things more clear, the code looks like below after hoisting.
+
+```javascript
+var a;
+var b;
+a = b;
+b = "A"; // It is not the other way round
+console.log(a, b);
+```
+
+</Answer>
+
+### let
+
+A variable declared using `let` keyword is **block scoped**. A block is a section of code wrapped in curly braces(`{}`).
+
+```javascript
+{
+  let a;
+}
+console.log(a); // ReferenceError: a is not defined
+```
+
+#### Default value
+
+A variable declared using `let` will have `undefined` as the default value.
+
+```javascript
+let a;
+console.log(a); // undefined
+```
+
+#### Global let variable
+
+Just like declaring a global variable using `var`, we can declare a global variable using `let`. But, when declaring a global variable using let, it is not added to the global object as `var` does.
+
+```javascript
+let letVariable = "let it Backbencher";
+var varVariable = "var it Backbencher";
+console.log(window.letVariable); // undefined
+console.log(window.varVariable); // "var it Backbencher"
+```
+
+#### let variable redeclaration
+
+When a variable is redeclared using `let`, it throws SyntaxError.
+
+```javascript
+let a;
+let a; // SyntaxError: Identifier 'a' has already been declared
+```
+
+Even when the first variable is declared using `var`, the error appears.
+
+```javascript
+var a;
+let a; // SyntaxError: Identifier 'a' has already been declared
+```
+
+#### Temporal Dead Zone
+
+A variable declared using `let` cannot be accessed before its declaration. The variable is treated to be in **Temporal Dead Zone**. Consider following code.
+
+```javascript{numberLines: true}
+console.log(a);
+console.log(b);
+var a;
+let b;
+```
+
+Before executing the code line by line, there is a parsing step. During parsing, all the declarations are understood and memory allocation and scope is defined. When memory is allocated for `a`, a value of `undefined` is automatically assigned to it. But for `b`, memory is allocated but not assigned with a value.
+
+After parsing, the execution starts line by line. So when the execution reaches line 2, there is a memory for `b`, but is in a non-readable condition(Temporal Dead Zone). In line 4, the engine assigns `undefined` to `b` after seeing the declaration statement. Statements if any after line 4 can access the variable `b`.
+
+#### Test your knowledge
+
+**Question**
+
+What is the output?
+
+```javascript{numberLines: true}
+let a = 10;
+{
+  let a = 20;
+  console.log(a);
+}
+console.log(a);
+```
+
+<Answer>
+
+```
+20
+10
+```
+
+Line 1 creates a variable `a` in global scope. Line 2 creates a new block using `{}`. Line 3 creates a new variable in the block scope. 20 is then assigned to the new block scoped variable. It does not affect the outer variable.
+
+</Answer>
+
+**Question**
+
+What is the output?
+
+```javascript{numberLines: true}
+let a = 10;
+{
+  var a = 20;
+}
+console.log(a);
+```
+
+<Answer>
+
+Line 3 throws error.
+
+```
+SyntaxError: Identifier 'a' has already been declared
+```
+
+</Answer>
+
+### const
+
+`const` is used to declare variables whose values **cannot be re-assigned**. In effect, `const` creates **constant variables**.
+
+```javascript
+const a = 5;
+a = 4; // TypeError: Assignment to constant variable
+```
+
+#### Declared and assigned
+
+A constant variable need to be assigned at the same time of declaration. If we try to separate the declaration and assignment operation, it **throws error**.
+
+```javascript
+const a; // SyntaxError: Missing initializer in const declaration
+a = 5;
+```
+
+#### Block scoped
+
+A variable declared using `const` is **block scoped**.
+
+```javascript
+{
+  const a = 5;
+}
+console.log(a); // ReferenceError: a is not defined
+```
+
+#### Variable redeclaration
+
+A constant variable cannot be redeclared. The initial declaration can be either through `var`, `let` or `const`.
+
+```javascript
+var a;
+const a = 5; // SyntaxError: Identifier 'a' has already been declared
+```
+
+#### Hoisting
+
+A variable declared using `const` is **not hoisted**, just like `let`.
+
+```javascript{numberLines: true}
+console.log(a); // ReferenceError: Cannot access 'a' before initialization
+const a = 5;
+```
+
+Here note the error message in line 1: "Cannot access 'a' before initialization". That means, the engine knows that the variable is going to be declared later. That awareness is obtained during the parsing step before code execution. In line 1, variable `a` is said to be in **Temporal Dead Zone**.
+
+#### Contant objects
+
+Elements of a constant object **can be updated**. It is because, when we assign an object to a constant variable, only the reference of the object is saved in the variable. Even when we update the object elements, the reference does not change. When the reference is kept constant, there will not be any error.
+
+```javascript
+const obj = {
+  name: "Backbencher",
+};
+
+obj.name = "Updated";
+
+console.log(obj.name); // "Updated"
+```
+
+### var vs let vs const
+
+| var                                             | let                                                 | const                                               |
+| ----------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
+| Function scoped                                 | Block scoped                                        | Block scoped                                        |
+| Global variables are attached to global objects | Global variables are NOT attached to global objects | Global variables are NOT attached to global objects |
+| Hoisted                                         | Not hoisted(Temporal Dead Zone)                     | Not hoisted(Temporal Dead Zone)                     |
+| Value can be changed                            | Value can be changed                                | Value cannot be changed                             |
+
+## Dynamic Typing
+
+JavaScript is a loosly typed and dynamic language. Variables in JavaScript are not directly mapped with any particular data type. In JavaScript, the type of a variable is decided by the **type of value it holds**.
+
+```javascript{numberLines: true}
+let a = "Backbencher";
+console.log(typeof a);  // "string"
+a = 10;
+console.log(typeof a);  // "number"
+```
+
+> `typeof` is an operator in JavaScript that returns the type of a variable or value as a string.
+
+In line 1, `a` is assigned with a string value `"Backbencher"`. That makes the type of `a` as string. In line 3, we reassigned `a` with a number value `10`. That makes `a` a number type. That is why we say JavaScript is loosly typed.
+
+In languages like Java, which is a strongly typed language, we need to specify the type of variable at the time of declaration.
+
+```java
+int i;
+```
+
+Now, the variable `i` in Java can hold only integer values. When trying to assign a non-integer value to `i`, Java throws an error.

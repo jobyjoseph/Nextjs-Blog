@@ -1,0 +1,29 @@
+---
+title: "SOLVED: fatal: refusing to merge unrelated histories"
+date: 2022-06-30
+slug: solved-fatal-refusing-merge-unrelated-histories
+description: "When we get fatal refusing to merge unrelated histories error in Git, we can solve it using --allow-unrelated-histories flag"
+tags: ["git"]
+---
+
+Last day, I created a new repository in Bitbucket. During the creation phase itself, a `.gitignore` file was created and a `master` default branch was formed in Bitbucket remote server. Basically, a git remote server with a `master` branch was created. The remote server can be anything like Github or Bitbucket.
+
+Next, I was trying to push my existing project to Bitbucket. The local project is also a git repository with `master` branch. Before pushing the code to Bitbucket, I planned to pull my latest change in remote with `.gitignore` file to my local machine. This was the command.
+
+```
+git pull origin master
+```
+
+But Git replied with this error message:
+
+```
+fatal: refusing to merge unrelated histories
+```
+
+Why unrelated? Because the `master` branch in remote and local machine was created in separate ways. We already know that fact. We need to tell Git that its OK to pull the unrelated master branch contents. For that we need to add an extra flag `--allow-unrelated-histories`. This was my line:
+
+```
+git pull origin master --allow-unrelated-histories
+```
+
+That did the trick for me.

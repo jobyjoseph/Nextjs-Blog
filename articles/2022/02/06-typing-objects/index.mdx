@@ -1,0 +1,113 @@
+---
+title: "Object Types in TypeScript"
+date: 2022-02-06
+slug: typescript-object-types
+description: ""
+tags: ["typescript"]
+---
+
+Objects in JavaScript consist of key value pairs. An object consist of different properties. Each property can contain a data value of certain type. **Setting types of an object properties and recursively applying this process to nested objects defines the type of an object**.
+
+Here is a simple JavaScript object.
+
+```javascript
+{
+    name: "Joby",
+    age: 35
+}
+```
+
+As we can see, `name` property contains string value and `age` contains a number. Therefore, we can define the type of above object as:
+
+```typescript
+{
+    name: string,
+    age: number
+}
+```
+
+We saw the object and associated type. In actual code, this is how we can declare a variable and attach an object type.
+
+```typescript
+let student: {
+  name: string;
+  age: number;
+};
+
+student = {
+  name: "Joby",
+  age: 35,
+};
+```
+
+The object value we passed to `student` matches the defined type. What if we assign a different object to `student` as shown below?
+
+```typescript
+student = {
+  name: "Joby",
+  age: 35,
+  year: 2022,
+};
+```
+
+TypeScript in this case clearly points out the extra `year` property. See how detail TypeScript is in the error message.
+
+```
+error TS2322: Type '{ name: string; age: number; year: number; }' is not assignable to type '{ name: string; age: number; }'.
+  Object literal may only specify known properties, and 'year' does not exist in type '{ name: string; age: number; }'.
+```
+
+## Object as Function Argument
+
+When a function accepts an object as argument, we can again define the type of object accepted by the function. If there is a function `foo()` that accepts above `student` object, this is how the function declaration looks like.
+
+```typescript
+function foo(student: { name: string; age: number }) {
+  return;
+}
+```
+
+We can then call the function `foo()` by passing an object with only `name` and `age` property.
+
+```typescript
+foo({
+  name: "Joby",
+  age: 35,
+});
+```
+
+Adding an extra parameter to the argument object throws an error. Let us pass an object to `foo()` that contains 3 properties.
+
+```typescript
+foo({
+  name: "Joby",
+  age: 35,
+  year: 2022,
+});
+```
+
+TypeScript clearly points out the error. Let me paste the exact error message below. See for yourself how descriptive it is.
+
+`error TS2345: Argument of type '{ name: string; age: number; year: number; }' is not assignable to parameter of type '{ name: string; age: number; }'. Object literal may only specify known properties, and 'year' does not exist in type '{ name: string; age: number; }'.`
+
+## Optional Properties in Objects
+
+In an object, few properties can be **optional**. Consider the following object:
+
+```javascript
+{
+  name: "Joby",
+  status: "married",
+  spouse: "Ninu"
+}
+```
+
+In the above object, `spouse` key is not required if `status` is `single`. While defining type for such fields, we can mark a property as optional by `?` operator. Here is the type definition for our object.
+
+```typescript
+{
+  name: string
+  status: string
+  spouse?: string
+}
+```

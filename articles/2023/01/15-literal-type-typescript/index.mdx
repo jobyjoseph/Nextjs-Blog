@@ -1,0 +1,33 @@
+---
+title: "Literal Type in TypeScript"
+date: 2023-01-15
+slug: literal-type-typescript
+description: "Instead of saying, a variable can contain a string or a number, literal type forces a particular value to a variable."
+tags: ["typescript"]
+---
+
+Instead of saying, a variable can contain a string or a number, literal type forces a particular value to a variable.
+
+## Literal type with const
+
+We have a const variable in our code:
+
+```typescript
+const num = 80;
+```
+
+Since a `const` variable cannot be reassigned, TypeScript marks the type of `num` as `80`(Not `number`).
+
+```typescript
+const num: 80;
+```
+
+That was an example of literal type.
+
+## Combining literal types using or operator
+
+If a variable can have only two values `apple` or `banana`, we can set the type as follows:
+
+```typescript
+let a: "apple" | "banana";
+```

@@ -1,0 +1,47 @@
+---
+title: "Big O Time Complexity"
+date: 2022-12-03
+slug: big-o-time-complexity
+description: Big 0 time complexity is a way to categorize algorithms based on their time or memory requirements.
+tags: ["algorithms"]
+---
+
+**Big O** is a way to convey the performance of an algorithm. If somebody is asking us, how is the performance of an algorithm, there should be some symbol or value to convey. That is **Big O**.
+
+Big O is not an exact measurement. It is like food tasting. We can give answers like good, tasty and so on. But not exact values like this food tastes 8.14/10. That is weird. Same thing for Big O. It is not exact, but serves the purpose.
+
+Big O tells us how the computation grows based on input.
+
+## Where we use Big O?
+
+Knowing Big O value helps to decide which data structure to use. There are data structures like Arrays, Linked list and so on. Based on the Big O value, it will help us to chose which one.
+
+## Big O for Worst Case
+
+Big O always considers the worst case. If Big O says O(N), the algorithm never goes worser than that.
+
+## How to find Big O easily
+
+Look for loops. Observe below code:
+
+```javascript
+const n = 100;
+for (let i = 0; i < n; i++) {
+  console.log(i);
+}
+```
+
+As `n` increases the time increases linearly. So Big O is O(n).
+
+Below code contains a nested loop:
+
+```javascript
+const n = 100;
+for (let i = 0; i < n; i++) {
+  for (let j = 0; j < n; j++) {
+    console.log(i);
+  }
+}
+```
+
+For each increase in `n`, the time increases `n^2`. So Big O is O(n<sup>2</sup>).

@@ -1,0 +1,206 @@
+---
+title: "How To Write a File to AWS S3 Using Pure Node.js"
+date: 2024-01-29
+slug: how-to-write-file-aws-s3-using-pure-nodejs
+description: "This article explains how to write a file to AWS S3 using pure Node.js. We are not using AWS SDK."
+tags: ["web"]
+---
+
+import Olink from "../../../../src/components/olink";
+import Image from "../../../../src/components/image";
+
+If we are using Node.js, there is already an <Olink link="https://www.npmjs.com/package/aws-sdk">AWS SDK</Olink> that can write a file to S3.
+
+This article explains how to do it without the SDK. The generic steps to be followed are given in this <Olink link="https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html">AWS documentation</Olink>.
+
+For me it took a while and help from various other articles to finally implement the same using Node.js. Main challenge was in finding the right encryption methods.
+
+## Packages
+
+We need `crypto` package to make use of different hashing algorithms. We need `axios` to make API requests.
+
+```javascript
+const crypto = require("crypto");
+import axios from "axios";
+```
+
+## Function to Caculate HMAC SHA256
+
+This function comes handy to do the hmac encryption with a key.
+
+```javascript
+async function sign(key, msg) {
+  // Convert the key and data to ArrayBuffer
+  let keyBuffer = key;
+  if (typeof key === "string") {
+    keyBuffer = new TextEncoder().encode(key);
+  }
+  const dataBuffer = new TextEncoder().encode(msg);
+
+  // Import the key
+  const importedKey = await crypto.subtle.importKey(
+    "raw",
+    keyBuffer,
+    { name: "HMAC", hash: { name: "SHA-256" } },
+    false,
+    ["sign"]
+  );
+
+  // Sign the data
+  const signature = await crypto.subtle.sign(
+    { name: "HMAC", hash: "SHA-256" },
+    importedKey,
+    dataBuffer
+  );
+
+  return Buffer.from(signature);
+  //console.log(crypto.createHmac('sha256', key).update(msg, 'utf8').digest())
+}
+```
+
+## Function to Caculate SHA256
+
+```javascript
+async function contentHash(content) {
+  const msgUint8 = new TextEncoder().encode(content);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  //const hash = crypto.createHash('sha256').update(content).digest('hex')
+  return hashHex;
+}
+```
+
+## Function to Get Signature Key
+
+```javascript
+async function getSignatureKey(key, dateStamp, regionName, serviceName) {
+  const kDate = await sign(`AWS4${key}`, dateStamp);
+  const kRegion = await sign(kDate, regionName);
+  const kService = await sign(kRegion, serviceName);
+  const kSigning = await sign(kService, "aws4_request");
+  return kSigning;
+}
+```
+
+## Function to Create the String to Sign
+
+```javascript
+function createStringToSign(datetime, region, service, requestHash) {
+  const algorithm = "AWS4-HMAC-SHA256";
+  const credentialScope = `${datetime.substring(
+    0,
+    8
+  )}/${region}/${service}/aws4_request`;
+  const stringToSign = `${algorithm}\n${datetime}\n${credentialScope}\n${requestHash}`;
+  return stringToSign;
+}
+```
+
+## Function to Get UTC date
+
+```javascript
+// Function to get the current date in the required format
+function getFormattedDate() {
+  const now = new Date();
+  const year = now.getUTCFullYear();
+  const month = ("0" + (now.getUTCMonth() + 1)).slice(-2);
+  const day = ("0" + now.getUTCDate()).slice(-2);
+  const hour = ("0" + now.getUTCHours()).slice(-2);
+  const minute = ("0" + now.getUTCMinutes()).slice(-2);
+  const second = ("0" + now.getUTCSeconds()).slice(-2);
+  return {
+    date: `${year}${month}${day}`,
+    dateTime: `${year}${month}${day}T${hour}${minute}${second}Z`,
+    utcString: `${now.toUTCString()}`,
+  };
+}
+```
+
+## Init Function
+
+This function sets the values like bucket name, accessKey, secret etc and starts the call stack.
+
+```javascript
+async function init(contentArg, fileNameArg) {
+  console.log({ contentArg, fileNameArg });
+  const dateObj = getFormattedDate();
+  console.log(dateObj);
+
+  // Example usage
+  const accessKey = "AKIA5Q3DN3MWQRKB7865";
+  const secretKey = "uvzQGk14YWY0LX8RPwm9JZu2example/4qCFBL";
+  const dateStamp = dateObj.date; // Replace with the current date in YYYYMMDD format
+  const regionName = "us-east-1"; // Replace with your AWS region
+  const serviceName = "s3"; // Replace with the AWS service you are using
+  const datetime = dateObj.dateTime; // Replace with the timestamp of the request
+  const bucketname = "your-bucket-name";
+  const fileName = fileNameArg;
+  const content = contentArg;
+  const hashedContent = await contentHash(content);
+
+  // Example Canonical Request (replace with your actual canonical request)
+  const canonicalRequest = `PUT
+/${fileName}
+
+date:${dateObj.utcString}
+host:${bucketname}.s3.amazonaws.com
+x-amz-content-sha256:${hashedContent}
+x-amz-date:${dateObj.dateTime}
+
+date;host;x-amz-content-sha256;x-amz-date
+${hashedContent}`;
+
+  // Step 1: Calculate the Signature Key
+  const signingKey = await getSignatureKey(
+    secretKey,
+    dateStamp,
+    regionName,
+    serviceName
+  );
+
+  // Step 2: Create the String to Sign
+  const requestHash = crypto
+    .createHash("sha256")
+    .update(canonicalRequest)
+    .digest("hex");
+  const stringToSign = createStringToSign(
+    datetime,
+    regionName,
+    serviceName,
+    requestHash
+  );
+
+  // Step 3: Calculate the Signature
+  const signature = (await sign(signingKey, stringToSign)).toString("hex");
+
+  console.log(signature);
+
+  const authHeader = `AWS4-HMAC-SHA256 Credential=${accessKey}/${dateObj.date}/us-east-1/s3/aws4_request,SignedHeaders=date;host;x-amz-content-sha256;x-amz-date,Signature=${signature}`;
+
+  console.log(authHeader);
+
+  const url = "https://your-bucket-name.s3.amazonaws.com/" + fileName;
+  const authorizationHeader = authHeader;
+  const contentSha256Header = hashedContent;
+  const amzDateHeader = dateObj.dateTime;
+  const dateHeader = dateObj.utcString;
+  const data = content;
+
+  const response = await axios.put(url, data, {
+    headers: {
+      Authorization: authorizationHeader,
+      "x-amz-content-sha256": contentSha256Header,
+      "x-amz-date": amzDateHeader,
+      date: dateHeader,
+    },
+  });
+
+  console.log(response.status);
+  console.log(response.data);
+}
+
+init("hello world content", "filename.txt");
+```

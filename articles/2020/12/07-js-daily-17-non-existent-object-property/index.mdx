@@ -1,0 +1,24 @@
+---
+title: JS Daily 17 - Non Existent Object Property
+date: 2020-12-07
+slug: js-daily-17-non-existent-object-property
+decription: If we try to access a non-existent property of an object, we get undefined
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj = {
+  name: "Backbencher"
+}
+console.log(obj.age);
+```
+
+<Divider />
+
+The output is `undefined`.
+
+`obj` is an object literal. We are trying to access the value of a property that is not present in `obj`. It results in `undefined`.

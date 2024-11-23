@@ -1,0 +1,37 @@
+---
+title: SOLVED setupTests.js not working in create-react-app
+date: 2021-04-05
+slug: create-react-app-setuptests-js-not-working
+description: Solution for Enzyme Internal Error. Enzyme expects an adapter to be configured.
+tags: ["javascript"]
+---
+
+import Image from "../../../../src/components/image";
+import imageJestError from "./images/jest-error.png";
+
+To use enzyme with React 16, I need to use an enzyme adapter. To setup the adapter before any Jest tests, I wrote the code in `src/setupTests.js`. For some reasons, that file is not being called by CreateReactApp. Instead, I am getting an error like this:
+
+```
+Enzyme Internal Error: Enzyme expects an adapter to be configured, but found none. To
+configure an adapter, you should call `Enzyme.configure({ adapter: new Adapter() })`
+before using any of Enzyme's top level APIs, where `Adapter` is the adapter
+corresponding to the library currently being tested. For example:
+
+          import Adapter from 'enzyme-adapter-react-15';
+```
+
+<Image
+  src={imageJestError}
+  alt="Enzyme error"
+  caption="Enzyme error in Create React App"
+/>
+
+**Solution:**
+
+I added a flag to `test` command in `package.json` file. So now my test command looks like:
+
+```
+react-scripts test --setupFiles ./src/setupTests.js
+```
+
+Then I ran `npm run test` again and it worked.

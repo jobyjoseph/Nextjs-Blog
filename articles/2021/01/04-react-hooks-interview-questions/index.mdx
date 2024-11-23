@@ -1,0 +1,536 @@
+---
+title: React Hooks Interview Questions
+date: 2021-01-19
+slug: react-hooks-interview-questions
+decription: Understand the different types of hooks in React and prepare for React interview.
+tags: ["react"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+What are hooks in React?
+
+**Answer:**
+
+Hooks are a new feature added in React v16.8. It allows to use all React features without writing class components. For example, before version 16.8, we need a class component to manage state of a component. Now we can keep state in a functional component using `useState` hook.
+
+<Divider />
+
+**Question:**
+
+Will React hooks work inside class components?
+
+**Answer:**
+
+No
+
+<Divider />
+
+**Question:**
+
+Why React hooks was introduced?
+
+**Answer:**
+
+One reason to introduce hooks was the complexity in dealing with `this` keyword inside class components. If not handled properly, `this` will take some other value. That will result in breaking lines like `this.setState()` and other event handlers. Using hooks, we avoid that complexity when working with functional components.
+
+Class components do not minify very well and also make hot reloading unreliable. That is another inspiration to bring hooks.
+
+Another reason is that, there is no specific way to reuse stateful component logic. Even though HOC and render props patterns address this problem, that asks for modifying the class component code. Hooks allow to share stateful logic without changing the component hierarchy.
+
+Fourth reason is, in a complex class component, related code are scattered in different lifecycle methods. Example, in case of a data fetching, we do that mainly in `componentDidMount()` and `componentDidUpdate()`. Another example is, in case of event listeners, we use `componentDidMount()` to bind an event and `componentWillUnmount()` to unbind. Hooks instead helps to place related code together.
+
+<Divider />
+
+**Question:**
+
+How `useState` hook works? What is/are the arguments accepted by this hook and what is returned by the hook?
+
+**Answer:**
+
+`useState` hook is a function which is used to store state value in a functional component. It accepts an argument as the initial value of the state. It returns an array with 2 elements. First element is the current value of state. Second element is a function to update the state.
+
+We import `useState` first from React by
+
+```javascript
+import React, { useState } from "react";
+```
+
+Later we use `useState` like:
+
+```javascript
+const [currentStateValue, functionToUpdateState] = useState(initialStateValue);
+```
+
+<Divider />
+
+**Question:**
+
+Here we have a class component with a state value. Each time the button in component is clicked, the count is incremented.
+
+```javascript
+class Counter extends Component {
+  state = {
+    count: 0,
+  };
+
+  incrementCount = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.incrementCount}>Count: {this.state.count}</button>
+      </div>
+    );
+  }
+}
+```
+
+Rewrite this component using React hooks.
+
+**Answer:**
+
+```javascript
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Count: {count}
+      </button>
+    </div>
+  );
+}
+```
+
+<Divider />
+
+**Question:**
+
+Below we have a class component. It contains code to update the state based on previous state value.
+
+```javascript
+class Counter extends Component {
+  state = {
+    count: 0,
+  };
+
+  incrementCount = () => {
+    this.setState((prevState) => {
+      return {
+        count: prevState.count + 1,
+      };
+    });
+  };
+
+  decrementCount = () => {
+    this.setState((prevState) => {
+      return {
+        count: prevState.count - 1,
+      };
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <strong>Count: {this.state.count}</strong>
+        <button onClick={this.incrementCount}>Increment</button>
+        <button onClick={this.decrementCount}>Decrement</button>
+      </div>
+    );
+  }
+}
+```
+
+Rewrite the above code using React hooks.
+
+**Answer:**
+
+One can update the value of a state variable just by passing the new value to update function or by passing a callback function. Second technique which accepts a callback function is safe to use.
+
+```javascript
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount((prevCount) => {
+      return prevCount + 1;
+    });
+  };
+
+  const decrementCount = () => {
+    setCount((prevCount) => {
+      return prevCount - 1;
+    });
+  };
+
+  return (
+    <div>
+      <strong>Count: {count}</strong>
+      <button onClick={incrementCount}>Increment</button>
+      <button onClick={decrementCount}>Decrement</button>
+    </div>
+  );
+}
+```
+
+<Divider />
+
+**Question:**
+
+Here we have class component that updates the state using the input from a form.
+
+```javascript
+export class Profile extends Component {
+  state = {
+    name: "Backbencher",
+    age: 23,
+  };
+
+  onNameChange = (e) => {
+    this.setState({
+      name: e.target.value,
+    });
+  };
+
+  onAgeChange = (e) => {
+    this.setState({
+      age: e.target.value,
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <form>
+          <input
+            type="text"
+            value={this.state.name}
+            onChange={this.onNameChange}
+          />
+          <input
+            type="text"
+            value={this.state.age}
+            onChange={this.onAgeChange}
+          />
+          <h2>
+            Name: {this.state.name}, Age: {this.state.age}
+          </h2>
+        </form>
+      </div>
+    );
+  }
+}
+```
+
+Rewrite the same component using React hooks.
+
+**Answer:**
+
+```javascript
+import React, { useState } from "react";
+
+function Profile() {
+  const [profile, setProfile] = useState({
+    name: "Backbencher",
+    age: 24,
+  });
+
+  const onNameChange = (e) => {
+    setProfile({ ...profile, name: e.target.value });
+  };
+
+  const onAgeChange = (e) => {
+    setProfile({ ...profile, age: e.target.value });
+  };
+
+  return (
+    <div>
+      <form>
+        <input type="text" value={profile.name} onChange={onNameChange} />
+        <input type="text" value={profile.age} onChange={onAgeChange} />
+        <h2>
+          Name: {profile.name}, Age: {profile.age}
+        </h2>
+      </form>
+    </div>
+  );
+}
+```
+
+The setter function of `useState()` does not automatically merge if an object is stored in state. But in case of `setState()` method in class components, auto merging happens.
+
+Here we are merging object properties with the help of JavaScript spread operator.
+
+<Divider />
+
+**Question:**
+
+What are the differences in using hooks and class components with respect to state management?
+
+**Answer:**
+
+When using `setState()` in class components, always the state variable is an object. Where as, the state variable in hooks can be of any type like number, string, boolean, object or array.
+
+When state variable is an object, `setState()` in class components automatically merges the new value to the state object. But in case of setter function in `useState()`, we need to explicitly merge the updated object property using spread operator.
+
+<Divider />
+
+**Question:**
+
+What is the purpose of `useEffect` hook?
+
+**Answer:**
+
+The Effect hook lets us to perform side effects in functional components. It helps us to avoid redundant code in different lifecycle methods of a class component. It helps to group related code.
+
+<Divider />
+
+**Question:**
+
+Here is a class component that prints _Boom_ in console whenever it is mounted or updated.
+
+```javascript
+export class Banner extends Component {
+  state = {
+    count: 0,
+  };
+
+  updateState = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+
+  componentDidMount() {
+    console.log("Boom");
+  }
+
+  componentDidUpdate() {
+    console.log("Boom");
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.updateState}>State: {this.state.count}</button>
+      </div>
+    );
+  }
+}
+```
+
+Remove the redundant console.log statement using React hooks.
+
+**Answer:**
+
+`componentDidMount()` and `componentDidUpdate()` are lifecycle methods. Such side effects can be done using `useEffect` hook. `useEffect` hook is a function which accepts a callback function. That callback function is called every time render happens.
+
+The code can be rewritten as:
+
+```javascript
+import React, { useState, useEffect } from "react";
+
+function Banner() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Boom");
+  });
+
+  const updateState = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={updateState}>State: {count}</button>
+    </div>
+  );
+}
+```
+
+<Divider />
+
+**Question:**
+
+Understand the code below:
+
+```javascript
+function Banner() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    console.log("Count is updated");
+  });
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>State: {count}</button>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+    </div>
+  );
+}
+```
+
+It logs "Count is updated" message even when updating the value in textbox. How can we show the log message only when the count state is updated?
+
+**Answer:**
+
+`useEffect` function accepts a second parameter which should be an array. Within this array, we need to pass the props or state we need to watch for. Only if those props or state mentioned in the array change, the effect is executed. So in our code, we add the second argument and specify only `count` value in the array.
+
+Here is the udpated `useEffect` code:
+
+```javascript
+useEffect(() => {
+  console.log("Count is updated");
+}, [count]);
+```
+
+<Divider />
+
+**Question:**
+
+We have got a class component that updates time every second. It uses `componentDidMount()` to set the timer.
+
+```javascript
+export class Clock extends Component {
+  state = {
+    date: new Date(),
+  };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        date: new Date(),
+      });
+    }, 1000);
+  }
+
+  render() {
+    return <div>{this.state.date.toString()}</div>;
+  }
+}
+```
+
+Convert the above code to React hooks.
+
+**Answer:**
+
+`componentDidMount()` is a lifecycle method that executes only once in a component lifecycle. We use `useEffect` to bring effects of `componentDidMount()`. But `useEffect` runs on every props or state updation. To prevent it, we make use of second array argument of `useState`. We keep that array empty. So for React, there are no props or state to watch for. Therefore `useEffect` runs only once like `componentDidMount()`.
+
+Here is the code using React hooks.
+
+```javascript
+function Clock() {
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+  }, []);
+
+  return <div>{date.toString()}</div>;
+}
+```
+
+<Divider />
+
+**Question:**
+
+We have a code snippet from a class component which registers and remove an event listener.
+
+```javascript
+componentDidMount() {
+  window.addEventListener("mousemove", this.handleMousePosition);
+}
+
+componentWillUnmount() {
+  window.removeEventListener("mousemove", this.handleMousePosition);
+}
+```
+
+Convert this code to React hooks format.
+
+**Answer:**
+
+```javascript
+useEffect(() => {
+  window.addEventListener("mousemove", handleMousePosition);
+
+  return () => {
+    window.removeEventListener("mousemove", handleMousePosition);
+  };
+}, []);
+```
+
+<Divider />
+
+**Question:**
+
+Here is a code snippet from a Context consumer component.
+
+```javascript
+import { NameContext, AgeContext } from "./ProviderComponent";
+
+export class ConsumerComponent extends Component {
+  render() {
+    return (
+      <NameContext.Consumer>
+        {(name) => {
+          return (
+            <AgeContext.Consumer>
+              {(age) => (
+                <div>
+                  Name: {name}, Age: {age}
+                </div>
+              )}
+            </AgeContext.Consumer>
+          );
+        }}
+      </NameContext.Consumer>
+    );
+  }
+}
+```
+
+Rewrite the `ConsumerComponent` using `useContext` React hook.
+
+**Answer:**
+
+Hooks can be used only in a functional component. The `ConsumerComponent` can be re-written as:
+
+```javascript
+function ConsumerComponent() {
+  const name = useContext(NameContext);
+  const age = useContext(AgeContext);
+
+  return (
+    <div>
+      Name: {name}, Age: {age}
+    </div>
+  );
+}
+```

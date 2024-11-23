@@ -1,0 +1,43 @@
+---
+title: String in JavaScript
+date: 2021-02-14
+slug: javascript-string
+description: Learn in depth about string data type in JavaScript.
+tags: ["javascript"]
+---
+
+import Version from "../../../../src/components/version";
+
+## String Instance Methods
+
+### trimStart() <Version number="10" />
+
+`trimStart()` method removes whitespace from the beginning of a string and **returns the trimmed string**.
+
+```javascript
+const str = "     Backbencher     ";
+const trimmed = str.trimStart(); // highlight-line
+console.log(trimmed); // "Backbencher     "
+```
+
+Technically `trimStart()` and `trimLeft()` are same. `trimLeft()` is an alias to `trimStart()`.
+
+```javascript
+console.log(String.prototype.trimLeft.name); // "trimStart"
+```
+
+### trimEnd() <Version number="10" />
+
+`trimEnd()` method removes whitespace from the end of a string and **returns the trimmed string**.
+
+```javascript
+const str = "     Backbencher     ";
+const trimmed = str.trimEnd(); // highlight-line
+console.log(trimmed); // "     Backbencher"
+```
+
+Technically `trimEnd()` and `trimRight()` are same. `trimRight()` is an alias to `trimEnd()`.
+
+```javascript
+console.log(String.prototype.trimRight.name); // "trimEnd"
+```

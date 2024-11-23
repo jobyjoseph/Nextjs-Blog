@@ -1,0 +1,42 @@
+---
+title: Comments in JavaScript
+date: 2020-11-07
+slug: javascript-comments
+decription: Comments in Javascript is used to improve code readability. They are added to JavaScript using two forward slashes or a forward slash followed by *.
+tags: ["javascript"]
+---
+
+Comments in JavaScript improve readability of the code. A comment block is not executed by JavaScript engine. In JavaScript, we can write comments using two techniques.
+
+## Single Line Comment
+
+If the comment can be contained in one line, we can use `//` notation to write the comment. Here, the start of the comment is from `//` and the end is at the end of line.
+
+```javascript
+// First line of comment
+console.log("Hello"); // Comment beside the code
+```
+
+## Multi Line Comment
+
+When the comment text spans multiple lines, we can use `/* ... */` to write the comment.
+
+```javascript
+/*
+Here is a comment that
+takes more than one line.
+*/
+```
+
+Multi line comment cannot be nested. Let us see what happens if we nest it.
+
+```javascript
+/*
+Parent comment line
+/*
+Child comment line
+*/
+*/
+```
+
+Above code will throw an error. Because the first `*/` closes the entire comment text so far. So the second `*/` does not have a role and is the reason for syntax error.

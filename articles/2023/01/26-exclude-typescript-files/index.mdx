@@ -1,0 +1,42 @@
+---
+title: "Exclude Certain TypeScript Files From Compilation"
+date: 2023-01-26
+slug: exclude-certain-typescript-files-from-compilation
+description: ""
+tags: ["typescript"]
+---
+
+If our project is a TypeScript project, when we run `tsc` command, all the TypeScript files are compiled to JavaScript files. But what if, we want to exclude certain files from compilation?
+
+Say we have three files in our project:
+
+```
+app.ts
+analytics.ts
+tracking.ts
+```
+
+When we run `tsc` command, only `app.ts` needs to compile. For that, we need to add `exclude` property in `tsconfig.json` file.
+
+Open `tsconfig.json` file. Your file might look like this now:
+
+```json
+{
+  "compilerOptions": {
+    // ...
+  }
+}
+```
+
+Add `exclude` property in the root level as shown below:
+
+```json
+{
+  "compilerOptions": {
+    // ...
+  },
+  "exclude": ["analytics.ts", "tracking.ts"]
+}
+```
+
+We can use wild card(`*`) in the file name pattern.

@@ -1,0 +1,30 @@
+---
+title: Read Content of All Files Inside a Folder Using Node.js
+date: 2021-07-22
+slug: read-content-of-files-in-folder-using-nodejs
+description: Sometimes we require to read the contents of all files in a folder. It can be to pre-render static pages or for some other reason. filesystem package in nodejs help us with it.
+tags: ["nodejs"]
+---
+
+Sometimes we require to read the contents of all files in a folder. It can be to pre-render static pages or for some other reason. Let us see how we can do that using Node.js.
+
+Here `index.js` and `blog` directory are in same folder. Here are the contents of `index.js` file.
+
+```javascript
+const path = require("path");
+const fs = require("fs");
+
+const blogPath = path.join(process.cwd(), "blog");
+const filenames = fs.readdirSync(blogPath);
+const filePosts = filenames.map((name) => {
+  const fullPath = path.join(process.cwd(), "blog", name);
+  const file = fs.readFileSync(fullPath, "utf-8");
+  console.log(file);
+});
+```
+
+`path` and `fs` comes with Node.js. They are included on top.
+
+`process.cwd()` returns current directory. `path.join()` returns the full path string.
+
+`fs.readdirSync` gets all file names synchronously. `fs.readFileSync` gets the content of the file.

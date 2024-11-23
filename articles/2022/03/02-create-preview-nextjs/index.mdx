@@ -1,0 +1,26 @@
+---
+title: "Create Preview Mode in Next.js"
+date: 2022-03-03
+slug: create-preview-mode-nextjs
+description: "Next.js turns to be in preview mode by setting two cookies in the user's browser. The cookie names are `__prerender_bypass` and `__next_preview_data`"
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgSetPreviewMode from "./images/set-preview-mode.png";
+
+Next.js turns to be in preview mode by setting two cookies in the user's browser. The cookie names are `__prerender_bypass` and `__next_preview_data`.
+
+Now, in order to set these cookies, we need to create an API endpoint in Next.js like `pages/api/preview.js`. Then call `setPreviewData({})` on the response object.
+
+```javascript
+export default function handler(req, res) {
+  // ...
+  res.setPreviewData({});
+  // ...
+}
+```
+
+Calling the API endpoint will enable preview mode.
+
+<Image src={imgSetPreviewMode} alt="Set preview mode" />

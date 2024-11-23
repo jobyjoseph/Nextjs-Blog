@@ -1,0 +1,29 @@
+---
+title: JS Daily 11 - Named Arguments
+date: 2020-12-01
+slug: js-daily-11-named-arguments
+decription: In JavaScript, we can bring the feature of named arguments using objects.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function xyz({name = "Rock", age = 20}) {
+  console.log(name, age);
+}
+xyz({name: "Joe"});
+```
+
+<Divider />
+
+Output is:
+
+```
+"Joe"
+20
+```
+
+This is an example of providing named arguments to a function. This is achieved using **object destructuring**. The value of arguments are mapped from the passed object. If a property is not passed(`age`), the default value assigned is taken.

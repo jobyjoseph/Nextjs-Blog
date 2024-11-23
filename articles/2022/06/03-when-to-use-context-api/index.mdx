@@ -1,0 +1,29 @@
+---
+title: "When to Use Context API in React"
+date: 2022-06-29
+slug: when-to-use-context-api-in-react
+description: "Context API provides a way to pass data through the component tree easily."
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+In a typical React application, there will be lot of components one nested inside another. The depth of nesting can be really big in some cases. What if we need to pass a value from parent component to a child component that is nested few levels deep?
+
+One solution is to **pass the value as props** from one level to next level. This is more kind of water flowing through steps. Even though this solution works, it can be a nightmare for the developer sometimes.
+
+Context API can help us here. We can set the value to be passed to the context using `Provider`. Here is an example where I pass the value as `"dog"`.
+
+```javascript
+<ThemeContext.Provider value="dog">
+  // ... Nested components
+</ThemeContext.Provider>
+```
+
+And then inside the nested component where we need to get the value, retrieve it using `this.context`.
+
+Above example assumed we are using class components. In function components we can make use of `useContext()` hook.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

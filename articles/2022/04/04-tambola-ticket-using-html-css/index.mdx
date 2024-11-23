@@ -1,0 +1,163 @@
+---
+title: "Create a Tambola Ticket Using HTML and CSS"
+date: 2022-04-05
+slug: create-tambola-ticket-using-html-css
+description: "Tambola ticket is the small sheet of paper with a grid of 3 rows and 9 columns. Each row contains 5 random numbers between 1 and 90. We are trying to create our own Tambola ticket using HTML and CSS. We also include a striked number in the design."
+tags: ["css"]
+---
+
+import Image from "../../../../src/components/image";
+import imgTambolaTicket1 from "./images/tambola-ticket-1.png";
+import imgTambolaTicket2 from "./images/tambola-ticket-2.png";
+
+Tambola ticket is the small sheet of paper with a grid of **3 rows** and **9 columns**. Each row contains 5 random numbers between **1** and **90**. We are trying to create our own Tambola ticket using HTML and CSS. We also include a striked number in the design.
+
+## The Grid
+
+We need 3 rows and 9 columns to store the numbers. We create it using `div` tags.
+
+```html
+<div class="tambola-ticket">
+  <!--First Row-->
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">21</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">45</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell striked">67</div>
+  <div class="tambola-ticket-cell">79</div>
+  <div class="tambola-ticket-cell">90</div>
+  <!--Second Row-->
+  <div class="tambola-ticket-cell">2</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">23</div>
+  <div class="tambola-ticket-cell">36</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">77</div>
+  <div class="tambola-ticket-cell">89</div>
+  <!--Third Row-->
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">18</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">33</div>
+  <div class="tambola-ticket-cell">44</div>
+  <div class="tambola-ticket-cell"></div>
+  <div class="tambola-ticket-cell">68</div>
+  <div class="tambola-ticket-cell">75</div>
+  <div class="tambola-ticket-cell"></div>
+</div>
+```
+
+We have 27 cells under `.tambola-ticket` container. We convert that to 3x9 grid using CSS grids.
+
+```css
+.tambola-ticket {
+  display: grid;
+  max-width: 360px;
+  grid-template-columns: repeat(9, 38px [col-start]);
+  grid-template-rows: repeat(3, 38px [col-start]);
+  column-gap: 2px;
+  row-gap: 2px;
+}
+```
+
+`display: grid` tells that the container is going to be a **grid**.
+
+`grid-template-columns` and `grid-template-rows` specifies number of columns and rows. It also accepts the width and height of cells.
+
+`column-gap` and `row-gap` specifies the gap between the cells.
+
+Above CSS is for mobile device, since we follow mobile first approach. Using media queries, we specify the style for larger screens.
+
+```css
+@media only screen and (min-width: 600px) {
+  .tambola-ticket {
+    max-width: 580px;
+    grid-template-columns: repeat(9, 60px [col-start]);
+    grid-template-rows: repeat(3, 60px [col-start]);
+    column-gap: 5px;
+    row-gap: 5px;
+  }
+}
+```
+
+## Styling Cells
+
+Each cell can be styled by defining `.tambola-ticket-cell` class.
+
+```css
+.tambola-ticket-cell {
+  background-color: #eee;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+@media only screen and (min-width: 600px) {
+  .tambola-ticket-cell {
+    font-size: 28px;
+  }
+}
+```
+
+We are giving a light grey background to each cell and a dark grey as font color. We use media queries to give larger font size in larger screens.
+
+Here is the output now:
+
+<Image
+  src={imgTambolaTicket1}
+  alt="Tambola ticket partially styled"
+  style={{ maxWidth: "500px" }}
+/>
+
+When a player clicks on a number, it is marked as **striked**. We bring that state by adding a `striked` class to that cell.
+
+```html
+<div class="tambola-ticket-cell striked">67</div>
+```
+
+Below is the CSS for styling the striked cell.
+
+```css
+.tambola-ticket-cell.striked {
+  background-color: #f7c327;
+  color: #000;
+}
+```
+
+## Font
+
+We have taken [Rubik Google font](https://fonts.google.com/specimen/Rubik?query=rubik) for the ticket. For that, add the font CDN to html.
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Then specify the font as the style of `body` tag.
+
+```css
+body {
+  font-family: "Rubik", sans-serif;
+}
+```
+
+After all these changes, our Tambola ticket looks like this:
+
+<Image
+  src={imgTambolaTicket2}
+  alt="Tambola ticket styled"
+  style={{ maxWidth: "500px" }}
+/>
+
+We learned how to use CSS grids and style them. We also learned how to use Google fonts in our project.

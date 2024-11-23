@@ -1,0 +1,29 @@
+---
+title: JS Daily 6 - SetTimeout and Callstack
+date: 2020-11-26
+slug: js-daily-6-settimeout-asynchronous
+decription: Learn how setTimeout function is used to push the execution of a function to last
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+console.log("C");
+```
+
+<Divider />
+
+In the console, we see the output in following order:
+
+```
+"A"
+"C"
+"B"
+```
+
+This is an example of how **call stack** and **event loop** works. The delay is set to 0 for the `setTimeout()` function. Still, `"B"` is not printed immediately after `"A"`. What happens is, line 1 prints `"A"`. Line 2 then executes `setTimeout()` and it will set the callback function to executed later after the specified delay(Even if delay is 0). Then the control goes to line 3 and prints `"C"`. After printing `"C"`, the callstack is now empty to take and execute more functions. At that time, the callback function of `setTimeout()` is brought to callstack and executed. That prints `"B"` in the console.

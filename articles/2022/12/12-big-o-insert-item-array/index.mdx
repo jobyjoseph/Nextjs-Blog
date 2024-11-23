@@ -1,0 +1,21 @@
+---
+title: "Big-O of Inserting Element at Specific Index in an Array"
+date: 2022-12-06
+slug: big-o-get-inserting-specific-index-array
+description: We analyze the worst case performance of inserting an element at specific index in an Array.
+tags: ["javascript"]
+---
+
+Here is a code that inserts an item to specific index. Here, there is no pushing or popping, instead just replace at an index.
+
+```javascript
+const arr = [2, 5, 7, 9];
+arr[2] = 8; // 👉 O(1)
+console.log(arr[2]); // 8
+```
+
+The position can be easily calculated by the **index number** and **each item size**.
+
+Irrespective of the index position, time taken to insert a value is a constant.
+
+> Big-O of inserting an item to array is O(1)

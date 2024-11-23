@@ -1,0 +1,64 @@
+---
+title: "Introduction to TypeScript"
+date: 2022-02-01
+slug: introduction-to-typescript
+description: "TypeScript is a syntactic superset of JavaScript. It means, it starts with basic JavaScript syntax, and then start building more type specific syntax on top of it. TypeScript is an open-source project maintained by Microsoft. The main goal is to add types to JavaScript."
+tags: ["typescript"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+TypeScript is a **syntactic superset** of JavaScript. It means, it starts with basic JavaScript syntax, and then start building more type specific syntax on top of it. TypeScript is an **open-source** project maintained by Microsoft. The main goal is to add **types** to JavaScript.
+
+Here is an example TypeScript code to declare a string type variable.
+
+```typescript
+let name: string;
+```
+
+A TypeScript code is compiled by a TypeScript compiler and outputs JavaScript code.
+
+## Why Choose TypeScript?
+
+One reason is developers can be bring their **intent to the code**. For example, below function is to add 2 numbers, NOT to concatenate 2 strings.
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+```
+
+But how to express our intent? We can do using TypeScript.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Now if somebody use the function like `add("b", 3)`, TypeScript compiler will throw an error.
+
+Second reason is TypeScript can **detect some errors at compile time** rather than at run time. Examples are:
+
+- Errors occuring due to `null` or `undefined` values in variables
+- Bad reference variables. You changed the name of a function, but forgot to replace the new name in all occurences.
+- Breakage around internal code contract. ie, earlier an argument was optional, but now it is mandatory.
+
+Third reason is the **code development experience** with TypeScript. TypeScript gels well with Visual Studio Code. Both are from Microsoft. When working with TypeScript, the intellisense support and documentation support is great.
+
+## TypeScript Online Editor
+
+If you want to try TypeScript syntax quickly, TypeScript language provides an online editor at <Olink link="https://www.typescriptlang.org/play">
+https://www.typescriptlang.org/play</Olink>. Also <Olink link="https://www.typescriptlang.org/">https://www.typescriptlang.org/</Olink> is the official website of TypeScript.
+
+## Typed Future JavaScript
+
+Another question that comes to developers is about future JavaScript. Will JavaScript in near future bring type support? I don't think so.
+
+Assume, JavaScript bring following syntax tomorrow:
+
+```javascript
+string name = "Jack";
+```
+
+It is going to break a lot of JavaScript code floating on web starting from 90s. So it is good and advisable to learn TypeScript.

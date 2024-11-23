@@ -1,0 +1,33 @@
+---
+title: JS Daily 37 - Same Key in Object
+date: 2020-12-27
+slug: js-daily-37-same-key-in-object
+decription: If in an object we use same key twice, the last one is considered.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj = {
+  a: "Apple",
+  b: "Banana",
+  a: "Orange"
+}
+console.log(obj);
+```
+
+<Divider />
+
+The output is:
+
+```
+{
+  a: "Orange",
+  b: "Banana"
+}
+```
+
+In the example above, `"Apple"` and `"Orange"` are assigned to same object key(`a`). In such cases, last value assigned is saved to the key. That is why `"Orange"` is in key `a`.

@@ -1,0 +1,31 @@
+---
+title: How to Add React Material UI in Next.js App
+date: 2021-08-17
+slug: how-to-add-react-material-ui-framework-to-nextjs
+description: React Material UI can be installed in a Nextjs app using @material-ui/core package. Components like Button can be extracted from the package.
+tags: ["nextjs"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+<Olink link="https://material-ui.com/">React Material UI</Olink> is a CSS framework
+using which we can build beautiful website in less time. In order to add React Material
+UI to a Next.js app, first install the package.
+
+```
+yarn add @material-ui/core
+```
+
+Then, inside a page we can use it like below:
+
+```javascript
+import { Button } from "@material-ui/core";
+
+export default function Home() {
+  return <Button color="primary">Hello World</Button>;
+}
+```
+
+Here we first import only the Button component from material-ui. Then we use it in our page.
+
+> `Button` is a named import, not a default one. Keep that in mind to save time.

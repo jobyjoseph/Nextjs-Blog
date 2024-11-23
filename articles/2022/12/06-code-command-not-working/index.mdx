@@ -1,0 +1,27 @@
+---
+title: "SOLVED: Code Command Not Working in Terminal to Open VS Code"
+date: 2022-12-05
+slug: solved-code-command-not-working-terminal-open-vs-code
+description: It is easy to open VS Code using code command. If for some reason it is not working check this solution.
+tags: ["web"]
+---
+
+If I need to open a file or folder in Visual Studio Code, I use `code` command. It was working fine for long. All of a sudden, it stopped working.
+
+## Reason
+
+The exact reason why it stopped working, I am not sure. I doubt it has something to do with VS code software update.
+
+## Solution
+
+Every time when I get this issue below solution worked for me.
+
+Click _Shift+Cmd+P_ to open the command pallete.
+
+Search for `Shell command: Uninstall code command from PATH`. Run that command. It will remove the code command from PATH.
+
+Then, search for `Shell command: Install code command in PATH`. It will install it again.
+
+For uninstalling and installing, it will ask your root permissions.
+
+After that the `code` command starts working from any terminal.

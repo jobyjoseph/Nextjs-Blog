@@ -1,0 +1,61 @@
+---
+title: "Variables in Java"
+date: 2022-09-10
+slug: variables-in-java
+description: "Variables are used to store values. Each variable can be treated as a box in which we can put something. The name of the box(like black box / wooden box) can be treated as the variable name. The something that we put inside the box can be treated as the value assigned to the variable."
+tags: ["java"]
+---
+
+Variables are used to store values. Each variable can be treated as a box in which we can put something. The name of the box(like black box / wooden box) can be treated as the **variable name**. The something that we put inside the box can be treated as the **value** assigned to the variable.
+
+Here is an example of creating a integer variable(`age`). Integer variable can store only integer values like `24`.
+
+```java
+int age = 24;
+```
+
+## Naming Convention
+
+Best followed naming convention of variables is to follow **lowerCamelCase**. It means the name starts with a lowercase letter. If there are subsequent words, they start with capital letters.
+
+Here are some examples:
+
+```java
+age
+calculateAge
+calculateFileSizeWithoutComments
+```
+
+> Class names are in CamelCase. Example: `HelloWorld`. But variable names are in lowerCamelCase.
+
+## Strongly Typed
+
+Java is strongly typed. If a type of variable is defined, the variable can accept only that type. A string value cannot be assigned to an integer variable.
+
+```java
+int a = "hello";
+```
+
+Above code throws this error during build step: `error: incompatible types: String cannot be converted to int`.
+
+## Case Sensitive
+
+Java is case sensitive. A variable declared using one case is different from that using different case.
+
+```java
+int A = 10;
+a = 20;
+```
+
+Above code throws this error: `error: cannot find symbol a`. That is because `A` and `a` are not same and the variable `a` is not defined.
+
+## Updating Variables
+
+Once a variable is declared, we can update the value to another one of the same type.
+
+```java
+int a = 10;
+a = 20;
+```
+
+If the value updated is of different type, Java throws incompatible types error which we saw above.

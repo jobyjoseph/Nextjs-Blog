@@ -1,0 +1,39 @@
+---
+title: "What is the Expiry Date of Session Cookie"
+date: 2022-08-31
+slug: what-is-the-expiry-date-of-session-cookie
+description: "When we check the expiry date of cookies, we can see that for some cookies expiry date is session. It means that the cookie value is present only for that session"
+tags: ["web"]
+---
+
+import Image from "../../../../src/components/image";
+import imgSessionCookie from "./images/session-cookie.png";
+import imgJSSessionCookie from "./images/session-cookie-using-js.png";
+
+A session cookie is a browser cookie that has validity only for that session. For example, when the user logs in, we might store the access token in a session cookie.
+
+Here is how we can see a session cookie in browser console:
+
+<Image
+  src={imgSessionCookie}
+  alt="Session cookie"
+  style={{ maxWidth: "500px" }}
+/>
+
+Browser automatically destroys session cookies when it is closed. Closing just the tab, will not kill the session cookies.
+
+If we are creating a Session cookie using JavaScript, do not provide the expiry date. A cookie without expiry is going to be a session cookie by default.
+
+Here is a code sample:
+
+```javascript
+document.cookie = "site=Backbencher.dev";
+```
+
+You can try out this code from the browser console. After that, we can see the session cookie created.
+
+<Image
+  src={imgJSSessionCookie}
+  alt="JS Session Cookie"
+  style={{ maxWidth: "600px" }}
+/>

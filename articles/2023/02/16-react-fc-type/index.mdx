@@ -1,0 +1,33 @@
+---
+title: "What is React.FC Type?"
+date: 2023-02-16
+slug: what-is-react-fc-type
+description: "If we are using TypeScript along with React, we might use `React.FC` type. `FC` stands for function component."
+tags: ["typescript"]
+---
+
+If we are using TypeScript along with React, we might use `React.FC` type. `FC` stands for function component.
+
+If we write a function that returns a React component, we can use this type.
+
+```typescript
+const App: React.FC = () => {
+  return <div>Hello</div>;
+};
+```
+
+If the function does not return a React component, TypeScript will throw an error. Here is a function that will throw an error:
+
+```typescript
+const App: React.FC = () => {
+  return "hello";
+};
+```
+
+The error message will be:
+
+```
+Type 'string' is not assignable to type 'ReactElement<any, any>'
+```
+
+`React.FC` is the short version of `React.FunctionComponent`. We can use any type according to our convienience.

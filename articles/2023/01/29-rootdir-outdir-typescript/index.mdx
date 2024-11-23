@@ -1,0 +1,29 @@
+---
+title: "rootDir and outDir in TypeScript"
+date: 2023-01-29
+slug: rootdir-outdir-typescript
+description: "When project get bigger `rootDir` and `outDir` helps to organize our project. One of the normal convention is to keep all source files in `src` folder and keep all distribution or the output files in `dist` folder."
+tags: ["typescript"]
+---
+
+When project get bigger `rootDir` and `outDir` helps to organize our project. One of the normal convention is to keep all source files in `src` folder and keep all distribution or the output files in `dist` folder.
+
+We can follow similar approach in a TypeScript project. We can set `outDir` property in `tsconfig.json` to store all JS files in `dist` folder or any folder for that matter.
+
+```json
+{
+  "compilerOptions": {
+    "outDir": "./dist"
+  }
+}
+```
+
+The path or name of the output directory can be anything as you wish.
+
+## Sub folder
+
+When we set the `outDir`, it also maintains the folder structure. Say, if you have sub folders in the `src` folder, the same folder structure will be maintained in the output `dist` folder.
+
+`rootDir` property tells the TypeScript compiler where to look for TypeScript files. If we store all the TypeScript files inside `src` folder, then it is good to set the `rootDir` to `./src`.
+
+If we do not set the `rootDir`, TypeScript will compile TypeScript files in other folders or root folder and put everything in `dist` folder. That will break things.

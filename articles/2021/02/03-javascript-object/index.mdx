@@ -1,0 +1,65 @@
+---
+title: Object in JavaScript
+date: 2021-02-03
+slug: javascript-object
+decription: Learn more about Object Static methods, fromEntries and creating object from array.
+tags: ["javascript"]
+---
+
+import Version from "../../../../src/components/version";
+
+## Object Static Methods
+
+Static methods are used directly from the `Object` constructor function. They are properties of `Object`.
+
+### fromEntries() <Version number="10"/>
+
+`fromEntries()` is used to convert an iterable to an object. Examples of iterable are Arrays, Maps and objects that implements the iterable protocol.
+
+#### Object from Array
+
+The elements of the array **should be in _[key, value]_** format.
+
+```javascript
+const arr = [
+  ["name", "Backbencher"],
+  ["age", 26],
+];
+
+const obj = Object.fromEntries(arr);
+
+console.log(obj);
+```
+
+And the output is:
+
+```
+{
+  age: 26,
+  name: "Backbencher"
+}
+```
+
+#### Object from Map
+
+The elements of the passed array **should be in _[key, value]_** format.
+
+```javascript
+const arr = new Map([
+  ["name", "Backbencher"],
+  ["age", 26],
+]);
+
+const obj = Object.fromEntries(arr);
+
+console.log(obj);
+```
+
+And the output is:
+
+```
+{
+  age: 26,
+  name: "Backbencher"
+}
+```

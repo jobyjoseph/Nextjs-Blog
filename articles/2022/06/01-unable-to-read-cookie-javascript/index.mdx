@@ -1,0 +1,30 @@
+---
+title: "SOLVED: Unable To Read Cookie Using JavaScript"
+date: 2022-06-28
+slug: solved-unable-to-read-cookie-using-javascript
+description: "Normally we can read a cookie value using JavaScript using document.cookie. But that is not possible if the cookie is an HttpOnly cookie"
+tags: ["javascript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgHttpOnly from "./images/httponly.png";
+
+In JavaScript we can create, read or update the value of cookie using `document.cookie`. Below code prints all the cookies of the site separated by semi-colon.
+
+```javascript
+console.log(document.cookie);
+```
+
+But, a cookie that is set as `HttpOnly` will not be there in the list. The server that sends the HTTP response decides if a cookie needs to be `HttpOnly` or not, by adding the attribute to the end of `Set-Cookie` header.
+
+```
+Set-Cookie: <name>=<value>[; <Max-Age>=<age>]
+[; expires=<date>][; domain=<domain_name>]
+[; path=<some_path>][; secure][; HttpOnly]
+```
+
+So if you find a working cookie code failing suddenly, this can be the reason. Check with the backend team if they had done any changes.
+
+In Chrome, a HttpOnly cookie is marked with a tick mark in the cookies list.
+
+<Image src={imgHttpOnly} alt="HTTP Only" />

@@ -1,0 +1,77 @@
+---
+title: Function in JavaScript
+date: 2021-06-13
+slug: javascript-function
+decription: Functions are the center piece in JavaScript. It has many uses and being handled in different ways to bring different programming capabilities in JavaScript.
+tags: ["javascript"]
+---
+
+Functions in JavaScript are a special kind of **object**. Function is an object that contains executable code. A function can be **invoked** to run that executable code and **return** a value.
+
+Here is an example of a function.
+
+```javascript
+function display() {
+  console.log("Backbencher");
+  console.log("JavaScript");
+  console.log("Coding is fun");
+}
+```
+
+In this function, `display` is the name of the function and the function contains 3 statements. The task to do for these statements is to print 3 strings to the console. So, when we call or invoke this function, it prints 3 texts to the console with the help of `console.log` method. `display` function is not calculating any value, instead it is performing a task.
+
+We can also write functions to calculate a value and return the result. Here is a function `sum()` that calculates the sum of 2 numbers and returns the result.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+The function `sum()` can be used whenever we need to add 2 numbers. Therefore, functions help us in reusing code.
+
+## Defining Function
+
+A function needs to be first defined to be called later. We can define a function using following ways in JavaScript.
+
+### Function declaration
+
+Here we are defining a function using `function` keyword. The format is:
+
+```javascript
+function <function name>(argument1, argument2, ...) {
+  // function body
+}
+```
+
+Here is an example.
+
+```javascript
+function sum(num1, num2) {
+  return num1 + num2;
+}
+```
+
+### Function Expression
+
+When we assign a function to a variable using assignment operator(`=`), a function expression is formed.
+
+```javascript
+var sum = function (num1, num2) {
+  return num1 + num2;
+};
+```
+
+### Functions are True Values
+
+Functions in JavaScript are true values. It means functions in JavaScript can be treated like regular objects.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+sum.myProperty = "Hello";
+console.log(sum.myProperty); // "Hello"
+```
+
+Here we added a new property to `sum()` just like a regular object.

@@ -1,0 +1,90 @@
+---
+title: "Dynamic Page in Next.js"
+date: 2022-08-28
+slug: dynamic-page-nextjs
+description: "Next.js is a React framework to build websites. Next.js creates page routes based on file and folder structure. We can also set dynamic pages in Next.js"
+tags: ["nextjs"]
+---
+
+Next.js is a React framework to build web application. Next.js creates page routes based on file and folder structure. We can also set and handle dynamic pages in Next.js.
+
+## Handle Dynamic Path
+
+We can find dynamic paths everywhere. If we consider `petco.com`, the product url for "Hill's Science Diet Adult Sensitive Stomach & Skin Chicken Recipe Dry Dog Food, 30 lbs" is:
+
+```
+https://www.petco.com/shop/en/petcostore/product/hills-science-diet-adult-sensitive-stomach-and-skin-chicken-recipe-dry-dog-food
+```
+
+And the product url for "Hill's Science Diet Adult Sensitive Stomach & Skin Small Bites Chicken Recipe Dry Dog Food, 15 lbs., Bag" is:
+
+```
+https://www.petco.com/shop/en/petcostore/product/hills-science-diet-adult-sensitive-stomach-and-skin-small-bites-chicken-recipe-dry-dog-food
+```
+
+If you observe above urls, only the last portion changes.
+
+If we need to build a structure like petco's using Next.js, we need to create a folder structure like:
+
+```
+pages
+|_shop
+  |_en
+    |_petcostore
+      |_product
+        |_[slug].js
+
+```
+
+In this case `slug` is kind of a placeholder that takes the value that comes after `/shop/en/petcostore/product`.
+
+Inside `[slug].js`, we can read the value of `slug` as follows:
+
+```javascript
+import { useRouter } from "next/router";
+
+const Product = () => {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  return <h1>Product: {slug}</h1>;
+};
+
+export default Product;
+```
+
+The value of `slug` can be retrieved from Next.js router object.
+
+## Multi Level Dynamic Path
+
+What if we need a dynamic url like below:
+
+```
+example.com/posts/<category>/<sort_order>
+```
+
+In this case we need to create the folder structure like below:
+
+```
+pages
+|_posts
+  |_[category]
+    |_[sort_order].js
+```
+
+Note that we have given the `category` folder name inside square brackets. And inside `[sort_order].js` we can read the values of `category` and `sort_order` like below:
+
+```javascript
+import { useRouter } from "next/router";
+
+const Product = () => {
+  const router = useRouter();
+  const { category, sort_order } = router.query;
+
+  return (
+    <h1>
+      Product: {category} | {sort_order}
+    </h1>
+  );
+};
+```

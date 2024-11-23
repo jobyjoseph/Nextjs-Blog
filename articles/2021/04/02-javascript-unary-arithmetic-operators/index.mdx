@@ -1,0 +1,101 @@
+---
+title: JavaScript Invocation Context(this) Interview Questions
+date: 2021-04-02
+slug: javascript-unary-arithmetic-operators
+description: Unary operators work with only one operand. There are mainly 4 unary arithmetic operators.
+tags: ["javascript"]
+---
+
+As the name indicates, **unary** operators work on a single operand.
+
+```javascript
+-23;
+```
+
+The four unary arithmetic operators are:
+
+1. `+`
+2. `-`
+3. `++`
+4. `--`
+
+`+` and `-` can be used as binary operators also. All 4 unary arithmetic operators convert their non-numeric operands to a number or `NaN`.
+
+## Unary Plus
+
+The unary plus(`+`) operator converts its operand to a number or `NaN` and returns that converted value. When used with an operand that is already a number, it does not do anything.
+
+```javascript
+console.log(+"3.14"); // 3.14
+console.log(+"3.14abc"); // NaN
+console.log(+"abc"); // NaN
+console.log(+true); // 1
+console.log(+false); // 0
+console.log(+null); // 0
+console.log(+undefined); // NaN
+console.log(+{}); // NaN
+```
+
+So unary `+` operator can be used to convert a data type to its number equivalent. Note that, `null` is converted to `0` and `undefined` is converted to `NaN`.
+
+## Unary Minus
+
+When minus(`-`) is used as an unary operator, it first converts the operand to a number if required, then changes the sign of the number.
+
+```javascript
+console.log(-2); // -2
+console.log(-(-3)); // 3
+```
+
+## Increment
+
+The increment(`++`) operator increments(adds 1) to its single operand. The operand should be either a **variable**, an **element of an array** or a **property of an object**.
+
+When `++` is used before the operand, it is called **pre-increment** operation. Here the increment expression increments the operand and returns the **incremented** value.
+
+```javascript
+var a = 1;
+console.log(++a); // 2
+```
+
+When `++` is used after the operand, it is called **post-increment** operation. Here the increment expression increments the operand and returns the **unincremented** value.
+
+```javascript
+var a = 1;
+console.log(a++); // 1
+```
+
+`++a` is not always equal to `a=a+1`. If the value of `a` is a string `"2"`, `++a` results in `3` and `a=a+1` results in `"21"`. This is because `++` works only with numbers and converts its operand to number.
+
+## Decrement
+
+The decrement(`--`) operator decrements(subtracts 1) from its single operand. The operand should be either a **variable**, an **element of an array** or a **property of an object**.
+
+When `--` is used before the operand, it is called **pre-decrement** operation. Here the decrement expression decrements the operand and returns the **decremented** value.
+
+```javascript
+var a = 2;
+console.log(--a); // 1
+```
+
+When `--` is used after the operand, it is called **post-decrement** operation. Here the decrement expression decrements the operand and returns the **undecremented** value.
+
+```javascript
+var a = 2;
+console.log(a--); // 2
+```
+
+## Associativity
+
+Unary operators in JavaScript have **right associativity**.
+
+```javascript
+var a = 6;
+var b = 2;
+b;
+++a;
+console.log(a); // 7
+console.log(b); // 2
+```
+
+Above code applied `++` to `a` due to right associativity.

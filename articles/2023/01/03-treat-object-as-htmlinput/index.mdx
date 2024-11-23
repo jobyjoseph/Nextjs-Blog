@@ -1,0 +1,23 @@
+---
+title: "Treat an Object as HTML Input Element in TypeScript"
+date: 2023-01-03
+slug: treat-object-html-input-element-typescript
+description: "If a variable contains reference to a HTML input, we can get the value of HTML input using input.value. We can tell TypeScript that an object is having HTML input reference using HTMLInputElement"
+tags: ["typescript"]
+---
+
+If the `id` of an input element is `myAge`, we can get the value of the text box using:
+
+```javascript
+const age = document.getElementById("myAge");
+console.log(age.value);
+```
+
+But, TypeScript is not sure if `age` will always contain a property called `value`. Due to that reason TypeScript will throw an error in second line.
+
+We can do type casting and tell TypeScript that `age` is a HTML input using `HTMLInputElement`.
+
+```typescript
+const age = document.getElementById("myAge") as HTMLInputElement;
+console.log(age.value);
+```

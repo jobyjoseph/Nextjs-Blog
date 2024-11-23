@@ -1,0 +1,23 @@
+---
+title: JS Daily 27 - Comparing String With String Object
+date: 2020-12-17
+slug: js-daily-27-comparing-string-with-string-object
+decription: A primitive string value and an equivalent String object are not strictly equal.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const a = "Backbencher";
+const b = new String("Backbencher");
+console.log(a === b);
+```
+
+<Divider />
+
+The output is `false`.
+
+`a` and `b` are not strictly equal. When `===` is used, if both **type** and **value** of operands are same, the return value is `true`. The type of `a` is _string_ and that of `b` is _object_. Therefore `a === b` returns `false`.

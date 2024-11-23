@@ -1,0 +1,63 @@
+---
+title: React Native vs Native Apps
+date: 2021-04-12
+slug: react-native-vs-native-apps
+description: React Native is a framework designed for cross-platform mobile app development without compromising UX and UI experience.
+tags: ["react"]
+---
+
+React Native is a framework designed for cross-platform mobile app development without compromising UX and UI experience.
+
+React Native helps to maintain single codebase, at the same time give us both Android and iOS apps. Native apps on the other hand can provide latest OS features and is more flexible. When to use what is based on project in hand.
+
+## Framework Stability
+
+React Native is in version 0.62 now and is very stable. There were lot of issues and memory leaks in the past. The React Native team is very active and the product is now well suited for production use. So if the situation asks for it, we can use it with confidence.
+
+Since new versions are coming fast, always keep track of new versions and features in that release. A problem you face might be solved by just upgrading React Native to latest version.
+
+## Platform
+
+If our client wants their app only for a certain OS like iOS or Android, then we do not have to go with React Native. We can directly jump into native app development.
+
+Sometimes, the project asks for platform specific features like iOS ARKit. React Native might not be supporting this feature. Likewise, if the app has too complex features, React Native might be a difficult choice. It is good to go with native approach. Even though the man effort might be more, but in the long term it will pay off.
+
+Most of the high traffic apps are not so complex. They might be having lot of CRUD operations and need access to basic phone features like camera, mic, push notifications and access permissions. React Native can easily handle these features.
+
+## Bug Fix and Feature Release
+
+Maintaining a single code base in React Native comes with lot of advantage. A new feature can be release to both iOS and Android at the same time. In the same line, if there is any bug, it can be fixed in one place for both iOS and Android.
+
+While developing the application one can maintain a single tool for code quality check and unit testing. Also, the QA team has to do only one regression testing.
+
+## Third Party Dependency
+
+Some projects depends on a lot of third party libraries. Adding reference to lot of such libraries can slow down a React Native app. In this situation, go for native app development.
+
+## Team Strength
+
+A React Native app can be easily done by a web developer with JavaScript and React knowledge. The framework abstracts the complexity and make it easy for the developer.
+
+Having said that, a native app developer, after learning React Native can take the app to next level. That is because if the app requires complex features, or latest features like ARKit, or implement animations using OpenGL, a native app developer is required to extend the React Native application.
+
+There is a steep learning curve for any developer. But overcoming that is worth the effort. Also, it will be good if you hire a very experienced React Native developer for your team's first RN project. There are areas like app structure, navigation, deployment which can cost lot of hours especially for a newbie. If the project has got tight deadline, have an experienced developer on team.
+
+## React Native Development Approach
+
+When going through case studies of many React Native app development, most of the teams are not aiming both iOS and Android when they start. They first start with iOS app development using React Native. Once it is done, they could come up with the Android version in a range of two weeks.
+
+About 95% of iOS code can be reused for Android development. 5% effort is required extra to handle Android specific navigation and UI patterns.
+
+Also, like Bootstrap for web, there are libraries to quick start React Native development. [NativeBase](https://nativebase.io/) and [Pepperoni](http://getpepperoni.com/) are two examples.
+
+From the experience of Airbnb team, we also need to know that even though React Native is a framework and vastly simplifies mobile development, it is not trivial to get up and running, particularly if you have an existing codebase. Expect to invest a substantial amount of time and energy to integrating React Native into your existing mobile codebase.
+
+## Testing on Real Devices
+
+When working with native app development, working with a simulator is fine. Chances of breaking after deploying to an actual physical device is very less.
+
+But when it comes to React Native development, start testing on physical device from day one. We might run into problems that are specific to real environment. It is best to identify these problems at an early stage.
+
+Not only will you find a few design inconsistencies every now and then, but you’ll also come across certificate problems, network constraints and spot performance-related issues that the simulator can’t easily reproduce for you. Also keep in mind that there are still people running iOS versions lower than 10 or 9, so make sure to test for these platforms too.
+
+xCode can test, validate, build and upload an app to Appstore. But that might be time consuming. In that case, we can consider apps like [Bitrise](https://www.bitrise.io/) to do those tasks for us. [Microsoft Appcenter](https://appcenter.ms/?utm_source=CodePush&utm_medium=Azure) is also another product to do the code push.

@@ -1,0 +1,23 @@
+---
+title: "Any Type in TypeScript"
+date: 2023-01-13
+slug: any-type-typescript
+description: "Any type is the most flexible type you can assign in TypeScript."
+tags: ["typescript"]
+---
+
+Any type is the most flexible type you can assign in TypeScript. This type does not tell TypeScript anything about any type. A variable that is declared using _Any_ type can store any value.
+
+```typescript
+let a: any;
+```
+
+Now `a` can contain any values. Because of that TypeScript will not throw any error in the below 3 lines of code.
+
+```typescript
+let a: any;
+a = 10;
+a = "Apple";
+```
+
+`any` takes away all advantages TypeScript gives you. Therefore, it is not advised to use `any` data type.

@@ -1,0 +1,42 @@
+---
+title: "readOnly Option in TypeScript Interface"
+date: 2023-02-05
+slug: readonly-option-typescript-interface
+description: "When defining the structure of an object using `interface` keyword, we can specify `readonly` modifier."
+tags: ["typescript"]
+---
+
+When defining the structure of an object using `interface` keyword, we can specify `readonly` modifier.
+
+```typescript
+interface Car {
+  readonly model: string;
+
+  show(message: string): void;
+}
+```
+
+If any object implements `Car` interface, there should be a property called `model`. It should be initialized only once and cannot be changed.
+
+So how it works?
+
+Here is an object that implements the interface `Car`.
+
+```typescript
+let obj: Car = {
+  model: "BMW",
+  show: () => {},
+};
+```
+
+Immediately after initialization, if we try to update the `model` property, TypeScript will throw error.
+
+```typescript
+obj.model = "Audi";
+```
+
+Above line throws below error:
+
+```typescript
+Cannot assign to 'model' because it is a read-only property.
+```

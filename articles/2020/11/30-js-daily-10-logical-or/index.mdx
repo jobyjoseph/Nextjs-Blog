@@ -1,0 +1,24 @@
+---
+title: JS Daily 10 - Logical OR
+date: 2020-11-30
+slug: js-daily-10-logical-or
+decription: Logical OR in JavaScript is used to set a default value if input is a falsy value.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const result = false || "Hello";
+console.log(result);
+```
+
+<Divider />
+
+Output is `"Hello"`. Output is not `true` as in some other programming languages.
+
+Logical OR operator returns the **deciding value** in the logical chain. Here, the first value is `false`. So, the _OR_ operator needs to check the next value. The next value, `"Hello"` is a truthy value that makes the overall OR statement `true`. Therefore `"Hello"` is returned and assigned to `result`.
+
+If all the values in the logical OR statement is falsy, then `result` will be `false`.

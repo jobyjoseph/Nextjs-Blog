@@ -1,0 +1,25 @@
+---
+title: How To Adjust React Query Cache Time
+date: 2021-08-04
+slug: react-query-adjusting-cache-time
+description: When React Query fetches data, it is cached for around 5 minutes. Caching results helps React Query to show the results instantaneously. To update the cache time we can pass cacheTime flag.
+tags: ["reactQuery"]
+---
+
+When React Query fetches data, it is cached for around 5 minutes. Caching results helps React Query to show the results instantaneously. If the content is stale, React Query then fetches the response in the background and then updates the front end.
+
+To update the cache time, set the time in query configuration.
+
+```javascript
+const queryUsers = useQuery(
+  "myquery",
+  () => {
+    // Fetch data
+  },
+  {
+    cacheTime: 5000,
+  }
+);
+```
+
+As per the above settings, if a query data is not responsive for 5 seconds, it is cleared from the cache. So, after 5 seconds, when the user tries to see the data, there will be a waiting time for completing the API request.

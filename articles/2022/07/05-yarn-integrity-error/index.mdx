@@ -1,0 +1,30 @@
+---
+title: "SOLVED: Incorrect integrity when fetching from the cache"
+date: 2022-07-18
+slug: solved-incorrect-integrity-fetching-cache
+description: "When using yarn package manager, we might face incorrect integrity when installing a new package. Here is the solution"
+tags: ["web"]
+---
+
+I was trying to install the dependencies of an existing project using:
+
+```
+yarn install
+```
+
+All of a sudden I saw this error in terminal:
+
+```
+...
+[2/4] Fetching packages...
+error Incorrect integrity when fetching from the cache
+info Visit https://yarnpkg.com/en/docs/cli/add for documentation about this command.
+```
+
+The solution to this problem is to do a cache cleaning. Just run following command from the same position:
+
+```
+yarn cache clean
+```
+
+After running above command, we can proceed with `yarn install` or `yarn add` commands. It should work fine.

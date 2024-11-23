@@ -1,0 +1,37 @@
+---
+title: "Linear Search Using JavaScript"
+date: 2022-12-08
+slug: linear-search-using-javascript
+description: Here is an implementation of linear search using JavaScript
+tags: ["javascript"]
+---
+
+Here is a function that implements linear search using JavaScript:
+
+```javascript{numberLines: true}
+function linearSearch(arr, item) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == item) {
+      return i;
+    }
+  }
+  return -1;
+}
+```
+
+**Lines 2 to 6**: Loop through the input array. If we find the item we are searching for, return its index.
+
+**Line 7**: `-1` is returned if the item is not found.
+
+Here is how we can run it:
+
+```javascript
+const arr = [2, 4, 6, 8, 10];
+const item = 4;
+const index = linearSearch(arr, item);
+console.log(index); // 1
+```
+
+## Big O
+
+Big O of linear search is **O(n)**.

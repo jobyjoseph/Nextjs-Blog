@@ -1,0 +1,31 @@
+---
+title: "Interfaces as Function Types in TypeScript"
+date: 2023-02-07
+slug: interfaces-function-types-typescript
+description: "Interfaces in TypeScript can also be used to define the type of a function."
+tags: ["typescript"]
+---
+
+Interfaces in TypeScript can also be used to define the type of a function.
+
+Without interface, we can define the type of a function as below:
+
+```typescript
+type sumFn = (a: number, b: number) => number;
+```
+
+Then later we can use the type as follows:
+
+```typescript
+const sum: sumFn = (a: number, b: number) => a + b;
+```
+
+Now let us see how to implement `sumFn` type using `interface`.
+
+```typescript
+interface sumFn {
+  (a: number, b: number): number;
+}
+```
+
+Note that there is no `=>` syntax in the above snippet.

@@ -1,0 +1,26 @@
+---
+title: JS Daily 34 - Hoisting of Let Variables
+date: 2020-12-24
+slug: js-daily-34-hoisting-let-variables
+decription: Variables declared using let keyword are not hoisted. They in a temporal dead zone till they are declared in the code.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+console.log(a);
+let a = 10;
+```
+
+<Divider />
+
+The output is:
+
+```
+ReferenceError: Cannot access 'a' before initialization
+```
+
+Variables declared using `let` are not hoisted. During the parsing step, JavaScript is aware about the variable. But, till line 2, it will keep the variable in _Temporal Dead Zone_. That means, we cannot use the code before the variable declaration, as mentioned in the error message.

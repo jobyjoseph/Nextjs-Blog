@@ -1,0 +1,290 @@
+---
+title: TypeScript Interview Questions Part 3 - Intersection, Union, Functions
+date: 2021-05-29
+slug: typescript-interview-questions-intersection-union-functions
+description: TypeScript Interview Questions on intersection, union functions
+tags: ["typescript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+Give one example where we can use TypeScript Intersection?
+
+** Answer: **
+
+We have a variable `person` that can accept either a student object or a teacher object. The `Student` type and `Teacher` type is defined separately.
+
+```typescript
+interface Student {
+  name: string;
+  marks: number;
+}
+
+interface Teacher {
+  name: string;
+  salary: number;
+}
+```
+
+Now based on some condition either a student object or teacher object is assigned to `person`. In that case `person` should be ready to accept either one of these objects. For that we use TypeScript Intersection.
+
+```typescript
+let person: Student | Teacher;
+
+if (Math.random() > 0.5) {
+  person = {
+    name: "Hanna",
+    marks: 23,
+  };
+} else {
+  person = {
+    name: "Jenny",
+    salary: 8900,
+  };
+}
+```
+
+In the first line, we can see the Intersection(`|`) operator. That will make `person` to accept either one of the types.
+
+Once we use intersection operator, only the keys that are common to both types could be used there after. For eg, in the above code, `name` is the common property. So we can access `name`.
+
+```typescript
+console.log(person.name);
+console.log(person.marks); // Error
+```
+
+It is not sure if `person` will have `marks` property. So, TypeScript throws an error if we try to access it.
+
+<Divider />
+
+**Question:**
+
+We have a TypeScript code here:
+
+```typescript
+interface Student {
+  marks: number;
+}
+
+interface Teacher {
+  salary: number;
+}
+
+let person: Student | Teacher;
+
+if (true) {
+  person = {
+    marks: 23,
+  };
+} else {
+  person = {
+    salary: 8900,
+  };
+}
+
+console.log(person.marks);
+```
+
+`marks` is present only in `Student`, not in `Teacher`. Therefore, does the last line throw an error?
+
+** Answer: **
+
+No. The `if` condition is checking for `true`. So TypeScript knows that the `else` block will never get executed. For that reason `person.marks` does not throw an error. If there was any chance to go to `else` block, then it will be an error.
+
+<Divider />
+
+**Question:**
+
+What are **union** types in TypeScript? When do we use it?
+
+**Answer:**
+
+Union operator(`&`) is used in TypeScript to join the types from multiple types. Say we already have a type `Person`.
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+```
+
+We now need to define a `teacher` object, who is a person and also has some more teacher specific attribute.
+
+```typescript
+interface Teacher {
+  school: string;
+}
+
+let teacher: Person & Teacher;
+```
+
+Now `teacher` variable should be an object that is a union of `Person` and `Teacher` type. That means, it is mandatory for `teacher` variable to have `name`, `age`, `school` properties. Absence of any property will result in error.
+
+```typescript
+teacher = {
+  name: "John",
+  age: 23,
+  school: "Winterville",
+};
+```
+
+<Divider />
+
+** Question: **
+
+What will happen if we use TypeScript union operator like this:
+
+```typescript
+let street: string & number;
+street = 23;
+```
+
+** Answer: **
+
+In line 1, we are declaring the type of `street` as both a string and number at the same time. Even though, such a condition cannot be met, TypeScript will not throw any error in line 1. TypeScript simply sets the type of `street` as `never`. `never` is a type that says, no value can be accepted.
+
+Since the type of `street` is `never`, line 2 throws an error when we try to assign a `number` type to `never` type.
+
+<Divider />
+
+** Question: **
+
+Here is a JavaScript variable `color`.
+
+```javascript
+let color;
+color = "Red";
+```
+
+The variable can only contain either of 3 values: `"Red"`, `"Yellow"`, `"Green"`. How can we bring this restriction using TypeScript?
+
+** Answer: **
+
+This can be done using _intersection_ operator in TypeScript.
+
+```typescript
+let color: "Red" | "Yellow" | "Green";
+color = "Red";
+```
+
+<Divider />
+
+**Question:**
+
+Here we have a function that accepts an object and returns an object.
+
+```javascript
+function setState(state) {
+  const newState = { ...state, name: "John" };
+  return newState;
+}
+```
+
+The input and return object can have only 2 properties, `name` and `age`. How can we make sure the type safety using TypeScript?
+
+**Answer:**
+
+Since the argument type and return type of the function are same, it is good to create an interface first.
+
+```typescript
+interface IPerson {
+  name: string;
+  age?: number;
+}
+```
+
+Then set the type for function parameter and return type.
+
+```typescript
+function setState(state: IPerson): IPerson {
+  const newState = { ...state, name: "John" };
+  return newState;
+}
+```
+
+<Divider />
+
+**Question:**
+
+We have a ES5 typed function.
+
+```typescript
+function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+We need to convert above function to arrow function syntax. How can we do that?
+
+**Answer:**
+
+Here is the typed arrow function.
+
+```typescript
+const sum = (a: number, b: number): number => {
+  return a + b;
+};
+```
+
+<Divider />
+
+** Question: **
+
+Here, we have a TypeScript function.
+
+```typescript
+function subscribe(accepted: "yes" | "no", email?: string): void {
+  console.log(email);
+}
+```
+
+My intention was, if the value passed to `accepted` is `"no"`, the second argument should not be passed. And if the value of `accepted` is `"yes"`, then the second argument `email` is mandatory. But the code snippet above is failing. It accepts `email`, even if the value of `accepted` is `"no"`. How can we fix it?
+
+**Answer:**
+
+Here we are talking about using the function with 2 different sets of inputs. One with only `"no"` and other with `"yes"` and `email`. So, what we need to do is function overloading. We need to define 2 separate signatures for TypeScript to understand. Here is how we need to do it:
+
+```typescript
+function subscribe(accepted: "no"): void;
+function subscribe(accepted: "yes", email: string): void;
+
+function subscribe(accepted: "yes" | "no", email?: string): void {
+  console.log(email);
+}
+```
+
+<Divider />
+
+** Question: **
+
+Here is a simple TypeScript code.
+
+```typescript
+function hello(this: string) {
+  console.log(this);
+}
+
+hello();
+```
+
+Will it throw any error? If yes, please explain and how can we solve it.
+
+** Answer: **
+
+Yes. Above code throws an error.
+
+When we define the type of `this`, TypeScript checks the value of invocation context when the function is invoked. When `hello()` is invoked, the value of `this` will be either `undefined` or `window` object. Both are not strings. That is the reason of the error.
+
+In order to solve the error, we need to set the value of `this` explicitly using `call()`, `apply()` or `bind()`. Here is an example using `call()` that clears the error.
+
+```typescript
+function hello(this: string) {
+  console.log(this);
+}
+
+hello.call("my string");
+```
+
+`call()` is a static method of `Function` object. The first parameter passed to it is set as the value of `this`.

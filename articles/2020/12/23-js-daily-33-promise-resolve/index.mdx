@@ -1,0 +1,35 @@
+---
+title: JS Daily 33 - Multiple Resolve in Promises
+date: 2020-12-23
+slug: js-daily-33-promise-resolve
+decription: A promise in JavaScript will be resolved only once even if we write multiple resolve statements.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const p1 = new Promise((resolve, reject) => {
+  resolve();
+  resolve();
+  resolve();
+});
+
+p1.then(() => {
+  console.log("Resolved");
+});
+```
+
+<Divider />
+
+The output is:
+
+```
+"Resolved"
+```
+
+Even though `resolve()` is called 3 times, the code will be resolved only once. That is how promises work.
+
+Same is the case with `reject()`. Even if the code is rejected multiple times, `.catch()` will be called only once.

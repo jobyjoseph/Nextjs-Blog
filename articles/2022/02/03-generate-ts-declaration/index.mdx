@@ -1,0 +1,53 @@
+---
+title: "Generate TypeScript .d.ts Declaration File"
+date: 2022-02-03
+slug: generate-typescript-declaration-file
+description: "In TypeScript project, if you find a .d.ts file, it is a TypeScript Declaration file. While compiling a TypeScript file, the compiler can strip all the type information and store it in this declaration file. The generated JavaScript file will not contain any TypeScript specific information."
+tags: ["typescript"]
+---
+
+In TypeScript project, if you find a `.d.ts` file, it is a **TypeScript Declaration** file. While compiling a TypeScript file, the compiler can strip all the type information and store it in this declaration file. The generated JavaScript file will not contain any TypeScript specific information.
+
+In order to generate a separate `.d.ts` declaration file, we need to set `declaration` property value to be `true` in `tsconfig.json`.
+
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true, // highlight-line
+    "target": "ES6"
+  },
+  "include": ["src"]
+}
+```
+
+#### index.ts
+
+My `index.ts` file contains following code.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+As per the TypeScript config file, the compiled output needs to be stored in `/dist` folder.
+
+#### index.d.ts
+
+When we compile the TypeScript code, a TypeScript declaration file with name `index.d.ts` is also created and stored along with the output `index.js` file. Here is how the declaration file looks like.
+
+```typescript
+declare function add(a: number, b: number): number;
+```
+
+As we can see, the declaration file contains the function `add()` with only the type information. Where as the generated output JavaScript file contains pure JavaScript code without any hint of TypeScript.
+
+```javascript
+// index.js
+function add(a, b) {
+  return a + b;
+}
+```
+
+Then what is the use of declaration file? For people who just requires JavaScript can take only the JavaScript file and use it. Whereas people who work with typescript can make use of the type declaration file to validate the code during development or while building the project.

@@ -1,0 +1,56 @@
+---
+title: "Write Java Code in Visual Studio Code"
+date: 2022-09-09
+slug: write-java-code-visual-studio-code
+description: "We can write Java code using Visual Studio Code. This article explains how to do that."
+tags: ["java"]
+---
+
+import { Link } from "gatsby";
+import Image from "../../../../src/components/image";
+import imgExtensionPack from "./images/extension-pack-java.png";
+import imgJavaOutput from "./images/java-output.png";
+
+Visual Studio is a **free** and **light weight IDE** maintained by Microsoft. It has good support for Java programming language.
+
+VS Code does not install JDK for you. You can install it separately using tools like <Link to="/articles/install-java-jdk-macbook-m1-chip">Amazon Corretto</Link>.
+
+If you do not have VS code installed, download and install it first.
+
+Next, we need to find and install **Extension Pack for Java**.
+
+<Image
+  src={imgExtensionPack}
+  alt="Extension pack for Java"
+  style={{ maxWidth: "600px" }}
+/>
+
+## HelloWorld Java
+
+Create a folder anywhere to store the Java files. Open the folder in VS Code.
+
+Create a new file `HelloWorld.java` and paste below content.
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+```
+
+VS Code comes with a terminal. Open a new terminal. Run below command to build the Java code.
+
+```
+javac HelloWorld.java
+```
+
+If the build is successful, you can see a `HelloWorld.class` created. Next we can run the program using:
+
+```
+java HelloWorld
+```
+
+We can find the output like below:
+
+<Image src={imgJavaOutput} alt="Java Output" style={{ maxWidth: "600px" }} />

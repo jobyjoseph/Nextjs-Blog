@@ -1,0 +1,103 @@
+---
+title: Next.js Interview Questions - Routing, Dynamic Routes, Catch-All Routes
+date: 2021-03-25
+slug: nextjs-interview-questions-routing-dynamic-routes-catch-all
+description: Here is a set of nextjs interview questions related to routing, dynamic routing and catch-all routes
+tags: ["nextjs"]
+---
+
+import Divider from "../../../../src/components/divider";
+import Image from "../../../../src/components/image";
+import imagePagesFolder from "./images/pages-folder.png";
+import imageSameURLPagesFolder from "./images/same-url-pages-folder.png";
+
+**Question:**
+
+How can we setup routes in Next.js? If I need two pages with urls `/` and `about` in Next.js, what should we do?
+
+**Answer:**
+
+In Next.js, we just have to follow its convention. Create a `pages` folder in the root and create two files inside it. The file names should be `index.js` and `about.js`. It can be `.jsx` files also. The url path is decided by the file name. `index.js` maps to `/` path.
+
+<Divider />
+
+**Question:**
+
+I am working on a Next.js project. The _pages_ folder structure looks like this:
+
+<Image
+  src={imagePagesFolder}
+  style={{ maxWidth: "200px", display: "block", margin: "auto" }}
+  alt="Next.js Pages folder"
+/>
+
+What will be the urls generated based on this folder structure?
+
+**Answer:**
+
+Three urls will be created.
+
+```
+/
+/category/men
+/category/women
+```
+
+<Divider />
+
+**Question:**
+
+If I have 2 files that resolve to same url, what will happen in Next.js? For example, what will happen when we run a Next.js project with following _pages_ folder structure?
+
+<Image
+  src={imageSameURLPagesFolder}
+  style={{ maxWidth: "160px", display: "block", margin: "auto" }}
+  alt="Next.js Same url Pages folder"
+/>
+
+**Answer:**
+
+Here when we try to take `/category` url, it will render the page from _pages/category.jsx_. But Next.js warns the developer in the console, saying:
+
+```
+Duplicate page detected. pages/category.jsx and pages/category/index.jsx both resolve to /category.
+```
+
+<Divider />
+
+**Question:**
+
+How to handle dynamic routes in Next.js? For example: In my ecommerce site, the category page has dynamic routes. `/category/men` lists all products under _men_. `/category/shoes` lists all products under _shoes_. So the category name which comes after `/category/` is dynamic. How should we design the _pages_ folder structure to handle this request?
+
+**Answer:**
+
+First create a folder `category` under `pages` folder. Then create a file named `[category].jsx` inside `category` folder. Inside the square brackets we can use any valid identifier. This identifier is later used to extract the value of dynamic route.
+
+Next we define a component in `[category].jsx`.
+
+```javascript
+import React from "react";
+import { useRouter } from "next/router";
+
+function Category() {
+  const router = useRouter();
+  const { category } = router.query;
+  return <div>{category}</div>;
+}
+
+export default Category;
+```
+
+Here we defined a functional component. That is why we used `useRouter` hook from `next/router`. We create a `router` object and later extract the `category` value from `router.query`.
+
+<Divider />
+
+**Question:**
+
+If I name a file under `pages` folder as `[...params].jsx`, what does that mean?
+
+**Answer:**
+
+It means, you just created a catch-all route. If `[...params].jsx` is present under `pages/products` folder, then all unhandled urls starting with `/products` end up in `[...params].jsx`.
+
+In the jsx file, we can extract the url path from `params` property.

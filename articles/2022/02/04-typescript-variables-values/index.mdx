@@ -1,0 +1,120 @@
+---
+title: "TypeScript Variables and Values"
+date: 2022-02-04
+slug: typescript-variables-values
+description: "TypeScript can define types for variables. It can be through type inference or through explicit type annotations. A variable that can accept any values can have any type"
+tags: ["typescript"]
+---
+
+TypeScript can define types for variables. It can be through type inference or through explicit type declaration.
+
+## Inferred Type
+
+In JavaScript, we can declare a variable using `var`, `let` or `const`. Here is a variable that is declared and initialized with a value `10`.
+
+```javascript
+let a = 10;
+```
+
+If above line is present in a TypeScript file, `a` is inferred as a `number` type variable by TypeScript. We do not have to explicitly set the type as `number`. If we try to assign a non-number value to `a`, TypeScript throws an error.
+
+```typescript
+let a = 10;
+a = "hello";
+```
+
+Above 2 lines are perfectly ok in JavaScript. But TypeScript is not happy with it. Here is the error message thrown by TypeScript:
+
+```
+error TS2322: Type 'string' is not assignable to type 'number'.
+
+a = "hello";
+```
+
+Generally, TypeScript defines the type of a variable at the time of declaration itself. So, it is always good to plan the type of a variable in advance and assign it at the time of declaration itself.
+
+## Literal Type
+
+Literals in JavaScript stands for specific data values like `6` or `"hello"`. For a variable declared using `const` keyword, we cannot change the value later.
+
+```javascript
+const a = 10;
+```
+
+As we learned in the previous section, TypeScript can infer the type of variable `a`. TypeScript is clever. It understands that `a` is a const variable. Therefore it can be assigned only with value `10`. TypeScript defines the type of `a` as `10`. Even though `10` is a value, for TypeScript it is called a **literal type**.
+
+When `a` is assigned with a literal type of `10`, assigning a different number results in a TypeScript error. For example, consider the following code.
+
+```typescript
+const a = 10;
+a = 20;
+```
+
+TypeScript will throw below error in the second line.
+
+```
+error TS2588: Cannot assign to 'a' because it is a constant.
+```
+
+What if we re-assign with value `10` itself? Can we expect TypeScript accepting that?
+
+```typescript
+const a = 10;
+a = 10;
+```
+
+Here also, TypeScript throws the same error:
+
+```
+error TS2588: Cannot assign to 'a' because it is a constant.
+```
+
+TypeScript respects the rules of JavaScript first. Then only it will check for its own rules. Re-assigning to a `const` variable is not allowed in JavaScript itself. So, TypeScript helps us by finding such errors at compile time itself.
+
+## Any Type
+
+Sometimes we declare a variable without initialization. There can be different reasons for that. One being passing the value from one scope to another like below.
+
+```javascript
+let apiResponse;
+
+function callAPI() {
+  apiResponse = "data";
+}
+
+function printResponse() {
+  console.log(apiResponse);
+}
+```
+
+In this case, we do not know what data will be set to `apiResponse` from the API. Therefore, what TypeScript will do is, it sets the type of `apiResponse` as `any`. As the name suggests, a variable with type `any` can accept any data values.
+
+Below TypeScript code will not throw an error.
+
+```typescript
+let a;
+a = 10;
+a = "hello";
+```
+
+That is because, the first line inferred `any` type for `a`. Now `a` can accept any data values.
+
+## Type Annotation
+
+We can explicitly set the type of a variable using type annotations. It is better to use type annotations only if required. If TypeScript can infer the type automatically from the initialized value, we do not have to use type annotations. This keeps the code cleaner.
+
+If we want to restrict a variable only to accept `Date` objects, we can do below annotation.
+
+```typescript
+let dob: Date;
+```
+
+Now if we try to assign a number to `dob`, it will throw below error.
+
+```
+error TS2322: Type 'number' is not assignable to type 'Date'.
+```
+
+We now know how TypeScript treats variables and how types of variables are determined.
+
+Happy learning!

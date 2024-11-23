@@ -1,0 +1,84 @@
+---
+title: "Binary Numbers"
+shortTitle: "Binary Numbers"
+date: 2022-10-05
+slug: binary-numbers
+description: "A number whose base is 2 is called a binary number. By base 2, it means we have only two digits to form all the numbers. They are 0 and 1."
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "types"
+sortorder: 15
+---
+
+A number whose base is `2` is called a binary number. By base 2, it means we have only two digits to form all the numbers. They are `0` and `1`.
+
+If we follow binary number system in daily life, this is how we count 10 apples:
+
+```java
+1
+10
+11
+100
+101
+110
+111
+1000
+1001
+1010
+```
+
+## Binary Number Literal
+
+By default if we assign a number literal to a variable, it is considered as a decimal number(base10).
+
+```javascript
+const a = 10;
+console.log(a); // 10
+```
+
+In the above example, `a` contains decimal `10`. It is not the binary equivalent of `2`. In ES5, there is no way to represent a binary number. From ES6, to specify a binary number, we must prefix it with a **leading zero followed by a lowercase or uppercase letter "B"**.
+
+```java
+// ES6+
+
+const a = 0b10;
+console.log(a); // 2
+
+const b = 0B10;
+console.log(b); // 2
+```
+
+JavaScript engine treats a number as binary if it sees a `0b` or `0B` prefix.
+
+If we use a number other than 0 and 1 after the prefix `0b` or `0B`, we get **Syntax Error**.
+
+```javascript
+const a = 0b123; // SyntaxError: Invalid or unexpected token
+```
+
+## Binary to Decimal Conversion
+
+Here we have a binary number that contains 4 digits:
+
+```
+1010
+```
+
+In binary number system, each digits are in 1's place, 2's place, 4's place and 8's place.
+
+```
+  8  4  2  1
+--------------
+  1  0  1  0
+```
+
+In order to convert this binary number to decimal number, here is the formula:
+
+```
+8 x 1 + 4 x 0 + 2 x 1 + 1 x 0 =
+
+8 + 0 + 2 + 0 =
+
+10
+```

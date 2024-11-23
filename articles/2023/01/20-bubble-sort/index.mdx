@@ -1,0 +1,29 @@
+---
+title: "Bubble Sort Using JavaScript"
+date: 2023-01-20
+slug: bubble-sort-using-javascript
+description: "Bubble sort is an algorithm to sort an array"
+tags: ["algorithms"]
+---
+
+Here is the bubble sort algorithm:
+
+```javascript
+function bubbleSort(arr) {
+  // Loop through all items
+  for (let i = 0; i < arr.length; i++) {
+    // Loop to move one item at time to right by swaping
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      // Swap positions if n is greater than n+1 value
+      if (arr[j] > arr[j + 1]) {
+        const temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+  return arr;
+}
+```
+
+Big O of Bubble sort is O(n^2).

@@ -1,0 +1,82 @@
+---
+title: "Case Sensitive"
+date: 2022-09-20
+slug: case-sensitive
+description: "JavaScript is case-sensitive. Variables or functions with different cases are treated differently"
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "lexical-structure"
+sortorder: 3
+---
+
+JavaScript is a case-sensitive language. That means JavaScript treats two words with same letters but different cases as two separate identifiers.
+
+This applies to the language keywords, variables, function names and other identifiers.
+
+## Keywords
+
+`let` is a keyword in JavaScript to declare a variable. Here is an example of its usage.
+
+```javascript
+let a = 10;
+```
+
+Since keywords are case sensitive, all statements below are **not** valid.
+
+```javascript
+Let a = 10;
+LET a = 10;
+```
+
+## Variables
+
+Variables store values in JavaScript. Since variables are case sensitive, below code is creating 3 variables, not 1.
+
+```javascript
+let age = 10;
+let Age = 10;
+let AGE = 10;
+```
+
+## Functions
+
+Functions are callable actions. We can group a set of statements under a function name. Here, we have two functions:
+
+```javascript
+// First function
+function sum() {
+  // some action
+}
+
+// Second function
+function Sum() {
+  // some action
+}
+```
+
+Even though two functions have same name, they are declared separately due to different case.
+
+## Switch Case
+
+Here is another scenario where case sensitivity is demonstrated. `switch` keyword is used to pick a logic based on the input given to it.
+
+```javascript
+const a = "Apple";
+switch (a) {
+  case "apple":
+    console.log("First case");
+    break;
+  case "Apple":
+    console.log("Second case");
+    break;
+  default:
+    break;
+}
+```
+
+Since the value of `a` is `"Apple"` with a capital `A`, above code prints `"Second case"` as output.
+
+## Identifiers
+
+Other than above mentioned examples, case of an identifier is considered in using object properties, function arguments or class names.

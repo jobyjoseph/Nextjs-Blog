@@ -1,0 +1,43 @@
+---
+title: "Install TypeScript in your Computer"
+date: 2022-10-04
+slug: install-typescript-computer
+description: "We can install TypeScript using Node Package Manager(NPM). NPM is automatically installed when you install Node.js."
+tags: ["typescript"]
+---
+
+We can install TypeScript using Node Package Manager(NPM). NPM is automatically installed when you install Node.js. You can check if `npm` command is available in your machine by running:
+
+```
+npm --version
+```
+
+If `npm` is installed, above command will display the version number like `8.15.0`. If `npm` command is not available, you can install Node.js from their official site.
+
+## Global Installation
+
+If you want TypeScript to run anywhere in the terminal, it needs to be installed globally. Global TypeScript installation can be done using:
+
+```
+npm i -g typescript
+```
+
+If the above command run successfully, then you can try below command to verify the installation:
+
+```
+tsc --version
+```
+
+It displays the version of TypeScript like `Version 4.8.4`.
+
+## Local Installation
+
+When we install TypeScript within the scope of a project, that is called local installation. When we install locally, we will not use `-g` flag.
+
+```
+npm i typescript
+```
+
+Once we start using TypeScript in any project, we use above command. In that case, TypeScript package will be locally stored under `node_modules` of the project.
+
+We then run `tsc` command from `package.json` script command.

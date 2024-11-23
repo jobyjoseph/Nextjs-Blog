@@ -1,0 +1,47 @@
+---
+title: "Specify Return Type for Functions in TypeScript"
+date: 2023-01-18
+slug: specify-return-type-functions-typescript
+description: "We can specify the type of value a function should return using TypeScript."
+tags: ["typescript"]
+---
+
+We can specify the type of value a function should return using TypeScript.
+
+## Inferred Return Type
+
+Here we have a function that accepts two arguments, both are numbers.
+
+```typescript
+function add(num1: number, num2: number) {
+  return num1 + num2;
+}
+```
+
+Since both `num1` and `num2` are numbers, TypeScript infers the return type as `number`. If you try to assign the result of `add()` to a string variable, we get error.
+
+```typescript
+const a: string = add(2, 3); // Error
+```
+
+## Setting Return Type Explicitly
+
+Here is a function that returns a `string` type explicitly.
+
+```typescript
+function add(num1: number, num2: number): string {
+  return "";
+}
+```
+
+Specifying return type explicitly, helps TypeScript to point out any errors as early as possible.
+
+## A function that does not return anything
+
+If a function does not return anything, the return type is `void`.
+
+```typescript
+function print(message: string): void {
+  // logic...
+}
+```

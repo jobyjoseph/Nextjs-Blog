@@ -1,0 +1,87 @@
+---
+title: Character Set in JavaScript
+date: 2020-11-05
+slug: javascript-character-set
+decription: JavaScript follows unicode character set. Understand how the charset is used in the language.
+tags: ["javascript"]
+---
+
+JavaScript programs are written using **Unicode** character set. Unicode is a superset of ASCII and supports most of languages in the world.
+
+> Unicode is a standard for consistent representation of text maintained by Unicode Consortium. Unicode Consortium is a non-profit organization based in Mountain View California.
+
+## Non English Text
+
+Let us try to print a Japanese text using `console.log()` statement. I translated `"hope"` to Japanese using Google translate and it says the Japanese is `Nozomu`.
+
+```javascript
+console.log("望む");
+```
+
+Above code prints the Japanese text just like that in console.
+
+```
+望む
+```
+
+Since JavaScript supports Unicode character set, it also possible to use foreign languages as **variable names**.
+
+```javascript
+const പേര് = "Backbencher";
+console.log(പേര്); // "Backbencher"
+```
+
+Above code used a word from Malayalam language as an identifier. That is also valid in JavaScript.
+
+## Escape Sequence
+
+Due to either hardware or software limitations, if we are not able input a particular unicode character, we can make use of escape sequence. Any unicode character in JavaScript can be represented using **6 characters**. 6 characters include a `\`, `u` and 4 hexa decimal characters.
+
+```javascript
+console.log("\u2764"); // "❤"
+```
+
+Above code logs a heart symbol in console.
+
+Another useful case is to write **latin alphabets**. How to write an `é`?. We can make use of unicode in this case.
+
+```javascript
+console.log("\u00e9"); // "é"
+```
+
+According to JavaScript engine, both `é` and `\u00e9` are same.
+
+```javascript
+console.log("é" === "\u00e9"); // true
+```
+
+## Normalization
+
+We can write a character in multiple ways using Unicode. Let us take the case of `é`. It can be written as a single unicode character as seen above.
+
+```javascript
+console.log("\u00e9"); // "é"
+```
+
+`é` can also be written by combining the normal ASCII `e` with the **acute accent combining mark(`\u0301`)**. The combining mark adds the dash on any normal characters.
+
+```javascript
+console.log("e\u0301"); // "é"
+console.log("f\u0301"); // "f́"
+```
+
+Even though both techniques produces the same output, they are not equal internally.
+
+```javascript
+console.log("\u00e9" === "e\u0301"); // false
+```
+
+## Unicode Application
+
+Even though we can use unicode to declare variables or as string literals, its direct usage is very rare. I have not seen anyone giving a Japanese word as variable name. When we declare a variable for maximum readability, it is good to choose English language.
+
+There can be scenarios when we need to insert a special character like copyright symbol. In that case if use unicode, we might save inserting an additional image.
+
+```javascript
+console.log("\u00A9"); // "©"
+```

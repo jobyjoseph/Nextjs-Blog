@@ -1,0 +1,70 @@
+---
+title: "Query Invalidation in React Query"
+date: 2021-10-12
+slug: query-invalidation-in-react-query
+description: In React Query, we can invalidate a query to force the query to fetch latest content from the server
+tags: ["reactQuery"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+React Query by default has its own techniques to sync server state with the client. It fetches fresh data on 4 instances.
+
+1. New instances of the query mount
+2. Window focus
+3. Network reconnection
+4. Query that is configured with refetch interval
+
+Other than these 4 scenarios, what if we need to forcefully make React Query to refetch the content from the server? We can make use of `invalidateQueries()` method.
+
+Here, we have a `RandomCoffee` component that shows a random coffee name from <Olink link="https://random-data-api.com/api/coffee/random_coffee">random-data-api.com</Olink>.
+
+```javascript
+import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import axios from "axios";
+
+const queryClient = new QueryClient();
+
+function RandomCoffee() {
+  const randomCoffee = useQuery("coffee", async () => {
+    const { data } = await axios.get(
+      "https://random-data-api.com/api/coffee/random_coffee"
+    );
+    return data;
+  });
+  return (
+    <>
+      {randomCoffee.isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <h1>{randomCoffee.data.variety}</h1>
+          <button>Get Fresh Coffee</button>
+        </div>
+      )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RandomCoffee />
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
+```
+
+The code now contains a button that does nothing. We need to fetch a new coffee name when we click on the button. For that we can invoke `queryClient.invalidateQueries("coffee")` on button click.
+
+```javascript
+<button onClick={() => queryClient.invalidateQueries("coffee")}>
+  Get Fresh Coffee
+</button>
+```
+
+Passing the query key to `invalidateQueries` will invalidate only that specific query. We can invalidate all queries by invoking the method without any arguments.

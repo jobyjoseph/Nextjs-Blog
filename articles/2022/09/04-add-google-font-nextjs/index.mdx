@@ -1,0 +1,71 @@
+---
+title: "Adding Google Font in Next.js"
+date: 2022-09-02
+slug: adding-google-font-nextjs
+description: "In order to use Google font in Next.js, we need to add Google font reference in all pages. For that we can make use of _document.js file"
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgGoogleFont from "./images/google-font.png";
+
+Next.js has a default `Document` structure using which it renders all pages. We can override that structure using `pages/_document.js`.
+
+For this article, let us try adding _Luckiest Guy_ Google font. Here is the `link` code which I got from Google.
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap"
+  rel="stylesheet"
+/>
+```
+
+We need to add above code in `pages/_document.js`. Here is the complete contents of the file:
+
+```javascript
+import Document, { Html, Head, Main, NextScript } from "next/document";
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default MyDocument;
+```
+
+In order to make valid JSX syntax, we need to add closing tags(`/>`) for all `<link/>`s. Also `crossorigin` needs to be changed to `crossOrigin` to fix eslint errors.
+
+Ok! Now, all pages can use the font family to show Luckiest Guy font. In my case, `create-next-app` created a `styles/globals.css` for global style setting. I therefore need to update the font-family there.
+
+```css
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Luckiest Guy", cursive;
+}
+```
+
+We can now place any text in any page in the site to check if the new font is applied. For me, my header in home page looks like this:
+
+<Image src={imgGoogleFont} alt="Google font" style={{ maxWidth: "500px" }} />
+
+Enjoy!

@@ -1,0 +1,169 @@
+---
+title: String replaceAll() Method
+date: 2021-02-13
+slug: javascript-string-replaceall-method
+description: String .replaceAll() method returns a new string with all matches of a pattern replaced by a replacement. The original string remains unchanged.
+tags: ["javascript"]
+---
+
+String `.replaceAll()` method returns a new string with all matches of a `pattern` replaced by a `replacement`. The original string remains unchanged.
+
+```javascript
+"my string".replaceAll(pattern, replacement);
+```
+
+The `pattern` can be either a string or a regular expression. The `replacement` can be either a string or a function which will be called for each match.
+
+## String Pattern
+
+`replaceAll()` method can take a string as a pattern to be replaced. This is the simplest and common use of `replaceAll()` method.
+
+```javascript
+const str = "Tom ate apple and pineapple";
+const response = str.replaceAll("apple", "banana");
+console.log(response); // "Tom ate banana and pinebanana"
+```
+
+The string pattern is **case sensitive**. Only strings with same charset and case will be replaced.
+
+```javascript
+const str = "Tom ate Apple and Pineapple";
+const response = str.replaceAll("Apple", "Banana");
+console.log(response); // "Tom ate Banana and Pineapple"
+```
+
+## RegExp Pattern
+
+`replaceAll()` method can take a regular expression as a pattern to be replaced. Regular expression is a string pattern to represent different formats of string like email address, numbers only and so on. For example, the regular expression for a pure number is `/[0-9]+/g`. That expression says, a string with characters only from 0 to 9 is a pure number.
+
+Using above knowledge, let us replace all numbers in a string with `"Apple"`.
+
+```javascript
+const str = "My phone number changed from 12345 to 67890";
+const regExp = /[0-9]+/g;
+const response = str.replaceAll(regExp, "Apple");
+console.log(response); // "My phone number changed from Apple to Apple"
+```
+
+The ending `g` in the regular expression is **mandatory**. `replaceAll()` will throw an error if the ending `g` is missing. Here is the error thrown:
+
+```
+TypeError: String.prototype.replaceAll called with a non-global RegExp argument
+```
+
+## Function as Replacement
+
+The second argument of `replaceAll()` method can be a function. The value returned by the function is taken as the replacement string.
+
+```javascript
+const str = "I need apple, not pineapple";
+const fun = () => "banana";
+const result = str.replaceAll("apple", fun);
+console.log(result); // "I need banana, not pinebanana"
+```
+
+Here the replacement function `fun()` always returns `"banana"`. That is why, in the final result, `"apple"` is replaced by `"banana"`.
+
+The replacement function is invoked every time a match is found.
+
+```javascript
+const str = "I need apple, not pineapple";
+
+let count = 0;
+
+const fun = () => {
+  count++;
+  return `[${count}]`;
+};
+
+const result = str.replaceAll("apple", fun);
+console.log(result); // "I need [1], not pine[2]"
+```
+
+### Replacement Function Arguments
+
+When the replacement function is invoked, 4 arguments are passed to it.
+
+1. `match`
+2. `offset`
+3. `string`
+
+#### `match`
+
+First argument(`match`) is the matched string. If the pattern provided to `replaceAll()` method is a string, `match` is always going to be that string.
+
+```javascript
+const str = "I need apple, not pineapple";
+
+const fun = (match) => {
+  console.log(match);
+  return "banana";
+};
+
+const result = str.replaceAll("apple", fun);
+console.log(result);
+```
+
+For the above code, the console logs following output.
+
+```
+"apple"
+"apple"
+"I need banana, not pinebanana"
+```
+
+`match` parameter is more meaningful when the pattern is a regular expression. If we need to find all numbers in a string and double it, we can make use of regular expression and replacement function.
+
+```javascript
+const str = "2 is shorter than 7";
+
+const fun = (match) => {
+  return match * 2;
+};
+
+const result = str.replaceAll(/[0-9]+/g, fun);
+console.log(result); // "4 is shorter than 14"
+```
+
+#### `offset`
+
+The second argument of the function gives the offset of the match in the original string. The offset is the zero indexed position of first character of the match. Consider the following string.
+
+```
+I   a t e   a p p l e
+0 1 2 3 4 5 6 7 8 9 10
+```
+
+The `a` in `"apple"` is at position 6. That is why in the following code, the position of first match is logged as 6.
+
+```javascript
+const str = "I ate apple";
+
+const fun = (match, p) => {
+  console.log(p);
+  return "";
+};
+
+const result = str.replaceAll("apple", fun);
+```
+
+#### `string`
+
+The third argument returns the original string.
+
+```javascript
+const str = "I ate apple";
+
+const fun = (match, p, str) => {
+  console.log(str);
+  return "";
+};
+
+const result = str.replaceAll("apple", fun);
+```
+
+Since there is only one match of `"apple"` in `"I ate apple"`, the original string is logged once in the console.
+
+```
+"I ate apple"
+```

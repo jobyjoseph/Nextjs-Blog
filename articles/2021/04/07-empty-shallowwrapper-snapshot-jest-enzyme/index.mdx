@@ -1,0 +1,97 @@
+---
+title: SOLVED Empty ShallowWrapper Snapshot Object in Jest and Enzyme
+date: 2021-04-07
+slug: empty-shallowwrapper-snapshot-jest-enzyme
+description: Here is the solution for when working with Jest v24 and above, developers are facing issue with Snapshot testing.
+tags: ["react"]
+---
+
+When working with Jest v24 and above, developers are facing issue with Snapshot testing.
+
+## The Issue
+
+In my code, I am working with Jest v26 and Enzyme v3. In unit testing, I am doing **snapshot testing** with a code like below.
+
+```javascript
+import { shallow } from "enzyme";
+import App from "./App";
+
+const app = shallow(<App />);
+
+it("renders correctly", () => {
+  expect(app).toMatchSnapshot(); // check if a component renders correctly
+});
+```
+
+When the tests are running, it creates a `__snapshots__` folder. But the snapshot is storing an empty object like below.
+
+```javascript
+exports[`renders correctly 1`] = `ShallowWrapper {}`;
+```
+
+However we update our `App` component, the snapshot is not going to change. This results in always passing snapshot tests, since there is no change when the generated snapshots are compared.
+
+## Solution
+
+The key issue is, for some reasons the module which converts a component to json string is not working. How to fix it?
+
+### Downgrade Jest
+
+Developers are saying this issue started from Jest v24. So most of them are downgrading Jest to v23. If that is ok in your project, you can try that.
+
+### Enzyme to JSON
+
+In this solution, we are installing an extra package to do enzyme to json conversion.
+
+First of all, install `enzyme-to-json` as a dev dependancy in your project.
+
+```
+yarn add --dev enzyme-to-json
+```
+
+Now tell Jest to use `snapshotSerializers` from `enzyme-to-json`. To do that, add a new key called `"jest"` in `package.json` and mention the new serializer.
+
+```javascript
+// package.json
+// { ...
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+//}
+```
+
+Now when we run the test, correct JSON is written to snapshot file. Now the snapshot written will look like this:
+
+```javascript
+exports[`renders correctly 1`] = `
+<div>
+  Hello World
+</div>
+`;
+```
+
+### React Test Renderer
+
+React Test Render can be used to create snapshots. It is not a helper for `Enzyme`. Instead it is a replacement for `Enzyme`. First install it using:
+
+```
+yarn add --dev react-test-renderer
+```
+
+Now the `App.test.js` file should contain below code.
+
+```javascript
+import React from "react";
+import { create } from "react-test-renderer";
+import App from "./App";
+
+const app = create(<App />);
+
+it("renders correctly", () => {
+  expect(app.toJSON()).toMatchSnapshot(); // check if a component renders correctly
+});
+```
+
+`create()` method is similar to `shallow()` in Enzyme. `.toJSON()` method generates the json to be written to snapshot file.

@@ -1,0 +1,24 @@
+---
+title: "Big-O of Getting Element at Specific Index in an Array"
+date: 2022-12-06
+slug: big-o-get-element-specific-index-array
+description: We analyze the worst case performance of getting an element at specific index in an Array.
+tags: ["javascript"]
+---
+
+Here is an array:
+
+```javascript
+const arr = [2, 5, 1, 9, 3];
+```
+
+Array are stored in contigous memory locations. So `2`, `5`, `1`, `9`, `3` are stored in contigous memory locations. Let us assume `arr` stores only 8 bit integers. So each element takes 1 byte of memory.
+
+```javascript
+arr[1]; // 5
+arr[4]; // 3
+```
+
+When program needs to take the value of any element, compiler can jump to the index location by calculating the memory address of the element. Since, the length of each element in an array is same, computer just needs to multiply offset with element size.
+
+Since the time taken is always a constant irrespective of the position, Big-O of getting an element from an array is **O(1)**.

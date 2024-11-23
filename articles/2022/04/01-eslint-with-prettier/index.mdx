@@ -1,0 +1,69 @@
+---
+title: "How To Use ESLint With Prettier And React"
+date: 2022-04-01
+slug: how-to-use-eslint-with-prettier-and-react
+description: "ESLint is a opinionated code quality tool. If Prettier is concentrating on the style and formatting of code, ESLint takes care of the quality of the code. For example, if there is an unused variable in code, ESLint throws an error, but Prettier does not have any issue."
+tags: ["react"]
+---
+
+ESLint is a opinionated code quality tool. If Prettier is concentrating on the style and formatting of code, ESLint takes care of the quality of the code. For example, if there is an unused variable in code, ESLint throws an error, but Prettier does not have any issue.
+
+There are few areas like spacing which both ESLint and Prettier check. We have ways to handle such issues with only Prettier. Thereby we keep all style related changes assigned to Prettier.
+
+## Installation
+
+We assume that `prettier` package is already installed and setup. On top of that, we need to now install `eslint` and `eslint-config-prettier`.
+
+```
+npm install -D eslint@7.18.0 eslint-config-prettier@8.1.0
+```
+
+## Setup
+
+Create a `.eslintrc.json` file in project root folder. Fill the file with below content.
+
+```json
+{
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": [],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  }
+}
+```
+
+The order of `extends` array matters. The first element, `"eslint:recommended"` turns on a set of rules, including white space rules. The second element, `"prettier"` turns off any eslint rules which prettier needs to handle. Like that, prettier gains control back from eslint.
+
+Since we are not using any plugins, we gave `[]` as the value of `plugins`.
+
+`parserOptions` specifies the kind of parser to be used. We gave `ecmaVersion` as 2021. So, that covers all latest syntax. We have also specified `jsx` syntax for the parser to consider.
+
+`"env"` tells eslint, in what all environments the code will run. If we set `es6` to true, eslint respects keywords like `let`, arrow functions and other new ES6 syntax. `browser` environment tells eslint that there will be global variables like `window` or `document`. `node` environment tells eslint to expect keywords like `process` and `global`. If we do not specify the environment, eslint throws error when it sees variables like `window`.
+
+## Running ESLint
+
+In order to run ESLint, we can add a command in `package.json`.
+
+```json
+ "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet" // highlight-line
+  },
+```
+
+Now, let us run our `lint` command.
+
+```
+npm run lint
+```
+
+If everything goes well, ESlint shows error in terminal if any. Examples of errors can be `React` not declared, unused variables and so on. As we can see ESLint checks for code logic and suggests areas of improvement.

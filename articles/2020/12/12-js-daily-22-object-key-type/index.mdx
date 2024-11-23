@@ -1,0 +1,29 @@
+---
+title: JS Daily 22 - Data Type of Object Keys
+date: 2020-12-12
+slug: js-daily-22-object-key-type
+decription: The key in JavaScript objects are always strings.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const a = {};
+const b = true;
+a[b] = 20;
+a["true"] = 30;
+console.log(a[true]);
+```
+
+<Divider />
+
+The output is `30`.
+
+`a` contains an empty object. `b` contains a boolean `true` value. This `b` is then used as a key in object `a`. An object key is always a **string**. So the boolean `true` is converted to string `"true"`. Therefore in line 3, 20 is assigned to `a["true"]`.
+
+In line 4, the value 20 is replaced by 30 in the position `a["true"]`.
+
+In line 5, we are printing the value of `a[true]`. As we already mentioned, object keys will be always of string type. Therefore, `a[true]` is same as `a["true"]`. That is why, it prints 30 as output.

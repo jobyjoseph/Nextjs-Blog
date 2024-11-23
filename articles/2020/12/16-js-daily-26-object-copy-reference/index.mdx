@@ -1,0 +1,36 @@
+---
+title: JS Daily 26 - Object Copy By Reference
+date: 2020-12-16
+slug: js-daily-26-object-copy-reference
+decription: Understand how copy by reference works with the help of simple object.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj1 = {
+  a : "Apple",
+  showA : function() {
+    console.log(this.a);
+  }
+}
+
+const obj2 = obj1;
+
+obj2.a = "Banana";
+
+obj1.showA();
+```
+
+<Divider />
+
+The output is `"Banana"`.
+
+In line1, an object is created and assigned to variable `obj1`. Note that, I did not say "we created an object `obj1`". It is because, ideally what is happening is that, at first, JavaScript engine creates the object on the right hand side somewhere in the memory. It then stores the **reference** of that object in variable `obj1`.
+
+Next in line 8, when we copy `obj1` to `obj2`, only the reference to the object is copied. That is why, in line 10, when we change the value of `obj2.a`, it is reflected in the original object.
+
+Finally, in line 12, even though we are calling method `showA()` of `obj1`, the changed value of `a` (`"Banana"`) is printed.

@@ -1,0 +1,49 @@
+---
+title: "Enum Type in TypeScript"
+date: 2023-01-11
+slug: enum-type-typescript
+description: ""
+tags: ["typescript"]
+---
+
+Enums help to tag labels to numbers.
+
+## Creating Enum Type
+
+Here is the syntax to create an enum type:
+
+```typescript
+enum Role {
+  ADMIN,
+  READ_ONLY,
+  AUTHOR,
+}
+```
+
+We then use it like below:
+
+```typescript
+const User1 = {
+  name: "Joe",
+  role: Role.ADMIN,
+};
+```
+
+## Compiled Output
+
+When we compile the above code to JavaScript, here is the output:
+
+```javascript
+var Role;
+(function (Role) {
+  Role[(Role["ADMIN"] = 0)] = "ADMIN";
+  Role[(Role["READ_ONLY"] = 1)] = "READ_ONLY";
+  Role[(Role["AUTHOR"] = 2)] = "AUTHOR";
+})(Role || (Role = {}));
+var User1 = {
+  name: "Joe",
+  role: Role.ADMIN,
+};
+```
+
+Basically, the enum is converted to an IIFE.

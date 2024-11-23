@@ -1,0 +1,83 @@
+---
+title: SOLVED Empty ShallowWrapper Snapshot Object in Jest and Enzyme
+date: 2021-04-08
+slug: filter-mongoose-response-for-api
+description: When working with mongoose and MongoDB, it is common thing to save a document and return the newly created document as the API response. Sometimes we have to modify the response before sending.
+tags: ["mongodb"]
+---
+
+When working with mongoose and MongoDB, it is common thing to save a document and return the newly created document as the API response. Sometimes we have to modify the response before sending. That is what we are going to see here.
+
+I got this info from a beautiful course in Udemy titled Microservices with Node JS and React.
+
+We have a signup API that saves user data and returns it. Here is the mongoose userSchema.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+```
+
+Without any modification, the signup API response looks like this.
+
+```javascript
+{
+    "_id": "6055863ae572b800194d342a",
+    "email": "joby@adsf.sd",
+    "password": "2d91dac0bd33ec1e4d3cef2e297b2f7fea349dd2c594174e67cfecb07e465e7c7a8c26761e315fdbeb8bccd171cab2abcd84687738c5463636f23b1d43190a62.989c3332f75b5590",
+    "__v": 0
+}
+```
+
+We need to clean up the response. Following changes needs to be done in the response.
+
+- Change `_id` key to `id`
+- Remove `password` key
+- Remove `__v` key
+
+Mongoose schema supports a JSON filter. So, whenever a JSON response is send by a route, it calls this filter. This `toJSON` filter can be added to `userSchema` like below.
+
+```javascript
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  // highlight-start
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+      },
+      versionKey: false,
+    },
+  }
+  // highlight-end
+);
+```
+
+`toJSON` accepts an object which contains the instruction to transform the API response. The logic written assigns `_id` to `id`. After that we delete `_id` and `password` fields. Then setting `versionKey` to `false` removes `__v` property. After doing all these, now the signup API returns response like below.
+
+```javascript
+{
+    "email": "joby123@adsf.sd",
+    "id": "605588229025fa002f88cac6"
+}
+```
+
+This is how we can create clean and standardized API response when working with mongoose and MongoDB.

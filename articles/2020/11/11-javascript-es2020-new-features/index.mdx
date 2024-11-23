@@ -1,0 +1,120 @@
+---
+title: ES2020 / ES11 New Features
+date: 2020-11-11
+slug: javascript-es2020-new-features
+decription: Javascript ES2020 added features like Promise.allSettled(), Nullish coalescing operator and globalThis.
+tags: ["javascript"]
+---
+
+## globalThis
+
+As the name suggests, `globalThis` stands for the global value of `this`. To know the global value of `this`, we just have to create a JavaScript file with a line to print its value.
+
+```javascript
+console.log(this); // window
+```
+
+The output of above line varies based on the environment in which we run the code. If we run above code in Nodejs, the output is `global`. Inside a webworker, the output is `self`.
+
+Now JavaScript is not constrained to a browser environment. So `globalThis` is an attempt to unify the different global terms. So instead of `window`, `self` or `global`, we can use `globalThis` from 2020.
+
+```javascript
+console.log(globalThis); // window
+```
+
+Above code is executed in a browser.
+
+## Promise.allSettled()
+
+This method ensures that all promises are settled, which means either resolved or rejected. In the following 3 promises, second promise is rejecting.
+
+```javascript
+const p1 = new Promise((resolve, reject) => setTimeout(resolve, 1000));
+const p2 = new Promise((resolve, reject) => setTimeout(reject, 2000));
+const p3 = new Promise((resolve, reject) => setTimeout(resolve, 5000));
+
+Promise.allSettled([p1, p2, p3]).then((values) => console.log(values));
+```
+
+Even though `p2` is rejected, we will get the output like below after 5 seconds.
+
+```javascript
+[[object Object] {
+  status: "fulfilled",
+  value: undefined
+}, [object Object] {
+  reason: undefined,
+  status: "rejected"
+}, [object Object] {
+  status: "fulfilled",
+  value: undefined
+}]
+```
+
+> `Promise.all()` cannot handle rejected case. All the promises passed to `Promise.all()` should be resolved to work.
+
+## Nullish Coalescing Operator(??)
+
+In JavaScript, we use OR operator(`||`) to check a value and assign a default value if not present. We have an object here.
+
+```javascript
+const account = {
+  amount: 4000,
+};
+```
+
+We are reading a property which is not there in `account` object.
+
+```javascript
+const interestRate = account.interestRate;
+console.log(interestRate); // undefined
+```
+
+Since we are accessing a non-property of `account`, it returns `undefined`. Now, using `undefined` in mathematical operations can break things. So we need to send a default interest rate if it does not exist.
+
+```javascript
+const interestRate = account.interestRate || 10;
+console.log(interestRate); // 10
+```
+
+Now, our account turns to a special account with no interest. So the `account` object looks like below.
+
+```javascript
+const account = {
+  amount: 4000,
+  interestRate: 0,
+};
+```
+
+As per our earlier code, if `account.interestRate` returns a falsy value("", 0, false, null, undefined), number 10 is returned. So, instead of 0, the interest rate will be 10 in all calculations.
+
+So now we need to explicitly check if the value of `interestRate` property is `null` or `undefined`. Here is the updated full code.
+
+```javascript
+const account = {
+  amount: 4000,
+  interestRate: 0,
+};
+
+let interestRate;
+if (account.interestRate != undefined && account.interestRate != null) {
+  interestRate = account.interestRate;
+} else {
+  interestRate = 10;
+}
+console.log(interestRate); // 0
+```
+
+Just for doing a `undefined` or `null` check, we added lot of code. Nullish Coalescing Operator(`??`) makes this job easy. `??` checks only `undefined` or `null`. So our code can be rewritten as below.
+
+```javascript
+const account = {
+  amount: 4000,
+  interestRate: 0,
+};
+
+let interestRate = account.interestRate ?? 10;
+console.log(interestRate); // 0
+```
+
+Latest babel supports this feature.

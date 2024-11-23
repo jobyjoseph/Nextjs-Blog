@@ -1,0 +1,57 @@
+---
+title: "Two Crystal Ball Problem Using JavaScript"
+date: 2023-01-18
+slug: two-crystal-ball-problem-using-javascript
+description: "Given two crystal balls that will break if dropped from high enough distance, determine the exact spot in which it will break in the most optimized way."
+tags: ["javascript"]
+---
+
+Here is the **Two Crystal Ball** problem:
+
+Given two crystal balls that will break if dropped from high enough distance, determine the exact spot in which it will break in the most optimized way.
+
+**Solution:**
+
+To understand the problem, let us assume the crystal ball will break if dropped from a height of 8 meters. So, if we drop from 1 meter, the ball will not break(`0`). If dropped from height of 2 meter, again the ball will not break(`0`). We keep on doing it. When dropped from 8 meters, the ball will break(`1`). If we list all 0s and 1s in an array, it will look like below:
+
+```
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 1...]
+```
+
+Basically, we want to find the first position of `1`.
+
+Another point here, is the array is sorted.
+
+Since there are two balls, we can use first ball to find an approximate breaking point by jumping by a certain amount in each loop(sqrt(n) in our case). We will do linear search in that interval to find the correct breaking position.
+
+Here is the code:
+
+```javascript
+function twoCrystalBall(arr) {
+  // Calculate jump length with sqrt of array length
+  const jumpLength = Math.floor(Math.sqrt(arr.length));
+  let i = 0;
+
+  // Leaping through array with distance of jumplength in each leap
+  for (; i < arr.length; i = i + jumpLength) {
+    if (arr[i] == 1) {
+      break;
+    }
+  }
+
+  // Going back by one leap to start walking using linear search
+  i = i - jumpLength;
+
+  // Walk one by one using linear search
+  for (let j = i; j < i + jumpLength; j++) {
+    if (arr[j] == 1) {
+      return j;
+    }
+  }
+
+  // If reached here means, the ball is not breaking within this height
+  return -1;
+}
+```
+
+The Big O of this algorithm is `O(sqrt(n))`.

@@ -1,0 +1,31 @@
+---
+title: JS Daily 13 - SetTimeout In For Loop
+date: 2020-12-03
+slug: js-daily-13-settimeout-for-loop
+decription: We understand a popular interview question that uses setTimeout inside for loop.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+for(var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+```
+
+<Divider />
+
+The output is:
+
+```
+3
+3
+3
+```
+
+Inside the `for` loop, we have a `setTimeout()` invocation. An invocation of `setTimeout()` means, we are keeping a function ready to be executed at a later point of time. That function is the callback function passed to `setTimeout()`.
+
+In our code, `setTimeout()` is invoked 3 times due to the 3 iteration of `for` loop. So 3 functions are now ready to be executed after 1 second. Now, at this moment, what is the state of variable `i`? The global variable `i` is sitting with value `3` after exiting from the for loop. After 1 second, all the callback functions are trying to print the value of `i`, which is now 3. So, we see `3` printed 3 times by the 3 callback function invocations.

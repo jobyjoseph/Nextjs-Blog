@@ -1,0 +1,31 @@
+---
+title: How To Configure Query Stale Time in React Query
+date: 2021-08-02
+slug: react-query-configure-query-stale-time
+description: If we know that the content is going to remain fresh for some time, we can configure the stale time in React Query. It can be done by setting the staleTime to required milli seconds.
+tags: ["reactQuery"]
+---
+
+The word _stale_ means no longer fresh to use. In React Query, when a Query fetch an API and the response is ready, React Query marks it as stale. That is one of the reason why React Query looks for fresh content each time the page gets focus.
+
+If we know that the content is going to remain fresh for some time, we can configure the stale time in React Query. It can be done by setting the `staleTime` to required milli seconds.
+
+```javascript
+const queryUsers = useQuery(
+  "gitUsers",
+  () => {
+    return fetch("https://api.github.com/search/users?q=joby").then((res) =>
+      res.json()
+    );
+  },
+  // highlight-start
+  {
+    staleTime: 5000,
+  }
+  // highlight-end
+);
+```
+
+In the above code, the query response will be `fresh` for 5 seconds. After 5 seconds, the data become `stale`.
+
+`staleTime` can be any number. By default, the value is 0. It can be `Infinity` also, which means the data will always be fresh.

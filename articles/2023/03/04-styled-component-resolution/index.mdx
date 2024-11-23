@@ -1,0 +1,21 @@
+---
+title: "Styled Components Resolution in Package.json File"
+date: 2023-03-04
+slug: styled-components-resolution-package-json-file
+description: "We are trying to find out why we add `resolutions` property in `package.json` file for Styled Components."
+tags: ["web"]
+---
+
+We are trying to find out why we add `resolutions` property in `package.json` file for Styled Components.
+
+You might have seen below code in `package.json` file:
+
+```json
+"resolutions": {
+    "styled-components": "^5"
+  }
+```
+
+In this specific case, the "resolutions" key is used to specify a particular version of the "styled-components" dependency that the project requires. The "^5" symbol in this example is a version range specifier called a caret range, which means that the project will accept any version of styled-components that is compatible with version 5.0.0 or higher, but less than version 6.0.0.
+
+By including this "resolutions" key with a specific version range, the project is telling the package manager to prioritize using the specified version of styled-components, even if other dependencies require a different version. This can help prevent version conflicts and ensure that the project is using the correct version of the dependency it needs.

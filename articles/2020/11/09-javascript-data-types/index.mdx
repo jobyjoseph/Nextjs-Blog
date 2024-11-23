@@ -1,0 +1,1134 @@
+---
+title: Data Types in JavaScript
+date: 2020-11-09
+slug: javascript-data-types
+decription: As of now there are 8 data types in JavaScript. This article takes each data type in detail and helps you to have a good understanding about them.
+tags: ["javascript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgSymbol from "./images/well-known-symbols.png";
+import Version from "../../../../src/components/version";
+
+Data Types refer to the ability of JavaScript to identify the kind of a value. In JavaScript, a value falls under one of the following **8** types. One of the fundamental characteristics of a programming language is the set of types it supports.
+
+1. [Boolean](#boolean)
+2. [null](#null)
+3. [undefined](#undefined)
+4. [Number](#number)
+5. [BigInt](#bigint)
+6. [String](#string)
+7. [Symbol](#symbol)
+8. [Object](#object)
+
+From the list, first 7 types are called **primitive data types**. So, we can say in JavaScript all non-primitive values are **objects**.
+
+## Primitive Data Type
+
+A primitive value is not an object and does not contain any methods. As discussed in the previous section, Boolean, null, undefined, Number, BigInt, String and Symbol are primitive data types in JavaScript.
+
+Primitive values are **immutable**. That means a primitive value once created, cannot be changed.
+
+```javascript{numberLines: true}
+let a = "Backbencher";
+a = "Hello";
+console.log(a);
+```
+
+In the above code, in line 1, JavaScript is storing a string `"Backbencher"` to a memory location. JavaScript is naming that memory location as `a`. This association of a variable name to its memory location is tracked by a **lookup table** which is internal to JavaScript engine.
+
+In line 2, JavaScript engine is not erasing `"Backbencher"` and writing `"Hello"`. It cannot be done since primitive values are immutable. It creates a new memory location to store `"Hello"` and the lookup table is now mapping the variable name `a` to `"Hello"`'s location.
+
+Since all this is happening internally, for the developer it seems like primitive values can be updated or mutated, which is not true.
+
+### Boolean<a name="boolean"/>
+
+Boolean represents a logical entity. Logical entities are used to write conditions and enable branching in the program. There are only 2 values in JavaScript that are of Boolean type. They are `true` and `false`.
+
+```javascript
+// Branching
+if (true) {
+  console.log("I am truthy");
+} else {
+  console.log("I will never be logged");
+}
+```
+
+#### Truthy and falsy values
+
+When we use any data types as a logical entity, JavaScript automatically converts that value to a boolean `true` or `false`. For example, in the following snippet we use `"hello"` as a logical entity.
+
+```javascript
+if ("hello") {
+  console.log("hello is true");
+} else {
+  console.log("hello is false");
+}
+```
+
+Here the output is `"hello is true"`. It is because, JavaScript automatically converts a non-empty string to a `true`. There are some values, when converted to boolean, results in `false`. Those values are called _falsy values_. They are:
+
+- `0`
+- `-0`
+- `null`
+- `false` Obviously
+- `NaN`
+- `undefined`
+- `""` Empty string
+
+All other values in JavaScript are truthy values.
+
+> An empty object `{}` and empty array `[]` are truthy values. It is not falsy like an empty string.
+
+> The string "false" is a non-empty string. So when it is converted to boolean, it is a truthy value.
+
+#### Boolean Conversion
+
+We can convert any value in JavaScript to boolean type. This can be done using 2 techniques.
+
+##### `Boolean` function
+
+We can use `Boolean` function to convert any values to boolean type.
+
+```javascript
+console.log(Boolean("A string")); // true
+console.log(Boolean("")); // false
+console.log(Boolean(0)); // false
+console.log(Boolean({})); // true
+```
+
+##### `!!` Double negation
+
+In JavaScript `!` can be used as a NOT operator. In Mathematics, if we have a number `23`, negating it, results in `-23`. Again negating it, reverts it back to `23`. In similar way, in JavaScript when using `!`, it negates the value and the output is a boolean value.
+
+Here is an example. A non-empty string is a truthy value. Let us do a single negation first.
+
+```javascript
+console.log(!"hello"); // false
+```
+
+Negating a truthy value resulted in `false`. We use `!` again to get the boolean converted value.
+
+```javascript
+console.log(!!"hello"); // true
+```
+
+### null<a name="null"/>
+
+`null` is a primitive type in JavaScript. There is only one value which is of type `null`. And that value is `null`. So it turns out that both the type and value is called `null`.
+
+`null` represents intentional absence of an object. That means, if there is a place where the code expects an object, but we are unable to provide one, then we give back `null`. Example: `match()` is a string method that returns an array of all matches of a supplied pattern.
+
+```javascript
+const str = "Orange is orange";
+const result = str.match(/orange/gi);
+console.log(result); // ["Orange", "orange"]
+```
+
+Here the `match()` method returned an array. After all, array is a type of object. So, we can say that, `result` is always expecting an object. If there was no match found, then there is no object to return to `result`. In order to state an intentional absence of an object, `match()` method returns `null` if no match is found.
+
+```javascript
+const str = "Orange is orange";
+const result = str.match(/Apple/gi);
+console.log(result); // null
+```
+
+> Always use `null` to mark intentional absence of an object. Do not use `undefined` in place where we need to use `null`. Even though, it might work, we cannot distinguish if the `undefined` returned was intentional or a default return of a function. A function in JavaScript by default returns `undefined`.
+
+### undefined<a name="undefined" />
+
+`undefined` is a primitive type in JavaScript. There is only one value in JavaScript that is of type `undefined`. That value is also called `undefined`. So, both the type and value is called `undefined`.
+
+A variable which is declared and not been assigned with a value, is by default assigned with the value `undefined`. So when we print the value of a variable, if it prints `undefined`, the most likely chance is that the variable is declared but not assigned with a value.
+
+```javascript
+var a;
+let b;
+console.log(a); // undefined
+console.log(b); // undefined
+```
+
+#### Global undefined property
+
+The `undefined` value is also stored as a property of global(`window`) object. If we list out all the properties of `window`, we can see a key named `undefined`.
+
+```javascript
+console.log(window.undefined); // undefined
+```
+
+What is the significance of this global property? In JavaScript, it is possible to treat `undefined` as a variable name and assign a value.
+
+```javascript{numberLines: true}
+(function(){
+  var undefined = "Backbencher";
+  console.log(undefined); // "Backbencher"
+})();
+```
+
+Line 3 prints `"Backbencher"`. At this moment, if we do a conditional operation with `undefined`, it results in wrong decision. To avoid such errors, we can do the comparision with the global `window.undefined` property.
+
+```javascript
+if (myVar === window.undefined) {
+  // ...
+}
+```
+
+We can use `window.undefined` safely because no one can update its value; That is because the property `undefined` of `window` is non-writable, non-enumerable and non-configurable.
+
+```javascript
+window.undefined = "Backbencher";
+console.log(window.undefined); // undefined
+```
+
+#### Determine undefined
+
+To check if a variable is declared and assigned, we can use strict equality(`===`) operator.
+
+```javascript
+var a;
+if (a === undefined) {
+  console.log("a is declared");
+} else {
+  console.log("a is declared and initialized");
+}
+```
+
+Above solution throws an error if the variable `a` is not declared before use.
+
+```javascript
+if (a === undefined) {
+  // ...
+}
+```
+
+Line 1 throws `ReferenceError: a is not defined` since `a` is not declared.
+
+More safer technique is to use `typeof` operator. `typeof` does not throw error even if the variable is not declared.
+
+```javascript
+if (typeof a === "undefined") {
+  // ...
+}
+```
+
+`typeof` returns `undefined` in following cases.
+
+- When the operand is not declared
+- When the operand is declared but not assigned with a value
+- When the operand resolves to an `undefined` value
+
+### Number<a name="number"/>
+
+In most of the programming languages, integer values and floating-point(numbers with decimal) values are treated differently. The amount of memory used for both types also varies. But in JavaScript, there is **no distinction** between integer values and floating-point values.
+
+#### Memory and Range
+
+In JavaScript, both integer and floating-point values are treated in the same way. Therefore, considering the worst case, the memory allocation for a number type should consider floating-point values. Each number in JavaScript occupies **64 bit** of memory. The numbers are stored in _Double-precision floating-point_ format as per [IEEE 754](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) standard.
+
+In case of integers, JavaScript can accurately represent all integers between -9007199254740992(-2<sup>53</sup>) and 9007199254740992(2<sup>53</sup>), inclusive. Beyond this range, the precision might lose. Let us try adding one to the maximum range.
+
+```javascript
+console.log(9007199254740992 + 1); // 9007199254740992
+```
+
+The expected output is `9007199254740993`. But the actual output is `9007199254740992`.
+
+#### Numeric literal
+
+When a number appears directly in a program, it is called a _numeric literal_. JavaScript supports numeric literals in several formats.
+
+```javascript
+12; // Base 10 integer literal
+0xff; // Base 16 integer literal
+0377; // Base 8 integer literal
+3.14; // Floating-Point literal
+6.73e5; // Floating-Point literal
+```
+
+##### Integer literal
+
+Integers in JavaScript can be represented in 3 ways.
+
+- Decimal
+- Hexadecimal
+- Octal
+
+Decimal numbers are sequence of digits with base **10**. When we say integers, what come to our minds is decimal numbers. Examples:
+
+```javascript
+0;
+23 - 46;
+100000;
+```
+
+Hexadecimal integers have their base as **16**. Hexadecimal integers can have digits from _0_ to _9_ and alphabets _A_ to _F_. In JavaScript, we denote hexadecimal integers by placing either `0x` or `0X` before the number.
+
+```javascript
+console.log(0xff); // 255
+console.log(0xa); // 10
+```
+
+Even though we log a hexadecimal integer, `log` method converts it to a decimal before printing in console.
+
+Some JavaScript engines support Octal format. Octal numbers have there base as **8**. A numeric literal is marked as octal by prepending a zero(0).
+
+```javascript
+console.log(077); // 63
+```
+
+In Google Chrome, above line prints `63`. It is supported by Chrome's V8 JavaScript engine. Now prepending a zero to mark a number as octal can lead to unexpected errors. Therefore, octal specification is not there in ECMAScript specification. It is not advised to use octal format because of non uniform support across JavaScript engines.
+
+If we use an octal number notation with a non-octal digit, JavaScript engine does not throw an error. Instead, it simply treats the number as a decimal.
+
+```javascript
+console.log(077); // 63
+console.log(099); // 99
+```
+
+##### Floating-point Literal
+
+Floating-point literals are real numbers that contain a decimal point. They contain an integer part, a decimal point and a fractional part. Some examples:
+
+```javascript
+2.78;
+0.912;
+```
+
+Floating-point literals can also be represented using exponential notation. Exponential notation is an `e`(or `E`) followed by a positive or negative integer. Here is an example:
+
+```javascript
+3.67e5; // 367000
+3.67e-5; // .0000367
+```
+
+`e5` denotes multiply the number `3.67` with 100000. In the same line, `e-5` denotes divide the number `3.67` by 100000.
+
+#### NaN
+
+`NaN` is a predefined global variable which holds a _Not a Number_ value. Sometimes, JavaScript need to tell user that the evaluated result is not a number. _NaN_ is for that purpose.
+
+```javascript
+console.log("hello" * 2); // NaN
+console.log(0 / 0); // NaN
+```
+
+So is `NaN` a variable or value? It is both a variable and value. It is something like, there is a variable `a` which holds the value `"a"`. Coming back to NaN, NaN is a global variable. So we can find it as a property of `window` object. The value that variable holds is `NaN` which is a representation for _Not a Number_ in JavaScript.
+
+```javascript
+console.log(window.NaN); // NaN
+```
+
+There is also a property for `Number` object called `NaN`. Again, the value of that property is `NaN`.
+
+```javascript
+console.log(Number.NaN); // NaN
+```
+
+##### NaN == NaN
+
+So does NaN evaluates to `true` when compared with itself? No. That makes sense because NaN is just a representation of _Not a Number_. For example, `"a"` is not a number. `"b"` is not a number. So does that mean that `"a"` and `"b"` are equal? No. Just like that, NaN is not equal to NaN.
+
+```javascript
+console.log(NaN == NaN); // false
+```
+
+`NaN` does not compare true with any value, including itself. So we cannot check if a value is `NaN` by comparing it with `NaN`. Instead we can compare a value with itself, and if it returns `false`, then that value is definitely `NaN`.
+
+```javascript
+var x = NaN;
+console.log(x != x); // true
+```
+
+We can also find if a value is `NaN` by using `isNaN()` method. `isNaN()` method returns `true` if the argument passed to the method is `NaN` or a value which cannot be converted to a number.
+
+```javascript
+var x = NaN;
+console.log(isNaN(x)); // true
+console.log(isNaN("apple")); // true
+console.log(isNaN("123")); // false. It can be converted to 123
+console.log(isNaN(true)); // false. true can be converted to 1
+console.log(isNaN({})); // true
+```
+
+##### NaN as Variable
+
+As we discussed in earlier section, `NaN` is a predefined global variable. In ECMAScript 3, we could both read/write that predefined global variable. But in ECMAScript 5, `window.NaN` is read only. It is not possible to edit the value of `window.NaN`.
+
+```javascript
+NaN = 46;
+console.log(NaN); // NaN
+```
+
+#### Number Conversion
+
+There are different techniques to convert a non-number data type to number data type.
+
+##### Multiply with one
+
+`*` is an operator in JavaScript to do multiplication. We know that a number multiplied with one returns the same number. Also, since multiplication(`*`) applies only to numbers, JavaScript automatically converts all operands of `*` operator to number data type. We use this automatic type conversion feature in JavaScript to convert any data type to a number type.
+
+```javascript
+// Boolean to Number
+console.log(true * 1); // 1
+console.log(false * 1); // 0
+
+// String to Number
+console.log("123" * 1); // 123
+console.log("abc" * 1); // NaN
+
+// Null to Number
+console.log(null * 1); // 0
+
+// Undefined to Number
+console.log(undefined * 1); // NaN
+```
+
+##### parseInt() and parseFloat()
+
+`parseInt()` and `parseFloat()` converts a **string to a number**.
+
+`parseInt()` function accepts 2 arguments. First one is the **string to be converted** and the second being the **radix**. In mathematics, radix is also known as the base. Default value of second parameter is **10**.
+
+```javascript
+console.log(parseInt("42", 10)); // 42
+console.log(parseInt("42", 8)); // 34
+```
+
+`parseInt()` ignores the decimal portion in the string, if present.
+
+```javascript
+console.log(parseInt("42.762", 10)); // 42
+```
+
+`parseFloat()` can convert a string to a floating-point number.
+
+```javascript
+console.log(parseFloat("42.762", 10)); // 42.762
+```
+
+##### Number()
+
+`Number` is a global function in JavaScript which can be used to convert any type in JavaScript to a number.
+
+**Boolean to number**
+
+`Number()` can convert a boolean value to a number.
+
+```javascript
+console.log(Number(true)); // 1
+console.log(Number(false)); // 0
+```
+
+`Number()` converts a `true` to `1` and `false` to `0`.
+
+**null to number**
+
+`Number()` converts `null` to `0`.
+
+```javascript
+console.log(Number(null)); // 0
+```
+
+**undefined to number**
+
+`Number()` converts `undefined` to `NaN`.
+
+```javascript
+console.log(Number(undefined)); // NaN
+```
+
+**String to number**
+
+`Number()` converts an empty string to `0`.
+
+```javascript
+console.log(Number("")); // 0
+```
+
+`Number()` converts a string with number value to corresponding number.
+
+```javascript
+console.log(Number("42")); // 42
+console.log(Number("42.765")); // 42.765
+```
+
+If the string contains a non-numeric character, `Number()` returns `NaN`.
+
+```javascript
+console.log(Number("42abc")); // NaN
+```
+
+If we used `parseInt()` in the above case, we will get `42`.
+
+**BigInt to number**
+
+A BigInt value can be directly passed to `Number()` to convert it to a number type.
+
+```javascript
+console.log(Number(42n)); // 42
+```
+
+### BigInt <a name="bigint" />
+
+BigInt allows JavaScript developers to have much greater integer representation in their code. The maximum a normal number supports is **9007199254740991**(2^53 - 1).
+
+Let us try to increment from the current MAX value.
+
+```javascript
+var num = Number.MAX_SAFE_INTEGER; // 9007199254740991
+num++;
+num++;
+num++;
+num++;
+num++;
+
+console.log(num); // 9007199254740992
+```
+
+Ideally we expect 9007199254740996 in the console, instead it is printing 9007199254740992. JavaScript is not able to compute beyond that.
+
+BigInt solves this issue. It helps to work on numbers beyond 9007199254740992.
+
+#### Declaring a BigInt
+
+A number is declared as BigInt by appending `n` to the number.
+
+```javascript
+10; // Integer
+10n; // BigInt
+```
+
+We can also use `BigInt()` function to convert any JavaScript type to BigInt type.
+
+```javascript
+BigInt(23); // 23n
+BigInt("23"); // 23n
+BigInt(true); // 1n
+BigInt(false); // 0n
+```
+
+Trying to convert `undefined`, `null` or an object to BigInt results in error.
+
+Let us rewrite the code in above section using BigInt.
+
+```javascript
+var num = BigInt(Number.MAX_SAFE_INTEGER);
+num++;
+num++;
+num++;
+num++;
+num++;
+
+console.log(num); // 9007199254740996n
+```
+
+#### Type of BigInt
+
+We use `typeof` operator to determine the type of a variable or value. When used with a BigInt variable or value, it returns `"bigint"`.
+
+```javascript
+typeof 1n; // "bigint"
+typeof BigInt(1); // "bigint"
+```
+
+### String<a name="string" />
+
+In JavaScript, _String_ is a primitive data type. It is used in JavaScript to work with texts.
+
+Here is an example of a string.
+
+```javascript
+"backbencher!";
+```
+
+#### String is immutable
+
+When we do any operations on a string, it creates a new string. The existing string cannot be mutated.
+
+```javascript
+const str = "hello".toUpperCase();
+```
+
+When `.toUpperCase()` is invoked, it does not affect the original string `"hello"`. Instead a new string `"HELLO"` is created in memory and assigned to `str`.
+
+#### Unicode support
+
+Each character in a string occupies **16 bits to consider Unicode characters**. Since JavaScript supports unicode characters, we can use unicodes in our texts. Here we are going to assign a malayalam language word to a variable.
+
+```javascript
+const fruit = "ആപ്പിൾ";
+console.log(fruit); // "ആപ്പിൾ"
+```
+
+#### String literals
+
+A string literal is a **string data value** that appears directly in a program. To use a string literal in the code, wrap the string value in a matching pair of single quotes(`''`) or double quotes(`""`) or backticks(` `` `).
+
+```javascript
+"Backbencher.dev";
+"Backbencher.dev"`Backbencher.dev`;
+```
+
+The backtick(` `` `) syntax was introduced in **ES6**.
+
+When using double quotes or single quotes, we can write a **multi-line** string literal using backslash(`\`).
+
+```javascript
+console.log(
+  "Backbencher.dev\
+is\
+rich"
+); // "Backbencher.devisrich"
+```
+
+Even though we write the code in separate lines, the output came in single line. That means, the backslash technique is purely to bring code readability. It does not have a difference compared to writing in one line.
+
+The backtick(` `` `) syntax by default supports multi-line literals. We do not need backslash to write new lines. Also, the new lines are considered as new lines by JavaScript engine.
+
+```javascript
+console.log(`Backbencher.dev
+is
+rich`);
+```
+
+and the output is shown in three lines.
+
+```
+"Backbencher.dev
+is
+rich"
+```
+
+#### String conversion
+
+Any non-string value in JavaScript can be converted to a string in different ways.
+
+##### String() function
+
+`String()` is a constructor function in JavaScript. It accepts any type as its argument and converts it to a **String object**.
+
+```javascript{numberLines: true}
+// Primitive to string
+const bool = true;
+console.log(String(bool)); // "true"
+
+// Object to string
+const date = new Date();
+console.log(String(date));    // "Tue Jul 07 2020 12:19:55 GMT+0530 (India Standard Time)"
+```
+
+From the code above, it is clear that `String()` function can easily handle primitive or object data types.
+
+##### toString() method
+
+Any data types except `null` and `undefined` can be converted to string using `.toString()` method.
+
+```javascript
+console.log(true.toString()); // "true"
+```
+
+As you can see `toString()` is used as a method using dot(`.`) operator. But we know that only objects have properties and methods. So how a primitive type like `true` behave as an object?
+
+When JavaScript engine tries to evaluate `true.toString()`, it understands that the code is trying to treat the primitive value `true` as an object. So internally, JavaScript engine converts `true` to its equivalent `Boolean` object.
+
+```javascript
+Boolean(true); // Boolean object
+```
+
+Now, `Boolean` is a constructor function object in JavaScript, which is inherited from `Object` type. That means, any methods in `Object` can be invoked from its child objects like `Boolean`. Such an inherited method is `.toString()`.
+
+```javascript
+Boolean(true).toString(); // "true"
+```
+
+Why `null.toString()` and `undefined.toString()` do not work?
+
+When we use `null.toString()`, JavaScript engine cannot convert it into equivalent `Null` object. Same is the case with `undefined`. If we try to convert `null` or `undefined` to string using `.toString()` method, it throws TypeError.
+
+```javascript
+null.toString(); // TypeError: Cannot read property 'toString' of null
+```
+
+##### Adding empty string
+
+In JavaScript, we can concatenate two strings using plus(`+`) operator. If one of the operand is a string, JavaScript automatically converts other operand to a string. We can make use of this capability to convert a value to string.
+
+```javascript
+const str = true + "";
+console.log(str); // "true"
+```
+
+This technique works with `null` and `undefined` also.
+
+```javascript
+console.log(null + ""); // "null"
+console.log(undefined + ""); // "undefined"
+```
+
+### Symbol <Version number="6" /><a name="symbol" />
+
+**Symbol** is a new primitive data type introduced in ES6. The `Symbol()` function returns a value of type **symbol**.
+
+#### Creating symbol variable
+
+A variable of _Symbol_ type is created using `Symbol()` function.
+
+```javascript
+const s1 = Symbol();
+console.log(typeof s1); // "symbol"
+```
+
+While creating a symbol variable, we can optionally pass a description.
+
+```javascript
+const id = Symbol("UserId");
+const name = Symbol("UserName");
+```
+
+`"UserId"` and `"UserName"` are the descriptions. Descriptions help in debugging. Other than that, there is no impact for description strings.
+
+#### Symbols are unique
+
+Every symbol value returned from `Symbol()` is anonymous and unique. We can consider `Symbol()` function as a magic box which throws out a unique toy each time when we open it.
+
+Let us create 2 symbols.
+
+```javascript
+const symbol1 = Symbol();
+const symbol2 = Symbol();
+```
+
+Here, we open the magic box 2 times. Now let us see what toy we have received by printing the symbol variables.
+
+```javascript
+console.log(symbol1); // Symbol()
+console.log(symbol2); // Symbol()
+```
+
+Both statements print `Symbol()` in console. Did you expect a random string? If yes, that is not happening. So, is there any way to see the contents of both variables? No. That is why they say `Symbol()` produces anonymous and unique values.
+
+In that case, how can we make sure that both the variables are unique? That is a guarantee by JavaScript. Now for our relief, at least we can try comparing them.
+
+```javascript
+console.log(symbol1 == symbol2); // false
+```
+
+Seeing a `false` is assuring. It means `symbol1` and `symbol2` are unique.
+
+Having same description, does not create identical symbols. Descriptions are purely for debugging purpose. It does not have any impact on uniquness of generated symbols.
+
+```javascript
+const s1 = Symbol("Disney");
+const s2 = Symbol("Disney");
+console.log(s1 == s2); // false
+```
+
+`s1` is not equal to `s2`, even though their Symbol description is same.
+
+#### Symbols as object keys
+
+In JavaScript, an object key should be either a string or a symbol. Other data types are not supported as object keys. Here is an example of an object literal.
+
+```javascript
+const obj = {
+  name: "John Doe",
+  age: 23,
+};
+```
+
+Now let us add a new Symbol key to `obj`.
+
+```javascript
+obj[Symbol("id")] = 1234;
+```
+
+> We need to use square bracket`[]` syntax to add a Symbol key property to an object. Dot(`.`) notation is not allowed to add Symbols to objects. Following code is invalid.
+>
+> ```javascript
+> obj.Symbol("id") = 1234;
+> ```
+
+What is the use of having a Symbol key?
+
+#### Symbol keys in `for..in`
+
+`obj` object which we created above now have 3 keys(2 strings and 1 symbol). Now let us log the key names using `for..in` loop.
+
+```javascript
+for (key in obj) {
+  console.log(key);
+}
+```
+
+And the output is
+
+```
+"name"
+"age"
+```
+
+We cannot see `Symbol("id")` in the list. Symbol keys act like private properties(in reality, they are not). They are not looped through when used with `for..in` loop.
+
+So, is this hiding behaviour applicable for all loops on objects?
+
+#### Symbol keys with `Object.keys()`
+
+The `Object.keys()` method returns an **array** of a given object's own enumerable property names, in the same order as we get with a normal loop.
+
+Let us try `Object.keys()` on `obj` object. Here is the full code from object creation to printing property names.
+
+```javascript
+const obj = {
+  name: "John Doe",
+  age: 23,
+};
+obj[Symbol("id")] = 1234;
+
+console.log(Object.keys(obj)); // ["name", "age"]
+```
+
+Here also the symbol keys are omitted. Only the string property names `name` and `age` are printed.
+
+#### Symbols do not auto-convert to a string
+
+In JavaScript, we can explicitly convert one data type to another using various techniques. One common conversion is converting a data type to string. All data types have `.toString()` method which makes this job easy. Here are few examples.
+
+```javascript
+console.log(true.toString()); // "true"
+console.log(Number(123).toString()); // "123"
+console.log([3, 5, 8].toString()); // "3,5,8"
+```
+
+In similar manner, we can convert a symbol to a string using `.toString()` method.
+
+```javascript
+const symbol1 = Symbol("Token");
+console.log(symbol1.toString()); //"Symbol(Token)";
+```
+
+A symbol when converted to a string, outputs the `Symbol()` function which created it, along with the symbol description(`Token`).
+
+There are cases where JavaScript implicitly convert a data type to string. Here are two examples.
+
+```javascript
+console.log(1 + "2"); // "12"
+alert([3, 4, 5]); // alerts "3,4,5"
+```
+
+What if we try to alert the value of a symbol? It throws an error. Let us try.
+
+```javascript
+const symbol1 = Symbol("Token");
+alert(symbol1); // TypeError: Cannot convert a Symbol value to a string
+```
+
+This says that, if we want to convert a symbol to string, we need to explicitly use `.toString()` method. Otherwise, implicit conversion to string value results in _TypeError_.
+
+#### Well-Known symbols
+
+So far we learned how to create custom symbols. There are a set of built-in symbols in JavaScript called as Well-Known symbols. We can find these symbols as constants of `Symbol` class. There are 13 such symbols.
+
+1. `Symbol.asyncIterator`
+2. `Symbol.hasInstance`
+3. `Symbol.isConcatSpreadable`
+4. `Symbol.iterator`
+5. `Symbol.match`
+6. `Symbol.matchAll`
+7. `Symbol.replace`
+8. `Symbol.search`
+9. `Symbol.species`
+10. `Symbol.split`
+11. `Symbol.toPrimitive`
+12. `Symbol.toStringTag`
+13. `Symbol.unscopables`
+
+We can find all these constant symbols, by going to browser console and type `Symbol.`. Browser will show above symbols in the auto complete.
+
+<Image src={imgSymbol} alt="Well known symbols" />
+
+Well-known symbols are used by various algorithms(like `for..of` loop) within JavaScript specification. To understand it better, let us take `Symbol.iterator`. This symbol will be present as a key in any iterable object. Let us verify it.
+
+An array in JavaScript is an iterable object. Whereas an object literal is not iterable.
+
+```javascript
+// Iterable object
+const arr = [2, 4, 6];
+
+// Non iterable
+const obj = {
+  name: "John",
+  age: 20,
+};
+```
+
+Now let us see the value present in the `Symbol.iterator` key.
+
+```javascript
+console.log(arr[Symbol.iterator]); // function values() { [native code] }
+
+console.log(obj[Symbol.iterator]); // undefined
+```
+
+Above statements show that, there is a `Symbol.iterator` key in an array, but not present in an object. We can therefore test if an object is an iterable object by checking for `Symbol.iterator` key.
+
+Now let us go little more in depth. We now know, the `Symbol.iterator` key inside `arr` contains a function. If we execute that function, it returns an _iterator_ object. Just for users who are new to iterators, an iterator object contains a `next()` method which returns values one by one upon each invocation. Let us try it.
+
+```javascript
+const arrayIteratorObject = arr[Symbol.iterator]();
+
+console.log(arrayIteratorObject.next().value); // 2
+console.log(arrayIteratorObject.next().value); // 4
+console.log(arrayIteratorObject.next().value); // 6
+console.log(arrayIteratorObject.next().value); // undefined
+```
+
+## Object <a name="object" />
+
+An **object** is an unordered collection of properties, each of which has a _name_ and _value_. In the following code, `car` is an example of _object_ in JavaScript.
+
+```javascript
+const car = {
+  model: "GLS",
+  company: "Mercedes",
+};
+```
+
+In the above object, `model` and `company` are properties of the object `car`. Each properties can have a primitive value or another object value.
+
+### Empty Object
+
+An object with no properties or methods inside it is an empty object.
+
+```javascript
+const car = {};
+```
+
+#### Usage Scenario
+
+Say, we are going to create a `student` object. But all the properties of `student` object is not available initially. In that case we start with an empty object at the start of program.
+
+```javascript
+const student = {};
+```
+
+Then as the program progresses, we start assigning properties to `student` object.
+
+```javascript
+//...
+student.name = `${firstName} ${lastName}`;
+//...
+student.marks = totalMarks;
+```
+
+Finally, we will get a `student` object with two properties, `name` and `marks`.
+
+### Object Literal
+
+As seen above, in JavaScript we can literally write an object by wrapping a set of key value pairs inside curly brackets `{}`.
+
+```javascript
+const car = {
+  model: "GLE",
+  company: "Mercedes",
+};
+```
+
+In case of strings, we have string literals like `"hello"`, `"apple"` and so on. Object literals are something in similar lines for Objects.
+
+#### Usage Scenario
+
+In our application, we might need to store the configuration of something as an object literal. The key-value pair will be later used in our application.
+
+```javascript
+const config = {
+  dbName: "library",
+  host: "localhost",
+  username: "johndoe",
+  password: "pass123",
+};
+```
+
+### Reading Object properties
+
+As we already discussed, object is a collection of related information. We have an object here `student` with some properties and method.
+
+```javascript
+const student = {
+  name: "David",
+  course: "Computer Science",
+  subject1Mark: 92,
+  subject2Mark: 89,
+  subject3Mark: 91,
+  getAverageMark: function () {
+    return (this.subject1Mark + this.subject2Mark + this.subject3Mark) / 3;
+  },
+};
+```
+
+#### Using Dot `.` operator
+
+We can use dot(`.`) operator to read the value of an object key. We can read the value of `name` property using `.` operator.
+
+```javascript
+console.log(student.name); // "David"
+```
+
+#### Using Bracket Notation `[]`
+
+We can also access object properties using `[]` notation.
+
+```javascript
+console.log(student["name"]); // "David"
+```
+
+The syntax looks very similar to how we access elements of an array. That is the reason why objects can also be called as **associative arrays**.
+
+##### Usage Scenario:
+
+Sometimes objects have illegal identifier characters in the key.
+
+```javascript
+const person = {
+  "full-name": "David Tom",
+};
+```
+
+`person` is a perfectly legal object. Now if we are trying to get the value of `full-name` using `.` operator, it will not work as expected.
+
+```javascript
+console.log(person.full - name);
+```
+
+In this situation we need to use the bracket syntax.
+
+```javascript
+console.log(person["full-name"]); // "David Tom"
+```
+
+##### Usage Scenario:
+
+Sometimes the key to extract might reside inside a variable. In that case, we use bracket notation `[]`, to get the value. From the above `student` object, if we are printing the marks in a loop, we can do like this.
+
+```javascript
+for (let i = 1; i <= 3; i++) {
+  console.log(student[`subject${i}Mark`]);
+}
+```
+
+Above code will output `92`, `89`, `91` in different lines. Here we used template literal string inside bracket notation.
+
+### Reading non-existent property
+
+Say we have an object `car` with two properties `model` and `year`.
+
+```javascript
+const car = {
+  model: "Mercedes GLS",
+  year: 2019,
+};
+```
+
+Now we are trying to get the value of a property `color` which is not in `car` object. Will it throw an error? No. Instead it will return `undefined`.
+
+```javascript
+console.log(car.color); // undefined
+```
+
+### Setting Object Properties
+
+We saw that we can read properties of an object either using dot(`.`) operator or using bracket notation`[]`. We can use the same operators to add / edit properties of an object. Here, we have an object `car`.
+
+```javascript
+const car = {
+  model: "Mercedes GLS",
+  year: 2019,
+};
+```
+
+#### Adding new property
+
+In JavaScript, we can dynamically create new properties or methods for an object. It can be done by just setting it. In `car` object, there is no `color` property. We can create it by just setting `color` property.
+
+```javascript
+car.color = "Black";
+```
+
+Now the `car` object looks like:
+
+```javascript
+{
+  model : "Mercedes GLS",
+  year : 2019,
+  color : "Black"
+}
+```
+
+In the above code, we created a new property `color` using dot(`.`) notation. Instead, we can also create a new property using bracket notation`[]`. Here is how it is done.
+
+```javascript
+car["color"] = "Black";
+```
+
+#### Updating existing property
+
+When we set a property of an object that does not exist, that property is created. If that property exists, then the value of that property is updated. In our `car` object, the `model` and `year` property exists. The value of `year` property is `2019`. Now we are going to set the value of `year` property with a different year.
+
+```javascript
+car.year = 2020;
+```
+
+Now the `year` property is updated. Now the `car` object looks like:
+
+```javascript
+{
+  model : "Mercedes GLS",
+  year : 2020
+}
+```
+
+As in the case of creating a new property, we can also update a property using bracket notation`[]`.
+
+```javascript
+car["year"] = 2020;
+```
+
+> Note that when we used bracket notation, `year` is wrapped in quotes to form a string literal. If we use it without quotes, JavaScript engine will consider it as a variable `year` and will try to resolve it.
+
+#### Using bracket notation`[]` to handle dynamic keys
+
+We can use variables inside bracket notation. This can come handy. We have a `student` object here.
+
+```javascript
+const student = {
+  name: "David",
+  age: 33,
+};
+```
+
+What if the student `"David"` have a unique property `dreamingAbout`? How can we add that?
+
+```javascript
+let dynamicProperty = "dreamingAbout";
+let dynamicValue = "Riding Mercedes GLS AMG";
+student[dynamicProperty] = dynamicValue;
+```
+
+See how we used variables to add a key value pair for an object. This can be achieved only using bracket notation`[]`. Now the new property is ready to use.
+
+```javascript
+console.log(student.dreamingAbout); // "Riding Mercedes GLS AMG"
+```
+
+### Objects are mutable
+
+Objects are mutable and are manipulated by reference rather than by value.
+
+```javascript
+var x = {
+  name: "Apple",
+  color: "Red",
+};
+var y = x;
+y.color = "Green";
+console.log(x.color); // "Green"
+```

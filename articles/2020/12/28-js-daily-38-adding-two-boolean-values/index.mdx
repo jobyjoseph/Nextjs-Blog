@@ -1,0 +1,21 @@
+---
+title: JS Daily 38 - Adding Two Boolean Values
+date: 2020-12-28
+slug: js-daily-38-adding-two-boolean-values
+decription: If we try to add two boolean values in JavaScript, they are converted to numbers and added.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+console.log(true + true);
+```
+
+<Divider />
+
+The output is `2`.
+
+When both the operands for `+` is of type **Boolean**, both the operands are converted to numbers. `true` is converted to `1` and `false` is converted to `0`. That is why the result printed as `2`.

@@ -1,0 +1,24 @@
+---
+title: JS Daily 28 - Rest Parameter in Functions
+date: 2020-12-18
+slug: js-daily-28-rest-parameter-functions
+decription: We can collect all the rest of the values passed to a function using rest operator in function arguments.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function sum(a, ...b) {
+  console.log(b.length);
+}
+sum(1, 2, 3, 4);
+```
+
+<Divider />
+
+The output is `3`.
+
+The second argument to the function is a **rest parameter**. It should always be the last parameter. In the example above, argument `1` is assigned to `a`. Rest of the arguments are grouped to an array and assigned to `b`. Therefore, `b` contains an array `[2, 3, 4]`. That is why the length is `3`.

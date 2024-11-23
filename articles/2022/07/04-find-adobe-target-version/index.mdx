@@ -1,0 +1,27 @@
+---
+title: "Find Adobe Target Version Used in a Website"
+date: 2022-07-17
+slug: find-adobe-target-at-js-version-website
+description: "There is major difference between at.js version 1 and version 2. It is sometimes important to find out the version used in a website."
+tags: ["web"]
+---
+
+import Image from "../../../../src/components/image";
+import imgAdobeObject from "./images/adobe-object.png";
+import imgTargetVersion from "./images/target-version.png";
+
+Adobe Target works by loading an Adobe script to client side browser. This script file name is `at.js`. Last day, I had to fix an Adobe Target issue in a production site. I was new to Adobe Target and after reading through the documentation, I came to know that there are two major `at.js` version. It can be either `v1.x` or `v2.x`.
+
+I needed to know which version the site is using. I finally found it and here I am explaining what I did.
+
+When Adobe loads its script, it creates a global `adobe` object in the browser.
+
+<Image src={imgAdobeObject} alt="Adobe Object" style={{ maxWidth: "300px" }} />
+
+The `adobe` object contains different services that Adobe provides like `target`. Next, print the value of `adobe.target.VERSION`. It prints the version of `at.js` loaded.
+
+<Image
+  src={imgTargetVersion}
+  alt="Adobe Target Version"
+  style={{ maxWidth: "300px" }}
+/>

@@ -1,0 +1,25 @@
+---
+title: "How To Compile All TypeScript Files in a Folder"
+date: 2023-01-25
+slug: how-to-compile-all-typescript-files-folder
+description: "If there are more than one TypeScript file in a folder, we can first initialize the folder as a TypeScript project and then compile all files using tsc command."
+tags: ["typescript"]
+---
+
+If there is only one TypeScript file, we can compile the file using:
+
+```
+tsc app.ts
+```
+
+Above command will compile the `app.ts` file and generate `app.js` file.
+
+What if there are two or more TypeScript files, `app.ts` and `tag.ts`? In that case, first initialize the folder as a TypeScript project.
+
+```
+tsc --init
+```
+
+Above command creates a `tsconfig.json` file in the project root. If you open the `tsconfig.json` file, you can find several options you can pass to TypeScript compiler.
+
+Next, from the project root folder, just run `tsc`. No file name or nothing, just `tsc`. It will create `.js` files for all `.ts` files.

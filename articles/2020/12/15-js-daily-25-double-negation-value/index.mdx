@@ -1,0 +1,22 @@
+---
+title: JS Daily 25 - Double Negating a Value
+date: 2020-12-15
+slug: js-daily-25-double-negation-value
+decription: A value can be quickly converted to its boolean equivalent by using double negation operator.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const str = "Backbencher";
+console.log(!!str);
+```
+
+<Divider />
+
+The output is `true`.
+
+This is the easiest way to convert any value to its equivalent boolean value. First negation(`!`) converts the value to boolean, but it will be inversed. We then use one more negation to invert the value again.

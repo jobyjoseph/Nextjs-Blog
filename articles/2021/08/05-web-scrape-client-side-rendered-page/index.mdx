@@ -1,0 +1,67 @@
+---
+title: Web Scraping From Client Side Rendered Page Using Node.js
+date: 2021-08-05
+slug: scrape-client-side-rendered-page-nodejs
+description: Client Side rendering happens in browser. We need a headless browser like `puppeteer` to actually execute the JavaScript code and render the content.
+tags: ["nodejs"]
+---
+
+Client Side rendering happens in browser. We need a headless browser like `puppeteer` to actually execute the JavaScript code and render the content. Once we have the page html, we need a tool like `cheerio` to select required elements easily.
+
+Here we are trying to get an item name and its price from a Flipkart page.
+
+Create `index.js`.
+
+Add reference to `puppeteer` and `cheerio`.
+
+```javascript
+const puppeteer = require("puppeteer");
+const cheerio = require("cheerio");
+```
+
+Create a function `getData()` that retrieves the HTML using puppeteer.
+
+```javascript
+async function getData() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(
+    "https://www.flipkart.com/acer-aspire-7-core-i5-10th-gen-8-gb-512-gb-ssd-windows-10-home-4-graphics-nvidia-geforce-gtx-1650-a715-75g-50ta-a715-75g-41g-gaming-laptop/p/itmc97c3da5d2abe?pid=COMG2KBG2K4GFFF7&lid=LSTCOMG2KBG2K4GFFF78YBPHO&otracker=clp_banner_2_5.bannerX3.BANNER_electronics-big-savings-days-store_31QQGW6H3B0T&fm=neo%2Fmerchandising&iid=M_9ce49505-7d83-486d-827d-4dc7f6e24c7e_5.31QQGW6H3B0T&ppt=hp&ppn=homepage&ssid=lale7dha000000001628101731142"
+  );
+  const data = await page.content();
+  await browser.close();
+  processData(data);
+}
+```
+
+What we can see above is:
+
+- Launch puppeteer browser
+- Open a tab in the browser
+- Navigate to the Flipkart product page
+- Get the content of the page
+- Close the browser
+- Pass the content to another function which we need to create `processData()`.
+
+Now create `processData()` that gets the required data using `cheerio`.
+
+```javascript
+function processData(data) {
+  const $ = cheerio.load(data);
+  const productTitle = $(".B_NuCI").text();
+  const productPrice = $("._16Jk6d").text();
+  console.log(productTitle);
+  console.log(productPrice);
+}
+```
+
+The syntax of cheerio is similar to jQuery.
+
+Run the file using `node index.js`.
+
+We can see the output as:
+
+```
+acer Aspire 7 Core i5 10th Gen - (8 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA GeForce GTX 1650) A715-75G-50TA/ A715-75G-41G Gaming Laptop  (15.6 inch, Black, 2.15 Kg)
+₹54,990
+```

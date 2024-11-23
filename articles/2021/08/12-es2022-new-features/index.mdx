@@ -1,0 +1,56 @@
+---
+title: ES2022 or ES13 New Features
+date: 2021-08-12
+slug: es2022-new-features
+description: New features are added to ECMAScript language by TC39 team. Here is the probable list of features that are expected in ES2022 or ES13.
+tags: ["javascript"]
+---
+
+New features are added to ECMAScript language by TC39 team. Here is the probable list of features that are expected in ES2022 or ES13.
+
+## Class Static Initialization Blocks
+
+Class `static` blocks perform additional static initialization during class definition evaluation. Currently, this feature is in **Stage 3**.
+
+Right now, we can declare static variables and methods inside a class. Example:
+
+```javascript
+class A {
+  static fruit = "Apple";
+  static dish = "";
+  static show() {
+    return "I ate Apple";
+  }
+}
+```
+
+Later, if we need to do an evaluation on this static properties, we need to do it **outside** the class definition.
+
+```javascript
+try {
+  const obj = whatToCook(A.fruit);
+  A.dish = obj.dish;
+} catch {
+  A.dish = "Pie";
+}
+```
+
+Using `static` blocks, we can now move this code inside class `A`.
+
+```javascript
+class A {
+  static fruit = "Apple";
+  static dish = "";
+  static show() {
+    return "I ate Apple";
+  }
+  static {
+    try {
+      const obj = whatToCook(A.fruit);
+      A.dish = obj.dish;
+    } catch {
+      A.dish = "Pie";
+    }
+  }
+}
+```

@@ -1,0 +1,79 @@
+---
+title: "How To Use Prettier In React Project"
+date: 2022-03-31
+slug: how-to-use-prettier-in-react-project
+description: "When working with multiple team members in a project, it will be nice to have everyone following a uniform style guide. For example, everyone ends a JavaScript statement with a semicolon, provide exactly 2 spaces for tabs and so on. Prettier is a tool which helps us in ensuring common style guide. It is an automatic code formatter."
+tags: ["react"]
+---
+
+When working with multiple team members in a project, it will be nice to have everyone following a uniform style guide. For example, everyone ends a JavaScript statement with a semicolon, provide exactly 2 spaces for tabs and so on. Prettier is a tool which helps us in ensuring common style guide. It is an **automatic code formatter**.
+
+## Installation
+
+If our project folder is not a Node package, make it as a node package by setting up `package.json`. For that, go to the project folder in terminal and run:
+
+```
+npm init -y
+```
+
+Then, install `prettier` package as a dev dependency.
+
+```
+npm install -D prettier
+```
+
+> If we are using Visual Studio Code, we might already be using prettier extension. But, having a prettier setup like we are doing helps other developers to run prettier with a simple command.
+
+## Setup
+
+In the project root folder, create a file with name `.prettierrc`. Prettier by default has a set of formatting rules. If we need to customize those rules, we can write our own rules in this file. If we are fine with the default rules, just provide an empty object in the `.prettierrc` file.
+
+```
+{}
+```
+
+We can find all the options available for prettier configuration in this [link](https://prettier.io/docs/en/options.html).
+
+Next, we need to add a command in `package.json` to run prettier. For that, under `scripts` object in `package.json`, add the following command.
+
+```json
+"scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx}\""
+  },
+```
+
+The long command is to format any `js` or `jsx` files under `src` folder. The `--write` flag tells prettier to overwrite the actual files with formatted code.
+
+## Run
+
+Before testing the command, we need a file to test. For that, create a `test.js` file in `/src` folder. Fill the file with below content.
+
+```javascript
+const person = {
+  name: "Joby",
+  age: 36,
+  gender: "Male",
+  location: "Cochin",
+  ssn: 123456789,
+};
+```
+
+We wrote the code in one line. Now go to terminal and run:
+
+```
+npm run format
+```
+
+Above command runs prettier code and formats `test.js` file. Here is the updated content:
+
+```javascript
+const person = {
+  name: "Joby",
+  age: 36,
+  gender: "Male",
+  location: "Cochin",
+  ssn: 123456789,
+};
+```
+
+If we are using prettier extension in Visual Studio Code, we can tell VS Code to honour the prettier configuration in our project. In that way, when each time we save a file, VS code can automatically format our code based on our project guidelines.

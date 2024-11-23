@@ -1,0 +1,19 @@
+---
+title: "SOLVED: Error HH606 - The Solidity version pragma statement in these files doesn't match any of the configured compilers in your config"
+date: 2022-02-20
+slug: solved-error-hh606-solidity-version-pragma-statement
+description: "Solution to The Solidity version pragma statement in these files doesn't match any of the configured compilers in your config. Change the pragma or configure additional compiler versions in your hardhat config."
+tags: ["web"]
+---
+
+While working with Solidity, during compilation I got this error.
+
+```
+Error HH606: The project cannot be compiled, see reasons below.
+
+The Solidity version pragma statement in these files doesn't match any of the configured compilers in your config. Change the pragma or configure additional compiler versions in your hardhat config.
+```
+
+This is caused due to mismatch in the compiler versions specified in hardhat config and that requested in solidity file `pragma` statement.
+
+In my case, `pragma` in solidity file requested minimum version to be `0.8.0`. But in `hardhat.config.js` the compiler version was `0.7.3`. Updating version in hardhat config file to `0.8.10` fixed the issue.

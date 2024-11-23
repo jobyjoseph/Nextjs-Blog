@@ -1,0 +1,51 @@
+---
+title: "Insert More Than One Child Component Using React.createElement()"
+date: 2022-03-28
+slug: insert-more-than-one-child-component-react-createelement
+description: "As React developers, we mainly work with JSX. But, after transpiling the code, JSX is entirely converted to pure JavaScript. Each component is created using React.createElement(). We can pass multiple child components as arguments or as an array"
+tags: ["react"]
+---
+
+As React developers, we mainly work with JSX. But, after transpiling the code, JSX is entirely converted to pure JavaScript. Each component is created using `React.createElement()`.
+
+Consider the following code in JSX. It has a parent tag with 3 children.
+
+```html
+<Student>
+  <Name>John Doe</Name>
+  <Age>36</Age>
+  <Gender>Male</Gender>
+</Student>
+```
+
+We can see the output of JSX to JavaScript [here](https://babeljs.io/repl). Here is the output:
+
+```javascript
+"use strict";
+
+/*#__PURE__*/
+React.createElement(
+  Student,
+  null,
+  /*#__PURE__*/ React.createElement(Name, null, "John Doe"),
+  /*#__PURE__*/ React.createElement(Age, null, "36"),
+  /*#__PURE__*/ React.createElement(Gender, null, "Male")
+);
+```
+
+As we can see, each child is passed to the parent `React.createElement()` method as an argument. So, in this case we had to pass total 5 arguments to the parent `createElement()` invocation.
+
+We can also pass the three children as an **array**. That means, we are passing only 3 arguments in total and the third argument is an array.
+
+```javascript
+"use strict";
+
+/*#__PURE__*/
+React.createElement(Student, null, [
+  /*#__PURE__*/ React.createElement(Name, null, "John Doe"),
+  /*#__PURE__*/ React.createElement(Age, null, "36"),
+  /*#__PURE__*/ React.createElement(Gender, null, "Male"),
+]);
+```
+
+This is how we can use `React.createElement()` to pass multiple child components.

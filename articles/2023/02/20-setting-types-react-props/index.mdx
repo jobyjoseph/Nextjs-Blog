@@ -1,0 +1,50 @@
+---
+title: "Setting Type for Props Passed to React Component in TypeScript"
+date: 2023-02-21
+slug: setting-type-props-passed-react-component-typescript
+description: "This article explains how we can define the structure and type of React props"
+tags: ["web"]
+---
+
+We can create a simple React component as shown below:
+
+```typescript
+const TodoList: React.FC = ({ todos }) => {
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+Above code complains that `todos` is not a valid props type. We can solve it by passing a generic type to `React.FC` explaining the props structure.
+
+First create an interface defining the props structure:
+
+```typescript
+interface TodoListProps {
+  items: {
+    id: string;
+    text: string;
+  }[];
+}
+```
+
+Pass the interface as Generic type to component.
+
+```typescript
+const TodoList: React.FC<TodoListProps> = ({ todos }) => {
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+This will fix the issue.

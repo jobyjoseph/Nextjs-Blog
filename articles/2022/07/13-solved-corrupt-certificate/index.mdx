@@ -1,0 +1,17 @@
+---
+title: "SOLVED: error:09091064:PEM routines:PEM_read_bio_ex: bad base64 decode"
+date: 2022-07-27
+slug: solved-error-09091064-pem-routines-pem-read-bio-ex-bad-base64-decode
+description: "If you are receiving this error 09091064:PEM routines:PEM_read_bio_ex:bad base64 decode, it means that your SSL certificate is corrupt."
+tags: ["web"]
+---
+
+In my project, I am using `axios` to make request to a HTTPS API endpoint. I had to pass the PEM certificate also to make the request work. When making the request, I was thrown with below error:
+
+```
+error:09091064:PEM routines:PEM_read_bio_ex:bad base64 decode
+```
+
+The reason for this error message is that, **the certificate file got corrupted for some reason**.
+
+In my case, I was trying to create the PEM file by copying the content from `crt` file. During this process, I accidently deleted one line. When pasted with the correct content, issue got resolved.

@@ -1,0 +1,38 @@
+---
+title: "Remove Commas From Currency Value Using JavaScript"
+date: 2022-11-26
+slug: remove-commas-currency-value-javascript
+description: Commas in a currency value can be removed using replaceAll() or replace() methods.
+tags: ["web"]
+---
+
+Here is the problem. We have a currency value that is greater than `999`. Some write such big currency values using comma separators.
+
+```
+"1,567,782.23"
+"1,000,000"
+```
+
+In JavaScript, sometimes we need to remove all the commas for further logic. There are multiple techniques. We are discussing, two string methods that can perform the job.
+
+## replaceAll()
+
+It is a comparitively new string method. It was added to ECMAScript in ES2021. Using `replaceAll()`, we can remove all commas like below:
+
+```javascript
+const withCommas = "1,567,782.23";
+
+const withoutCommas = withCommas.replaceAll(",", "");
+console.log(withoutCommas); // "1567782.23"
+```
+
+## replace()
+
+`replace()` method is comparitively old and can be used with more confidence and platform support. It uses regular expression to find patterns and replace them.
+
+```javascript
+const withCommas = "1,567,782.23";
+
+const withoutCommas = withCommas.replace(/,/g, "");
+console.log(withoutCommas); // "1567782.23"
+```

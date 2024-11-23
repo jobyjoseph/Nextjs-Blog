@@ -1,0 +1,885 @@
+---
+title: JavaScript Questions
+date: 2021-02-07
+slug: javascript-questions
+decription: Here is a set of questions in JavaScript. It can test our JavaScript skills and teach a lot of new things.
+tags: ["javascript"]
+---
+
+import Answer from "../../../../src/components/answer";
+
+Here is a set of questions in JavaScript. It can test our JavaScript skills and teach a lot of new things.
+
+**Question #1:**
+
+What is the output printed in the console?
+
+```javascript{numberLines: true}
+var a = 4;
+
+function baaz() {
+  a = 6;
+  boom();
+}
+
+function boom() {
+  var a = 8;
+}
+
+baaz();
+console.log(a);
+```
+
+<Answer>
+
+**Solution:**
+
+It prints `6` in browser console.
+
+In the global context, named memory locations are allocated for `a`, `baaz`, `boom`. When function `baaz` is called(_line 12_), it is added to call stack and a new execution context is created for `baaz`. `baaz` updates the value of `a` in global context to 6(_line 4_). When `baaz` calls `boom`, a new stack is added on top of `baaz` in call stack. Also a new execution context is created for `boom`. `boom` allocate a memory location for `a` in its local memory(_line 9_). Therefore, the global `a` is not updated. Hence finally, the value 6 is printed.
+
+</Answer>
+
+**Question #2:**
+
+What is a closure?
+
+<Answer>
+
+**Solution:**
+
+> Closure is when a function "remembers" its lexical scope even when the function is executed outside that lexical scope.
+
+One of the easy way to meet this condition is when a function returns another function. That is why usually during interviews, when asked about closures, candidates say "When a function returns another function, that is a closure.".
+
+Example of a closure.
+
+```javascript{numberLines: true}
+function a(){
+  const name = "Backbencher";
+
+  function b() {
+    console.log(name);
+  }
+
+  return b;
+}
+
+const c = a();
+c(); // "Backbencher"
+```
+
+Here is how we explain Kyle's definition with above example.
+
+Closure is when a function(`b()`) remembers its lexical scope(`name` is part of the scope) even when the function is executed outside(global scope) that lexical scope(scope of `a()`).
+
+</Answer>
+
+**Question #3:**
+
+Here is a code snippet:
+
+```javascript
+setTimeout(function () {
+  console.log("Backbencher");
+}, 2000);
+```
+
+Above code, does it form a closure?
+
+<Answer>
+
+**Solution:**
+
+Yes. It is a closure.
+
+So here is the technique to findout if there is a closure in the code. Go through the code and identify all the function definitions and the scope where those functions are defined. Now findout in which scope those functions are called. If any function is defined and called in a different scope, a closure is formed.
+
+In our code, the callback function accepted by `setTimeout` is local to `setTimeout` function. So the scope of the callback function definition is `setTimeout` function. Now after 2000 milliseconds, the callback function is executed in the global scope by JavaScript engine. Since the function definition scope is `setTimeout` and function invocation scope is `global`, a closure is formed.
+
+</Answer>
+
+**Question #4:**
+
+Here is a JavaScript code snippet.
+
+```javascript
+var name = obj.name;
+var age = obj.age !== undefined ? obj.age : 0;
+```
+
+How can we refactor above code using JavaScript destructuring?
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var { name, age = 0 } = obj;
+```
+
+</Answer>
+
+**Question #5:**
+
+We have an array and elements from the array are assigned to variables.
+
+```javascript
+var arr = ["B", "a", "c", "k"];
+var first = arr[0];
+var second = arr[1];
+```
+
+Refactor this code using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = ["B", "a", "c", "k"];
+var [first, second] = arr;
+```
+
+</Answer>
+
+**Question #6:**
+
+What is the output of following code snippet?
+
+```javascript
+var arr = ["B", , "c", "k"];
+var [first, second] = arr;
+
+console.log(second);
+```
+
+<Answer>
+
+**Solution:**
+
+The output printed is `undefined`. Here the second element of the array holds `undefined` and that is assigned to `second`.
+
+</Answer>
+
+**Question #7:**
+
+What is the output of following code snippet?
+
+```javascript
+var arr = ["B", null, "c", "k"];
+var [first, second] = arr;
+
+console.log(second);
+```
+
+<Answer>
+
+**Solution:**
+
+The output is `null`. `null` is not strictly equal to `undefined`.
+
+</Answer>
+
+**Question #8:**
+
+What is the output of following code snippet?
+
+```javascript
+var arr = ["B", , "c", "k"];
+var [first, second = 10] = arr;
+
+console.log(second);
+```
+
+<Answer>
+
+**Solution:**
+
+It prints `10`. Since `second` evaluates to `undefined`, JavaScript assigns the default value of `10`.
+
+</Answer>
+
+**Question #9:**
+
+What is the output of following code snippet?
+
+```javascript
+var arr = ["B", null, "c", "k"];
+var [first, second = 10] = arr;
+
+console.log(second);
+```
+
+<Answer>
+
+**Solution:**
+
+It prints `null`. `second` will take the default value of 10 only if it evaluates to `undefined`, not any other falsy values.
+
+</Answer>
+
+**Question #10:**
+
+How can we refactor below code using destructuring?
+
+```javascript
+var arr = ["B", "a", "c", "k", "b", "e", "n", "c", "h", "e", "r"];
+var first = arr[0];
+var second = arr[1];
+var rest = arr.slice(2);
+```
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = ["B", "a", "c", "k", "b", "e", "n", "c", "h", "e", "r"];
+var [first, second, ...rest] = arr;
+```
+
+</Answer>
+
+**Question #11:**
+
+What is the output of following code snippet?
+
+```javascript
+var arr = ["B", "a"];
+var [first, second, ...rest] = arr;
+
+console.log(rest);
+```
+
+<Answer>
+
+**Solution:**
+
+It prints `[]`. Note: it does not print `undefined`.
+
+</Answer>
+
+**Question #12:**
+
+Is this code valid?
+
+```javascript
+var arr = ["B", "a", "c", "k"];
+var first, second, third;
+[first, second, third] = arr;
+```
+
+<Answer>
+
+**Solution:**
+
+Yes. It is valid. Destructuring is all about assignment. So we can declare the variables first separately and then assign it using destructuring.
+
+</Answer>
+
+**Question #13:**
+
+Here is a JavaScript code snippet.
+
+```javascript
+var arr = ["Joe", 23, "Male"];
+var profile = {};
+profile.name = arr[0];
+profile.age = arr[1];
+profile.gender = arr[2];
+console.log(profile);
+```
+
+Refactor above code using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = ["Joe", 23, "Male"];
+var profile = {};
+[profile.name, profile.age, profile.gender] = arr;
+console.log(profile);
+```
+
+</Answer>
+
+**Question #14:**
+
+Here we have a code that copies first two elements of an array to another array.
+
+```javascript
+var arr = ["Joe", 23, "Male"];
+var newArr = [];
+newArr[0] = arr[0];
+newArr[1] = arr[1];
+console.log(newArr);
+```
+
+Refactor it using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = ["Joe", 23, "Male"];
+var newArr = [];
+[newArr[0], newArr[1]] = arr;
+console.log(newArr);
+```
+
+</Answer>
+
+**Question #15:**
+
+Here is an array.
+
+```javascript
+var arr = ["B", "a", "c", "k"];
+```
+
+How to pick only `"B"` and `"k"` from `arr` using destructuring?
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = ["B", "a", "c", "k"];
+var [first, , , fourth] = arr;
+```
+
+We can skip elements by simply putting comma separator.
+
+</Answer>
+
+**Question #16:**
+
+Here is a JavaScript code snippet to swap two numbers.
+
+```javascript
+var a = 2;
+var b = 5;
+var temp = a;
+a = b;
+b = temp;
+console.log(a);
+console.log(b);
+```
+
+Refactor the code without using `temp` variable.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var a = 2;
+var b = 5;
+[b, a] = [a, b];
+console.log(a);
+console.log(b);
+```
+
+</Answer>
+
+**Question #17:**
+
+We have a function that extracts values from its parameter array.
+
+```javascript
+function sum(numbers) {
+  var num1 = numbers[0];
+  var num2 = numbers[1];
+  return num1 + num2;
+}
+```
+
+Refactor the code using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+function sum([num1, num2]) {
+  return num1 + num2;
+}
+```
+
+</Answer>
+
+**Question #18:**
+
+Write the ES5 equivalent of following code.
+
+```javascript
+function sum([num1 = 1, num2 = 1] = []) {
+  return num1 + num2;
+}
+```
+
+<Answer>
+
+**Solution:**
+
+```javascript
+function sum(numbers) {
+  numbers = numbers !== undefined ? numbers : [];
+  var num1 = numbers[0] ? numbers[0] : 1;
+  var num2 = numbers[1] ? numbers[1] : 1;
+  return num1 + num2;
+}
+```
+
+</Answer>
+
+**Question #19:**
+
+How can we refactor the below code using destructuring?
+
+```javascript
+var arr = [1, 2, [3, 4]];
+var a = arr[0];
+var b = arr[1];
+var c = arr[2][0];
+var d = arr[2][1];
+
+console.log(a, b, c, d);
+```
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var arr = [1, 2, [3, 4]];
+var [a, b, [c, d]] = arr;
+```
+
+</Answer>
+
+**Question #20:**
+
+Refactor below code using destructuring.
+
+```javascript
+var obj = {
+  name: "Backbencher",
+  age: 23,
+  planet: "Earth",
+};
+
+var objName = obj.name;
+var objAge = obj.age;
+var objPlanet = obj.planet;
+
+console.log(objName, objAge, objPlanet);
+```
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var obj = {
+  name: "Backbencher",
+  age: 23,
+  planet: "Earth",
+};
+
+var { name: objName, age: objAge, planet: objPlanet } = obj;
+
+console.log(objName, objAge, objPlanet);
+```
+
+</Answer>
+
+**Question #21:**
+
+Here we have an object and 3 variables.
+
+```javascript
+var obj = {
+  a: "Apple",
+  b: "Boy",
+  c: "Cat",
+  d: "Dog",
+  e: "Elephant",
+};
+```
+
+We want `obj.a` to be assigned to a variable `first`, `obj.b` to be assigned to a variable `second` and rest of the object assigned to a variable `rest`. Write the code for it.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var obj = {
+  a: "Apple",
+  b: "Boy",
+  c: "Cat",
+  d: "Dog",
+  e: "Elephant",
+};
+
+var { a: first, b: second, ...rest } = obj;
+
+console.log(first);
+console.log(second);
+console.log(rest);
+```
+
+</Answer>
+
+**Question #22:**
+
+Here we have an object destructuring code that looks perfectly fine.
+
+```javascript
+var obj = {
+  a: "Apple",
+  b: "Boy",
+  c: "Cat",
+  d: "Dog",
+  e: "Elephant"
+}
+
+var first, second;
+
+{
+  a: first,
+  b: second,
+} = obj;
+
+console.log(first);
+console.log(second);
+```
+
+But when executed, it throws an error saying:
+
+```
+SyntaxError: Unexpected token ':'
+```
+
+What is the problem? And how can it be fixed?
+
+<Answer>
+
+**Solution:**
+
+When JavaScript parser sees `{}`, it is treated as a new block, not as a syntax for object destructuring. Writing a statement like `a:first` is not valid inside a block. That is why it throws a syntax error with unexpected token `:`.
+
+To solve this, we can wrap `{}` with brackets`(), like:
+
+```javascript
+({ a: first, b: second } = obj);
+```
+
+</Answer>
+
+**Question #23:**
+
+We have an ES5 code to assign object properties to variables.
+
+```javascript
+var obj = {
+  fruit: "Apple",
+  vegetable: "carrot",
+};
+
+var fruit = obj.fruit;
+var vegetable = obj.vegetable;
+
+console.log(fruit);
+console.log(vegetable);
+```
+
+Refactor above code using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var obj = {
+  fruit: "Apple",
+  vegetable: "carrot",
+};
+
+var { fruit, vegetable } = obj;
+
+console.log(fruit);
+console.log(vegetable);
+```
+
+Since variable name and object property name are same, we do not have to explicitly mention the variable name in the destructuring code.
+
+</Answer>
+
+**Question #24:**
+
+Here we have an object nested inside another object.
+
+```javascript
+var profile = {
+  name: "Backbencher",
+  age: 34,
+  address: {
+    state: "Kerala",
+    country: "India",
+    pincode: 682037,
+  },
+};
+
+var name = profile.name;
+var state = profile.address.state;
+var country = profile.address.country;
+
+console.log(name);
+console.log(state);
+console.log(country);
+```
+
+Refactor this code using destructuring.
+
+<Answer>
+
+**Solution:**
+
+```javascript
+var profile = {
+  name: "Backbencher",
+  age: 34,
+  address: {
+    state: "Kerala",
+    country: "India",
+    pincode: 682037,
+  },
+};
+
+var {
+  name,
+  address: { state, country },
+} = profile;
+
+console.log(name);
+console.log(state);
+console.log(country);
+```
+
+</Answer>
+
+**Question #25:**
+
+What is the value printed in the console?
+
+```javascript
+var obj = {
+  a: {
+    b: 10,
+  },
+};
+
+var {
+  a: { b, c } = {
+    b: 10,
+    c: 15,
+  },
+} = obj;
+
+console.log(c);
+```
+
+<Answer>
+
+**Solution:**
+
+It prints `undefined`, not 15. The default object with b, 10 and c, 15 is taken only if `a` is not defined. Here `a` is present, but only with one property `b`.
+
+</Answer>
+
+**Question #26:**
+
+What is the output printed?
+
+```javascript
+var obj = {
+  username: "backbencher",
+  social: {
+    likes: 245,
+    tweets: 42,
+    shares: 600,
+  },
+};
+
+var {
+  username,
+  social,
+  social: { likes, tweets },
+} = obj;
+
+console.log(social); // 1
+console.log(likes); // 2
+console.log(tweets); // 3
+```
+
+<Answer>
+
+**Solution:**
+
+1. `social` object
+2. 245
+3. 42
+
+Here value from `social` is taken more than once within destructuring operation. That is allowed for object destructuring. We can map a property to a variable multiple times.
+
+</Answer>
+
+**Question #27:**
+
+How can we bring named argument support to JavaScript using destructuring?
+
+<Answer>
+
+**Solution:**
+
+Named argument support means, we can pass arguments to a function as name-value pair. This allows developer to pass arguments in any order. In JavaScript, we can bring this feature using object destructuring.
+
+```javascript
+function getDetails({ id, options }) {
+  // ...
+}
+
+getDetails({
+  options: {},
+  id: 123,
+});
+```
+
+As long as the variable name and property name in argument matches, things will work. The order of properties in the object does not matter.
+
+</Answer>
+
+**Question #28:**
+
+What is async-await in JavaScript?
+
+<Answer>
+
+**Solution:**
+
+async-await feature was shipped in ES8. `await` inside an `async` function pauses a promise to resolve and send the response back in a synchronous style. async-await brings a cleaner syntax compared to callback hell or promise chains.
+
+</Answer>
+
+**Question #29:**
+
+We all have heard that JavaScript is an interpreted language? Then why below code does not print `"Backbencher"` in the console. Instead, the code is throwing a syntax error.
+
+```javascript
+var name = "Backbencher";
+
+console.log(name);
+
+name = "Hi"+;
+```
+
+<Answer>
+
+**Solution:**
+
+Even though JavaScript is said to execute the code line by line, every JavaScript engine performs a parsing/compilation phase before actually running the code. In the parsing phase itself, it can detect the syntax error and is notifying us.
+
+The parsing/compilation step improves the performance of execution.
+
+</Answer>
+
+**Question #30:**
+
+What is the output of following code snippet?
+
+```javascript{numberLines: true}
+console.log("Backbencher");
+
+baz("Hello","World");
+
+function baz(name, name) {
+    "use strict";
+    console.log(name);
+}
+```
+
+<Answer>
+
+**Solution:**
+
+An error is logged in the console.
+
+```
+SyntaxError: Duplicate parameter name not allowed in this context
+```
+
+The function `baz()` is accepting 2 arguments of the same name. The function is run in strict mode. In strict mode duplicate parameter name is not allowed.
+
+Even though the error is happening due to line 5, JavaScript will not output "Backbencher" from line 1. It is because before line by line execution, JavaScript engine is doing a parsing step. In that process, it is able to identify that the function is going to be executed in strict mode and already a duplicate parameter error has occured. So, that error is displayed to the developer first.
+
+</Answer>
+
+**Question #31:**
+
+What will be the output when following code is run?
+
+```javascript{numberLines: true}
+var a = 10;
+{
+  console.log(a);
+  let a = 20;
+}
+```
+
+Explain how that answer came.
+
+<Answer>
+
+**Solution:**
+
+It will throw following error in console.
+
+```
+ReferenceError: Cannot access 'a' before initialization
+```
+
+We might be tempted to think that `10` will be printed in console. But the `{}` created a block scope. Inside the block scope, we are declaring a variable `a` with `let`. That keeps `a` in Temporal Dead Zone(TDZ) till line 4. When trying to access a variable which is in TDZ, throws ReferenceError.
+
+</Answer>
+
+**Question #32:**
+
+What is the output?
+
+```javascript
+for (var i = 1; i <= 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+```
+
+<Answer>
+
+**Solution:**
+
+Console output after 1 second:
+
+```
+4
+4
+4
+```
+
+The `for` loop starts from 1 and continues till the value of `i` is 3. In total, there will be 3 loops. In each loop, a time out is set for 1 second. After 1 second, each timer starts to execute the callback function(`() => console.log(i)`). The callback needs to print the value of `i`. There is no local variable `i` in the callback function. So it checks one level up in the scope chain, which is the global scope. Since the for loop is now exited with value of `i` reaching `4`, the callback functions log the value of `4` every time.
+
+</Answer>

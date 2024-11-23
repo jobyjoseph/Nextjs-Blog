@@ -1,0 +1,46 @@
+---
+title: "Binary Search Using JavaScript"
+date: 2022-12-09
+slug: binary-search-using-javascript
+description: Here is an implementation of binary search using JavaScript
+tags: ["javascript"]
+---
+
+In Binary search, the data set to be searched for is halved every step.
+
+## Big O
+
+Big O of binary search is **O(log<sub>2</sub>n)** or just **O(log N)**.
+
+## Implementing Binary Search using JavaScript
+
+Here is the code:
+
+```javascript{numberLines: true}
+function binarySearch(inputArray, searchTerm) {
+  let low = 0;
+  let high = inputArray.length;
+
+  do {
+    const mid = Math.floor(low + (high - low) / 2);
+    const value = inputArray[mid];
+    if (value === searchTerm) {
+      return true;
+    } else if (value > searchTerm) {
+      high = mid;
+    } else if (value < searchTerm) {
+      low = mid + 1;
+    }
+  } while (low < high);
+
+  return false;
+}
+```
+
+We can call the function to test as shown below:
+
+```javascript
+const inputArray = [2, 4, 8, 12, 56, 67, 89];
+console.log(binarySearch(inputArray, 56)); // true
+console.log(binarySearch(inputArray, 45)); // false
+```

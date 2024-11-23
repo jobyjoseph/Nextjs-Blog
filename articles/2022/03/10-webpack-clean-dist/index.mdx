@@ -1,0 +1,41 @@
+---
+title: "Clean Distribution Folder In Each Webpack Build"
+date: 2022-03-15
+slug: clean-distribution-folder-in-each-webpack-build
+description: "Webpack creates bundle file and store it in a distribution folder. The default distribution folder is `/dist` folder. If each bundle is created with different file names, the distribution folder will be crowded with previous version of bundle files."
+tags: ["webpack"]
+---
+
+import Image from "../../../../src/components/image";
+import imgDist from "./images/dist-folder.png";
+
+Webpack creates bundle file and store it in a distribution folder. The default distribution folder is `/dist` folder. If each bundle is created with different file names, the distribution folder will be crowded with previous version of bundle files.
+
+Here is a webpack configuration that creates output file with the hash value.
+
+```javascript
+module.exports = {
+  output: {
+    filename: "[contenthash].js",
+  },
+};
+```
+
+Above configuration, first generates a hash value of the source content. Then the hash value is given as the output bundle file name. This technique is helpful with respect to **caching** because the output filename changes only when source changes.
+
+But, the problem is that, for each content change, the output `/dist` folder is filling up.
+
+<Image src={imgDist} alt="Ouput dist folder" style={{ maxWidth: "300px" }} />
+
+We can avoid this crowding by adding `clean` attribute to `output` configuration.
+
+```javascript
+module.exports = {
+  output: {
+    filename: "[contenthash].js",
+    clean: true, // highlight-line
+  },
+};
+```
+
+Now, after each build, only the generated bundle files will be there in the `dist` folder.

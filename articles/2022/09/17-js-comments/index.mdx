@@ -1,0 +1,47 @@
+---
+title: "Comments"
+date: 2022-09-21
+slug: comments
+description: "Comments in JavaScript are not taken for execution. Developers use comments to document the code."
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "lexical-structure"
+sortorder: 4
+---
+
+Comments in JavaScript is a piece of text that is not taken for execution. JavaScript engines ignore the comment text. Comments are purely for adding usability and readability of code.
+
+## Single Line Comment
+
+As the name tells, a _Single Line Comment_ is restricted to one line.
+
+```javascript
+// This is a single line comment
+
+////// Another single line comment //////
+```
+
+Any text that comes between `//` and **end of the line** is ignored by the JavaScript engine.
+
+## Multi Line Comment
+
+We can also place a comment by wrapping the text between `/*` and `*/`. This enables having multi-line comment.
+
+```javascript
+/* This is a multiline comment.
+It spans three lines.
+Oh! I am the third line. */
+```
+
+### Nested Comment
+
+Since the end of this comment is marked using `*/`, things will go wrong if we try to nest multiline comment.
+
+```javascript
+/* Parent comment starts
+/* Nested comment */
+Parent comment continues */
+```
+
+In the above example, the third line is not part of comment and will throw error.

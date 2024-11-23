@@ -1,0 +1,54 @@
+---
+title: Nullish Coalescing Operator in JavaScript
+date: 2021-02-01
+slug: javascript-nullish-coalescing-operator
+decription: Nullish coalescing is an operator in JavaScript. The operator is written using two question marks ??. It take two operands. It returns second operand if first operand is undefined or null.
+tags: ["javascript"]
+---
+
+Nullish coalescing is an operator in JavaScript just like `+`, `*` and so on. The operator is written using two question marks(`??`). It take two operands. It returns second operand if first operand is `undefined` or `null`.
+
+```javascript
+undefined ?? "I am returned"; // "I am returned"
+null ?? "I am returned"; // "I am returned"
+false ?? "I am NOT returned"; // false
+```
+
+## Set Default
+
+We usually assign default value to variables using OR(`||`) operator.
+
+```javascript
+var name = name || "Guest";
+```
+
+In this case, if `name` is any falsy value like `""` or `0`, `"Guest"` is set as the value. But we need to set `"Guest"` only if `name` is either `undefined` or `null`. In that case we can use `??` operator.
+
+```javascript
+var name = name ?? "Guest";
+```
+
+## Short-Circuiting
+
+Like OR and AND operator, in case of Nullish Coalescing operator, the right hand side operand is only evaluated if left hand side is `undefined` or `null`.
+
+```javascript
+false ?? undefined(); // false
+undefined ?? undefined(); // TypeError
+```
+
+## Chaining with AND or OR
+
+Logical AND(`&&`) and OR(`||`) can be combined and used. But Nullish coalescing operator(`??`) cannot be chained with `&&` or `||`.
+
+```javascript
+null || undefined ?? "Hello"
+```
+
+Above line will throw SyntaxError. If there is such a case, we can modify the code like below to remove the error.
+
+```javascript
+(null || undefined) ?? "Hello";
+```
+
+Here we explicitly set the operator precedence using parenthesis.

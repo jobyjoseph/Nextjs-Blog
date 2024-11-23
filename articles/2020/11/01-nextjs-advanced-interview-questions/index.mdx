@@ -1,0 +1,41 @@
+---
+title: Next.js Advanced Interview Questions
+date: 2020-11-06
+slug: nextjs-advanced-interview-questions
+description: Practice next.js advanced interview questions along with their answers. Covers preview mode.
+tags: ["nextjs"]
+---
+
+**Question**
+
+What is _Preview Mode_ in Next.js? How does it help?
+
+**Answer**
+
+Preview mode helps to preview a web page before it is actually published. For example, if Next.js is showing product details page in an eCommerce website, the business team might need to preview before publishing a new product. So Next.js creates static pages for all published products and shows the preview page dynamically when requested.
+
+**Question**
+
+What are API Routes in Next.js?
+
+**Answer**
+
+API routes helps developer to create APIs using Next.js. API routes are defined inside `pages/api` folder.
+
+**Question**
+
+Inside `pages/api` folder in Next.js, we created a file `about.js` with following code.
+
+```javascript
+function About() {
+  return <h1>About page</h1>;
+}
+
+export default About;
+```
+
+Assume that our app is running on `http://localhost:3000`, what will be the output when we visit `http://localhost:3000/api/about`?
+
+**Answer**
+
+We cannot see the `About` component. All endpoints under `/api` should resolve by sending back a response explicitly. In this case, we see a page which will be loading forever.

@@ -1,0 +1,21 @@
+---
+title: "Code: Generate a Random Number Between min and max Both Inclusive Using JavaScript"
+date: 2022-12-11
+slug: generate-random-number-between-min-max-both-inclusive-using-javascript
+description: Here is a JavaScript function that returns a random number between the supplied minimum and maximum values.
+tags: ["javascript"]
+---
+
+Here is a JavaScript function that returns a random integer from a range of numbers.
+
+```javascript
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+```
+
+`Math.random()` returns a value between `0`(inclusive) and `1`(exclusive). That means, the result can have `0`, but not `1`.
+
+`Math.floor()` returns the nearest integer less than the supplied value. `Math.floor(2.8)` returns `2`.
+
+Using these behaviors above logic returns a number between supplied `min` and `max` value.

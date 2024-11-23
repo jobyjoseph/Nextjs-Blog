@@ -1,0 +1,24 @@
+---
+title: Dynamic Import in JavaScript
+date: 2020-11-10
+slug: javascript-dynamic-import
+decription: We all know that import keyword is used to bring the functionality from other file to current file. When that process is synchronous, import() function helps us to do importing dynamically and asynchronously.
+tags: ["javascript"]
+---
+
+We have seen importing external JavaScript files using `import` statement.
+
+```javascript
+import utils from "./utils.js";
+```
+
+Some of us also have seen how dynamic import is done with the help of Webpack. The same syntax is now part of official JavaScript. Now we do not have to load all dependencies on page load. We can load the modules dynamically.
+
+```javascript
+if (condition) {
+  const utils = await import("./utils.js");
+  utils.myFunction();
+}
+```
+
+`import()` function returns a promise. So we can resolve the Promise using `await` or `.then()` syntax.

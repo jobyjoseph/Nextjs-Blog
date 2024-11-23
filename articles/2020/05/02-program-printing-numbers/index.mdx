@@ -1,0 +1,23 @@
+---
+title: Printing Numbers Algorithm
+date: 2020-05-27
+slug: program-printing-numbers
+decription: Program to print numbers from x to y without any loops.
+tags: ["algorithms"]
+---
+
+**Question**
+
+Write a function `printNumbers(x, y)` that prints numbers from `x` to `y`. `x` is less than `y`. Also, no loops can be used. ie, loops like `while`, `for` etc cannot be used in the code.
+
+Example: Executing `printNumbers(2, 5)` prints `2`, `3`, `4`, `5` in console.
+
+**Solution**
+
+```javascript
+function printNumbers(x, y) {
+  if (x > y) return;
+  console.log(x);
+  printNumbers(x + 1, y);
+}
+```

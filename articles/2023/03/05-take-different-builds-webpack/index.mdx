@@ -1,0 +1,76 @@
+---
+title: "Take Different Builds For Dev And Production Environment Using Webpack"
+date: 2023-03-04
+slug: take-different-builds-for-dev-and-production-environment-using-webpack
+description: "To take different builds in development and production environments using webpack, you can use webpack's configuration options to define environment-specific settings."
+tags: ["web"]
+---
+
+To take different builds in development and production environments using webpack, you can use webpack's configuration options to define environment-specific settings. Here are the steps to achieve this:
+
+Define two separate configuration files for development and production environments. You can name them as `webpack.config.dev.js` and `webpack.config.prod.js`, respectively.
+
+In the development configuration file, set the `mode` to `development`, and in the production configuration file, set it to `production`. This will enable certain optimizations in production mode, such as minification and code splitting.
+
+Define environment-specific settings in each configuration file. For example, you may want to enable source maps in development mode but disable them in production mode. Similarly, you may want to set different values for output paths or public paths.
+
+Use `webpack-merge` to merge the common parts of the configurations. This will allow you to avoid duplicating code between the two files.
+
+Use webpack's `--config` flag to specify which configuration file to use when running webpack. For example, to use the development configuration, you can run `webpack --config webpack.config.dev.js`.
+
+Here is an example configuration file for development environment:
+
+```javascript
+// webpack.config.dev.js
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+
+module.exports = merge(common, {
+  mode: "development",
+  devtool: "inline-source-map",
+  devServer: {
+    contentBase: "./dist",
+  },
+});
+```
+
+And here is an example configuration file for production environment:
+
+```javascript
+// webpack.config.prod.js
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+
+module.exports = merge(common, {
+  mode: "production",
+  devtool: "source-map",
+  output: {
+    filename: "[name].[contenthash].js",
+  },
+});
+```
+
+In this example, the `webpack.common.js` file contains the common configuration settings that are shared between the two configuration files. You can use the `entry`, `output`, and `module` options to define your build process.
+
+## How webpack picks the right config file?
+
+Webpack picks the right configuration file based on the `--config` option passed to it. The `--config` option specifies the path to the configuration file that should be used for the build process.
+
+For example, to use the `webpack.config.prod.js` configuration file for the build process, you would run the following command:
+
+```
+webpack --config webpack.config.prod.js
+```
+
+If you do not pass the `--config` option, webpack will look for a configuration file named `webpack.config.js` in the root directory of your project.
+
+Alternatively, you can also use a `package.json` script to specify the configuration file. For example, in your `package.json` file, you can add the following scripts:
+
+```json
+"scripts": {
+  "dev": "webpack --config webpack.config.dev.js",
+  "build": "webpack --config webpack.config.prod.js"
+}
+```
+
+In this example, running `npm run dev` would use the `webpack.config.dev.js` configuration file, and running `npm run build` would use the `webpack.config.prod.js` configuration file.

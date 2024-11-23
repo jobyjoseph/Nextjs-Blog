@@ -1,0 +1,72 @@
+---
+title: Next.js Interview Questions - getStaticProps, getStaticPaths, getServerSideProps
+date: 2021-03-17
+slug: nextjs-interview-questions-getstaticprops-getstaticpaths-getserversideprops
+description: Prepare for nextjs interview with questions related to getstaticprops, getserversideprops.
+tags: ["nextjs"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+Why we use `getStaticProps`?
+
+**Answer:**
+
+Next.js can prerender pages. `getStaticProps` is a method in a Next.js page which is executed during build step. It can set the data ready for the actual page to prerender. It is mainly used to:
+
+- Fetch data required for the page
+- If the fetched data can be publicly accessed. That means, it can be stored in CDNs
+- Pre-render pages for better SEO
+
+<Divider />
+
+**Question:**
+
+In my ecommerce website, I have got a product details API to fetch product information. The API endpoint is `/products/:productid`. Here is a sample API response.
+
+```javascript
+{
+  "name": "Brother Monochrome Laser Printer",
+  "color": "Black"
+}
+```
+
+The product details page HTML looks like below.
+
+```html
+<div>
+  <h1>Product Name</h1>
+  <h2>Color</h2>
+</div>
+```
+
+How to use the API response in the HTML during pre-rendering?
+
+**Answer:**
+
+In order to populate the HTML with data during pre-rendering step, we need to use `getStaticProps`. For that we need to export an `async` function called `getStaticProps` from the page.
+
+```javascript
+export async function getStaticProps() {
+  const response = await fetch("...");
+
+  return {
+    props: response,
+  };
+}
+```
+
+As the name suggests, `getStaticProps` function supply static props values required in the pre-rendering phase. Here `getStaticProps` supplies `name` and `color` to the component. So the next step is to consume the prop values in `products` component.
+
+```javascript
+function products(props) {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <h2>{props.color}</h2>
+    </div>
+  );
+}
+```

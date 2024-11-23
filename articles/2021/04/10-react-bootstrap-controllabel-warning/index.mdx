@@ -1,0 +1,48 @@
+---
+title: "SOLVED: ControlLabel from React Bootstrap throws Warning"
+date: 2021-04-10
+slug: react-bootstrap-controllabel-warning
+description: Solution for a react-bootstrap error which throws error when ControlLabel is used.
+tags: ["react"]
+---
+
+import Image from "../../../../src/components/image";
+import imageControlLabel from "./images/control-label-warning.png";
+
+When we try to install `react-bootstrap`, at the time of writing, **version 1.0.0-beta.16** is installed. This version of `react-bootstrap` does not export a component with name `ControlLabel`. So if we try to use it in our code like:
+
+```html
+<FormGroup>
+  <ControlLabel>Person</ControlLabel>
+  <FormControl className="input-person" onChange="{this.onPersonChange}" />
+</FormGroup>
+```
+
+It will throw a warning, saying:
+
+```
+Warning: React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+```
+
+<Image src={imageControlLabel} alt="Control label warning" />
+
+`ControlLabel` was in older versions of `react-bootstrap`. Instead of `ControlLabel`, we can import `FormLabel` and use it to solve the issue.
+
+```javascript
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  FormLabel,
+  Button,
+} from "react-bootstrap";
+
+//...
+
+<FormGroup>
+  <FormLabel>Person</FormLabel>
+  <FormControl className="input-person" onChange={this.onPersonChange} />
+</FormGroup>;
+```
+
+Above code shows the updated import statement and the updated JSX to be used inside React component.

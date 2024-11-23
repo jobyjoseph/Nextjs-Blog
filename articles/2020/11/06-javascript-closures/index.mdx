@@ -1,0 +1,204 @@
+---
+title: Closures in JavaScript
+date: 2020-11-06
+slug: javascript-closures
+decription: This article helps you to get an in-depth understanding of Javascript closures.
+tags: ["javascript"]
+---
+
+Closure is a powerful feature in JavaScript. We all are using closures frequently, when working with JavaScript. Still, many of us are not confident to explain what is a closure. We are going to crack the closure concept smoothly by understanding all the pillars that support this feature in JavaScript.
+
+I have intentionally parked the definition and example of closure towards last. There are few concepts we need to refresh before talking about closures.
+
+## Scope in JavaScript
+
+In simple terms scope defines a boundary in which a variable can be accessed. We all might have heard about terms like global scope, function scope and so on. In order to understand the concept of closure, we refresh few areas related to scope in JavaScript.
+
+### Lexical Scope
+
+When a user loads a web page with JavaScript, first a request is sent to server to fetch the file. Once the browser receives the JavaScript file, the JavaScript engine within the browser executes the file. The engine does not directly jump into line by line execution. It first does a parsing/compiling step. This is to verify syntax, define scope, do optimization and so on, so that in the next step line by line execution will be fast.
+
+Our focus is on scope. The scope in JavaScript is decided during this parsing phase. Consider following code.
+
+```javascript
+var a;
+
+function baaz() {
+  var b;
+}
+```
+
+Here, variable `a` is in global scope. Variable `b` is in function scope, ie in the scope of `baaz()`. We came to that conclusion by looking where in the code the variable is written. We are not looking anything else like where the variable is used or how it is used.
+
+> Our only concern is where in the code, the variable is declared.
+
+This is called lexical scope. That means, this scope is decided during the lexical or parsing phase.
+
+### Inheriting Scope
+
+Consider following example:
+
+```javascript{numberLines: true}
+var a = 10;
+
+function baz() {
+  console.log(a);
+}
+
+baz(); // 10
+```
+
+What is the value printed by `baz()` in line 7?
+
+It prints `10` in console. Here variable `a` is in global scope. When function `baz()` was called, it needs to print the value of `a`. It is not able to resolve the value of `a` within itself(`baz()` scope). So JavaScript engine looks outside `baz()`. There the engine finds a variable `a` with value `10` in global scope and that value is printed.
+
+Ok wait! That was very easy to understand. But have you imagined how this scope inheritance is actually implemented by JavaScript engine. We need to skip a lot of details and just understand a very high level picture.
+
+## Functions as First-class Values
+
+In JavaScript, we can declare a function using the `function` keyword.
+
+```javascript
+function cling() {
+  console.log("Cling! Cling!");
+}
+```
+
+Later we can assign this function to any variable, just like other first-class values.
+
+```javascript
+var a = cling;
+```
+
+The function can also be passed to other functions as arguments.
+
+```javascript
+otherFunction(cling);
+```
+
+Closure is formed when a function remembers its lexical scope even when executed outside its lexical scope.
+
+One of the easy way to meet this condition to form a closure, is when a function returns another function. That is why usually during interviews, when asked about closures, candidates say "When a function returns another function, that is a closure.".
+
+Example of a closure.
+
+```javascript{numberLines: true}
+function a(){
+  const name = "Backbencher";
+
+  function b() {
+    console.log(name);
+  }
+
+  return b;
+}
+
+const c = a();
+c(); // "Backbencher"
+```
+
+Closure is when a function(`b()`) remembers its lexical scope(`name` is part of the scope) even when the function is executed outside(global scope) that lexical scope(scope of `a()`).
+
+## Closure in setTimeout()
+
+Consider the following code snippet:
+
+```javascript
+function a(name) {
+  setTimeout(function () {
+    console.log(name);
+  }, 1000);
+}
+
+a("Backbencher.dev");
+```
+
+Is there a closure formed in above snippet? Yes. Here, the callback function passed to `setTimeout()` is defined in the scope of `setTimeout` function. But after 1 second, the callback function is executed by JavaScript engine in Global scope. Still, the function remebers its lexical scope and prints the value of `name`.
+
+### setTimeout() in for loop
+
+Here is another code using `setTimeout()`. Our aim is to print numbers 1 to 5 every second.
+
+```javascript
+for (var i = 1; i <= 5; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, i * 1000);
+}
+```
+
+Again the callback function of `setTimeout()` remembers the value of `i` even executed after some time. As mentioned above
+But when we execute above code, the output is:
+
+```
+6
+6
+6
+6
+6
+```
+
+Why? Assume, JavaScript is storing all the callback functions in memory to be executed after 1 sec, 2 sec and so on.
+When these functions finally run, it is trying to print the value of `i`. But there is no local variable `i` inside the function. So as per lexical scope rules, JavaScript search for a variable `i` outside, ie in the global scope. There it finds a variable `i` with value of 6(because the loop is now complete). That is the reason why 6 is printed 5 times.
+
+What modification we can do to print 1 to 5? We need to create a wrap for each `setTimeout()` calls like below.
+
+```javascript
+for (var i = 1; i <= 5; i++) {
+  (function (j) {
+    setTimeout(function () {
+      console.log(j);
+    }, i * 1000);
+  })(i);
+}
+```
+
+Here when each callback is executed, the value of `j` is resolved from the IIFE outside. We found a solution using ES5 way. There is a simpler solution using ES6. In ES6, we can declare block level scopes using `let` keyword.
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, i * 1000);
+}
+```
+
+## Closures for Module Pattern
+
+So what is a module? Module is piece of code that can hide some information and expose only what is required. Hiding the information is called **encapsulation**.
+
+Here is a code which is _trying_ to be a module:
+
+```javascript
+var bank = {
+  processingFee: 100,
+  calculateTotalCost: function (amount) {
+    return amount + this.processingFee;
+  },
+};
+
+console.log(bank.calculateTotalCost(2300)); // 2400
+```
+
+The above code failed as a module. If it was a module, it would have given access only to `calculateTotalCost()` function. But now, somebody who is not happy with the processing fees, can update it using:
+
+```javascript
+bank.processingFee = 0;
+```
+
+Now we got the problem. What we want is, there should be a way `calculateTotalCost()` can access `processingFee` and at the same time, no one else can access it. This can be achieved using closures. We can make `calculateTotalCost()` that function which remembers `processingFee`.
+
+Here is how we do it.
+
+```javascript
+var bank = (function () {
+  var processingFee = 100;
+  return {
+    calculateTotalCost: function (amount) {
+      return amount + processingFee;
+    },
+  };
+})();
+```
+
+And above code is an example of Module Pattern.

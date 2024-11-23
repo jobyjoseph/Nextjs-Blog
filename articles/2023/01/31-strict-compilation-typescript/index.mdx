@@ -1,0 +1,22 @@
+---
+title: "Strict Compilation in TypeScript"
+date: 2023-01-31
+slug: strict-compilation-typescript
+description: "If strict compilation is enabled in TypeScript, TypeScript will be more strict in checking certain rules. Strict mode is enabled by default. It can be found under `compilerOptions` in `tsconfig.json`."
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgStrict from "./images/strict.png";
+
+If strict compilation is enabled in TypeScript, TypeScript will be more strict in checking certain rules. Strict mode is enabled by default. It can be found under `compilerOptions` in `tsconfig.json`.
+
+<Image
+  src={imgStrict}
+  alt="TypeScript strict mode"
+  style={{ maxWidth: "400px" }}
+/>
+
+The _Type Checking_ section has the `strict` property set as `true`. That is kind of enabling all the strict properties in one go.
+
+If you want to enable some strict properties and disable others, you can comment the global `strict` property and go with individual settings below.

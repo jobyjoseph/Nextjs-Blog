@@ -1,0 +1,30 @@
+---
+title: "SOLVED: SSH Git Push To Different Git Account"
+date: 2021-09-24
+slug: solved-ssh-git-push-to-different-git-account
+description: When we try to push code to a different git account other than normally using one, there can be an issue in detecting user.
+tags: ["git"]
+---
+
+In my machine, I usually push code to my personal Github account. There, the username is `jobyjoseph`. Today, I created a new account. I was trying to push code to that account using SSH. It was not working because Git for some reasons was detecting `jobyjoseph`, not the new account. I tried `git config` value updates. That also did not work.
+
+The error looked like this:
+
+```
+ERROR: Permission to backbenchercode/React-Query-Intro.git denied to jobyjoseph.
+fatal: Could not read from remote repository.
+```
+
+Finally, following steps worked. Take terminal. Then clear the SSH key links using:
+
+```
+ssh-add -D
+```
+
+Next attach the ssh key of the new account:
+
+```
+ssh-add ~/.ssh/id_rsa_bb
+```
+
+Thats it. After these steps, I could push my code to the new account.

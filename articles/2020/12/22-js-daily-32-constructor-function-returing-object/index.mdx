@@ -1,0 +1,60 @@
+---
+title: JS Daily 32 - Constructor Function Returning an Object
+date: 2020-12-22
+slug: js-daily-32-constructor-function-returing-object
+decription: If a constructor function in JavaScript returns an object, then each instances of the function will receive that object.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  return {
+    name: "Backbencher",
+    age: 30
+  }
+}
+
+const obj = new Person("Joby", 35);
+console.log(obj);
+```
+
+<Divider />
+
+The output is:
+
+```
+[object Object] {
+  age: 30,
+  name: "Backbencher"
+}
+```
+
+`Person` is a constructor function. If a constructor function returns an **object**, every instance is assigned with that object.
+
+On the other hand, if the constructor function returns a primitive value like number, string or boolean, then `obj` would have assigned with the newly created object. Here is a constructor function that returns a string value.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  return "Hello";
+}
+
+const obj = new Person("Joby", 35);
+console.log(obj);
+```
+
+In that case, the output is:
+
+```
+[object Object] {
+  age: 35,
+  name: "Joby"
+}
+```

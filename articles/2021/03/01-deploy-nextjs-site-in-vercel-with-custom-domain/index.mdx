@@ -1,0 +1,71 @@
+---
+title: Deploy Next.js Site in Vercel with Custom Domain
+date: 2021-03-12
+slug: deploy-nextjs-site-in-vercel-with-custom-domain
+description: Vercel platform is from the creators of Next.js. It supports easy deployment of Next.js app along with CDN support.
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import ImageTishkuGithub from "./images/github-tishku.png";
+import ImageVercelWebsite from "./images/vercel-website.png";
+import ImageVercelHome from "./images/vercel-home.png";
+import ImageVercelConnected from "./images/vercel-connected-github.png";
+import ImageVercelDeploymentProgress from "./images/vercel-deployment-progress.png";
+import ImageVercelDeploymentSuccess from "./images/vercel-deployment-success.png";
+import ImageDomainARecord from "./images/vercel-domain-arecord.png";
+
+<a href="https://vercel.com/" target="_blank" rel="nofollow">
+  Vercel
+</a> platform is from the creators of Next.js. It supports easy deployment of Next.js
+app along with CDN support.
+
+In this article we are going to deploy the Next.js application that we created in <Link to="/nextjs/hello-world-nextjs-site-for-beginners">Hello World Next.js Site for Beginners</Link>. If you do not have an existing Next.js project, you can go to this link and create one in few minutes.
+
+Deploying Next.js app to Vercel contains different steps. We are not going into granular level of explanation in each step. We assume you know those steps or if not, there are many articles on web to help in those areas.
+
+## Setup Git Repo
+
+Vercel can automatically pull the Nextjs project code from a **Git repository** and deploy it. For that we need to store our Next.js project in a Git server like **Github**, **Bitbucket** or **Gitlab**.
+
+I created a repository in my Github account and named it `tishku`. Then I pushed my Next.js code, just like that to the newly created repo.
+
+<Image src={ImageTishkuGithub} alt="Tishku in Github" />
+
+## Setup Vercel Account
+
+**Vercel** is the platform that is going to host our Next.js application. To start with, visit the beautiful <a href="https://vercel.com/" target="_blank" rel="nofollow">Vercel website</a>.
+
+<Image src={ImageVercelWebsite} alt="Vercel Website" />
+
+We can join Vercel using our Github, Gitlab or Bitbucket account. Since, my code is in Github, I am opting for _Continue with Github_. Once logged in, we can import our Next.js project from Github. For that, select _Add Github Org or Account_ option from Vercel home page.
+
+<Image src={ImageVercelHome} alt="Vercel Home" />
+
+Follow the steps required. In the step to select Github repositories, I explicitly chose _tishku_ repo I created in previous step. Finally, the home page looks like this.
+
+<Image src={ImageVercelConnected} alt="Vercel Connected" />
+
+Now, Vercel is ready to import and deploy our Next.js project. For that click **Import** button next to _tishku_. Follow the required steps. Once the deployment starts, we can see the log statements updating live.
+
+<Image src={ImageVercelDeploymentProgress} alt="Vercel Deployment Progress" />
+
+Once the deployment is done, we get a link to see the app live.
+
+<Image src={ImageVercelDeploymentSuccess} alt="Vercel Deployment Success" />
+
+We can click on _Visit_ button to see the live site. The live site link will look like _site_name.vercel.app_. Mine is tishku.vercel.app. <a href="https://tishku.vercel.app/" rel="nofollow" target="_blank">Click here</a> to view my tishku site.
+
+> Even though the link is to tishku.vercel.app, You will see tishku.com because I have set a redirect to my custom domain.
+
+## Setup Custom Domain
+
+When I hosted the app in Versel, I received a subdomain to access the app. It is https://tishku.vercel.app/. Now I need to map my own domain **tishku.com** to https://tishku.vercel.app. I am following this <a href="https://vercel.com/docs/custom-domains" target="_blank" rel="nofollow">Vercel documentation</a> to setup custom domain.
+
+First, login to Versel dashboard. Click on the project, in my case _tishku_. Then under **Settings > Domain**, add the domain name(tishku.com).
+
+<Image src={ImageDomainARecord} alt="Domain Configuration" />
+
+Next, add this **A Record** for the domain. This can be done on the site from where we bought the domain. In my case, I bought the domain from namecheap.com. So I can set the A Record in namecheap.com. Once I set the A Record, the site started coming in <a href="https://tishku.com/" target="_blank" rel="nofollow">https://tishku.com/</a> in few minutes.
+
+Vercel is now managing many things for us like SSL(My site is running on https), CDN, Easy deployment from any branch in the repo, Easy preview of a new feature and lot of other helpful things.

@@ -1,0 +1,39 @@
+---
+title: "Show a Quick Response in React Query Using Initial Data"
+date: 2021-08-14
+slug: react-query-intialdata
+description: Query objects in React Query resolve promises and fetch data from an API. Query supports initial data. When an initial data is set, that data is displayed immediately till the actual data is ready.
+tags: ["reactQuery"]
+---
+
+Query objects in React Query resolve promises and fetch data from an API. Query supports **initial data**. When an initial data is set, that data is displayed immediately till the actual data is ready.
+
+Here we have setup an object that should be displayed immediately:
+
+```javascript
+const initialData = [
+  {
+    id: 0,
+    name: "First Name",
+  },
+];
+```
+
+Next, we pass above object when creating the Query:
+
+```javascript
+const userQuery = useQuery(
+  "user",
+  () =>
+    fetch(
+      "https://jsonplaceholder.typicode.com/users?email=Sincere@april.biz"
+    ).then((res) => res.json()),
+  // highlight-start
+  {
+    initialData,
+  }
+  // highlight-end
+);
+```
+
+> If you are using a fast internet connection, you might not see the initialData. You can simulate a slow 2G connection in browser to view the working on `initialData`.

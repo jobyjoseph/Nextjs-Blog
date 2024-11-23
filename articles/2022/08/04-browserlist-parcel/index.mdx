@@ -1,0 +1,21 @@
+---
+title: "Setting Browserslist for Parcel Bundler"
+date: 2022-08-07
+slug: setting-browserslist-parcel-bundler
+description: "If we are using Parcel as the bundler in our project, we can set the browsers list supported by Parcel bundle."
+tags: ["web"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+Parcel is a module bundler. It can bundle all our code and its dependencies which can then be referenced in our project. When generating the bundle, we can specify the browser version we target. We can do that by specifying our browser list under `browserslist` property in `package.json`.
+
+Here is an example we need to add in our `package.json` file:
+
+```json
+"browserslist": [
+    "last 2 Chrome versions"
+  ]
+```
+
+At the time of writing, specifying _last 2 Chrome versions_ creates a bundle that supports 19% of internet users. You can even try with different version string online at <Olink link="https://browserslist.dev/?q=bGFzdCAyIHZlcnNpb25z">browserslist.dev</Olink>

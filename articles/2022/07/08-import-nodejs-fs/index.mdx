@@ -1,0 +1,52 @@
+---
+title: "Use ES Module Syntax to Import Node.js Modules like fs or https"
+date: 2022-07-21
+slug: use-es-module-syntax-to-import-nodejs-modules-like-fs-or-https
+description: "Node.js from the start used CommonJS way of importing a module. We can now use ES Module Syntax to Import Node.js modules"
+tags: ["nodejs"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+In Node.js each `.js` file is considered as a separate CommonJS module. That means if we declare a variable or function inside a file, we cannot access it from another file. We need to explicitly mention, what all variables and functions can be accessed by other files.
+
+## Import Core Node Modules in CommonJS Way
+
+We know that Node.js comes with multiple modules like `fs` or `https` out of the box. If we need to use say, `fs` in our code, here is the syntax.
+
+```javascript
+const fs = require("fs");
+
+// Then use it like..
+fs.readFileSync();
+```
+
+## Import Core Node Modules in ES Module Way
+
+If we are rewriting above code in ES Module way, it looks like this:
+
+```javascript
+import * as fs from "fs";
+
+fs.readFileSync();
+```
+
+Above syntax is one of the way in which we use `import` keyword. It takes all exported variables or functions from `fs` package and make it available for use.
+
+Here are other ways we use `import` keyword.
+
+```javascript
+import defaultExport from "module-name";
+import * as name from "module-name";
+import { export1 } from "module-name";
+import { export1 as alias1 } from "module-name";
+import { default as alias } from "module-name";
+import { export1 , export2 } from "module-name";
+import { export1 , export2 as alias2 , [...] } from "module-name";
+import { "string name" as alias } from "module-name";
+import defaultExport, { export1 [ , [...] ] } from "module-name";
+import defaultExport, * as name from "module-name";
+import "module-name";
+```
+
+You can read more in this <Olink link="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">MDN link</Olink>.

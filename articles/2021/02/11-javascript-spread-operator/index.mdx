@@ -1,0 +1,25 @@
+---
+title: Spread Operator in JavaScript
+date: 2021-02-11
+slug: javascript-spread-operator
+description: Spread operator(...) copies own enumerable properties of an object to a new object.
+tags: ["javascript"]
+---
+
+import Version from "../../../../src/components/version";
+
+## Object Spread <Version number="9" />
+
+Spread operator(`...`) copies **own enumerable properties** of an object to a new object.
+
+```javascript
+const obj = { name: "Backbencher", topic: "JavaScript" };
+const objCopy = { ...obj };
+console.log(objCopy);
+/* OUTPUT:
+{
+  name: "Backbencher",
+  topic: "JavaScript"
+}
+*/
+```

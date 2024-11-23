@@ -1,0 +1,85 @@
+---
+title: JavaScript Invocation Context(this) Interview Questions
+date: 2021-04-03
+slug: javascript-values
+description: Learn about different values in JavaScript like number values, string values, boolean values and null values
+tags: ["javascript"]
+---
+
+JavaScript can deal with different kinds of values.
+
+## Number value
+
+Here is an example of number values.
+
+```javascript
+23;
+67.21;
+```
+
+Some programming language consider above two numbers as different types, like _int_ and _float_. But, JavaScript consider both as a _number_ value. There is no distinction between a number with decimal and without decimal in JavaScript.
+
+## String value
+
+When a value is wrapped with double quotes(`""`) or single quotes(`''`) or back tick(` `` `), that is a _string_ value in JavaScript.
+
+```javascript
+"I am a string";
+"I am a string"`I am a string`;
+```
+
+## Boolean value
+
+Two values in JavaScript are boolean values. They are `true` and `false`.
+
+## null and undefined
+
+The values `null` and `undefined` are referred to as empty values in JavaScript.
+
+`undefined` value denotes a declared variable but not assigned. So in JavaScript, we declare a variable and try to get its value, `undefined` is returned.
+
+```javascript
+var a;
+console.log(a); // undefined.
+```
+
+`null` value is used to mark an intentional absense of an object. Say, we have a function that returns an object. If that function does not have an object to return, it should return `null`.
+
+Example. `match()` is a string method that returns an array of all matches in a string based on a regular expression.
+
+```javascript
+var str = "Backbencher is the new frontbencher";
+var result = str.match(/apple/g);
+console.log(result); // null
+```
+
+In the above code, we are searching for string `"apple"` in `str`. If there is a match, the method returns an Array. Since there is no match, it returned `null`.
+
+> In JavaScript, a function that returns an object should never return `undefined` to tell intentional absense of an object. It is because, a function by default returns `undefined` during invocation. So we cannot distinguish the origin of `undefined` and what purpose it serves.
+
+## Array values
+
+Array is a collection of values. The values can be of any type. We represent an array using `[]` syntax.
+
+Here are some examples.
+
+```javascript
+[1, 2, 3][("Apple", "Banana", "Orange")][(2, "John", 4.89)];
+```
+
+Array is an example of data structure that stores each element in contiguous memory locations.
+
+## Object values
+
+Objects are another kind of data structure in JavaScript that store data in key value pairs.
+
+Example:
+
+```javascript
+{
+  name: "John Doe",
+  age: 23
+}
+```
+
+Values and its different types in JavaScript help us to perform various kinds of operations on them.

@@ -1,0 +1,33 @@
+---
+title: JS Daily 31 - Optional Catch Binding
+date: 2020-12-21
+slug: js-daily-31-optional-catch-binding
+decription: We can omit the parameter of catch block now. If we need to log the error caught, we need an error argument.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+try {
+  throw new Error();
+} catch {
+  console.log("Error thrown");
+}
+```
+
+<Divider />
+
+The output is `"Error thrown"`.
+
+Now it is ok to omit the parameter part of `catch`. But it is good to have the error parameter and at least log it in the console.
+
+```javascript
+try {
+  throw new Error("Some Error");
+} catch (err) {
+  console.log(err.message);
+}
+```

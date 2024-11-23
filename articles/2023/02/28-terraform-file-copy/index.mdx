@@ -1,0 +1,25 @@
+---
+title: "[SOLVED] Can Terraform Copy Files from One Folder to Another?"
+date: 2023-02-28
+slug: can-terraform-copy-files-from-one-folder-to-another
+description: "No, Terraform is not designed to copy files from one folder to another directly. Terraform is an infrastructure as code tool that allows you to declare and manage cloud resources such as virtual machines, load balancers, databases, etc."
+tags: ["web"]
+---
+
+No, Terraform is not designed to copy files from one folder to another directly. Terraform is an infrastructure as code tool that allows you to declare and manage cloud resources such as virtual machines, load balancers, databases, etc.
+
+However, if you need to copy files between folders as part of your infrastructure setup, you can use a provisioner in Terraform to execute a script or command that performs the file copy. A provisioner is a way to execute scripts or commands on the instances or resources you create with Terraform.
+
+For example, you can use a provisioner like "remote-exec" to execute a command on a virtual machine to copy files between folders. The command might look something like this:
+
+```c
+provisioner "remote-exec" {
+  inline = [
+    "cp /path/to/source/folder/* /path/to/destination/folder/"
+  ]
+}
+```
+
+This command would copy all the files in the source folder to the destination folder. Note that this example assumes you have SSH access to the virtual machine and that the required command-line tools are installed on the instance.
+
+Keep in mind that while Terraform can manage the infrastructure for you, it's not the best tool for file management or general-purpose scripting. For more complex scenarios, you might want to consider using a dedicated configuration management tool like Ansible or Chef.

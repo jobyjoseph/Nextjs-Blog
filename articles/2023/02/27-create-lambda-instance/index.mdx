@@ -1,0 +1,29 @@
+---
+title: "Create AWS Lambda Instance Using JavaScript SDK"
+date: 2023-02-27
+slug: create-aws-lambda-instance-using-javascript-sdk
+description: "To create an instance of the AWS Lambda service client using the JavaScript AWS SDK, you can use the following code"
+tags: ["aws"]
+---
+
+To create an instance of the AWS Lambda service client using the JavaScript AWS SDK, you can use the following code:
+
+```javascript
+const AWS = require("aws-sdk");
+const lambda = new AWS.Lambda({
+  region: "your-aws-region",
+  accessKeyId: "your-access-key-id",
+  secretAccessKey: "your-secret-access-key",
+});
+```
+
+Here's a brief explanation of what's happening in this code:
+
+- First, we require the `aws-sdk` module, which provides us with access to the AWS SDK for JavaScript.
+- Next, we create a new instance of the AWS Lambda service client using the `AWS.Lambda` constructor function. We pass in an object with the following properties:
+
+  - `region`: The AWS region in which the Lambda function will be created and executed.
+  - `accessKeyId`: The access key ID for an AWS IAM user with permissions to access the Lambda service. This property is optional if you're using a default credentials provider, such as the AWS SDK's default credential chain.
+  - `secretAccessKey`: The secret access key for the IAM user. This property is also optional if you're using a default credentials provider.
+
+Once you've created an instance of the AWS Lambda service client, you can use it to interact with the Lambda service API and manage Lambda functions in your AWS account.

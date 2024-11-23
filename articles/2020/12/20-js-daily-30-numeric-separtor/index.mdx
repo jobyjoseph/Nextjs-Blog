@@ -1,0 +1,25 @@
+---
+title: JS Daily 30 - Numeric Separator
+date: 2020-12-20
+slug: js-daily-30-numeric-separtor
+decription: Numeric separator is a new feature introduced in ES12. It adds readability of a number by adding underscore _.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const num1 = 123456;
+const num2 = 1_2_3_4_5_6;
+console.log(num1 === num2);
+```
+
+<Divider />
+
+The output is `true`.
+
+Numeric separators are part of ES12. They are introduced to improve readability of numbers. The separators can be placed anywhere within the number. It does not affect the value in any way.
+
+Numeric Separators work in the decimal place also. Eg: `123_56.786_95` is a valid number.

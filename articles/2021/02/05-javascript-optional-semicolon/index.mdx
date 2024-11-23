@@ -1,0 +1,79 @@
+---
+title: Optional Semicolon in JavaScript
+date: 2021-02-05
+slug: javascript-optional-semicolon
+decription: avaScript uses semi-colon(`;`) to separate two statements. In JavaScript, if we omit the semi-colon, JavaScript intelligently understands end of statements.
+tags: ["javascript"]
+---
+
+JavaScript uses semi-colon(`;`) to separate two statements.
+
+```javascript
+var a;
+let b;
+```
+
+In JavaScript, if we omit the semi-colon, JavaScript intelligently understands end of statements.
+
+```javascript
+var a = 6;
+console.log(a); // 6
+```
+
+In the above code JavaScript parser first takes `var` and then check if adding next phrase makes any sense. `var a` is a valid statement. The engine does not stop there. It will check if the next part can also be appended. `var a =` makes sense only if there is a value or expression after `=`. We have `6` which is valid value. Now, the statement looks like `var a = 6`. Again, JavaScript checks if appending next line makes sense. `var a = 6 console.log(a)` is not a valid statement. So JavaScript, automatically inserts a semi-colon after `6`. So our code after parsing looks like:
+
+```javascript
+var a = 6;
+console.log(a);
+```
+
+It is always good to explicitly put semicolon. Consider the following code.
+
+```javascript
+var a = b(x + y).toString();
+```
+
+If we tried to insert 2 statements, that wont work. JavaScript engine consider above code like below.
+
+```javascript
+var a = b(x + y).toString();
+```
+
+## return, break and continue
+
+There are 2 exceptions to the automatic semicolon insertion by JavaScript.
+
+The first exception involves `return`, `break` and `continue`. Let us consider following code.
+
+```javascript
+return;
+true;
+```
+
+The second line can be considered as continuation of first line. But JavaScript does not do that. It places a semicolon immediately after `return`.
+
+```javascript
+return;
+true;
+```
+
+So if we want to write the return value in separate lines, place a `(` as a starting point in the same line of `return`. That makes JavaScript to parse the full `()` block and return it.
+
+```javascript
+return a + b;
+```
+
+This line break issue is with `break` and `continue` also;
+
+## Unary increment and decrement operators
+
+The second exception to auto semicolon insertion is with unary increment and decrement operators.
+
+How the code below works?
+
+```javascript
+x;
+++y;
+```
+
+It is parsed as `x; ++y;`, not as `x++; y;`. Anyways, I have not seen any developer writing unary operators in separate lines. Still, it is fun to know this weird behaviour of JavaScript.

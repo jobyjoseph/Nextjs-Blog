@@ -1,0 +1,36 @@
+---
+title: "Solved: error:0909006C:PEM routines:get_name:no start line"
+date: 2022-07-27
+slug: solved-error-0909006c-pem-routines-get-name-no-start-line
+description: "When making a request to a HTTPS end point, we might need to pass the certificate also. This error usually comes if the certificate file is invalid."
+tags: ["web"]
+---
+
+I was working on a code deployed in AWS Lambda. The code is written in Node.js. Using `axios` package, we are making a request to a new HTTPS API endpoint. We already had a mail containing different formats of SSL certificates used by the API server.
+
+We took the first certificate format and attached it to our `axios` request as an _http agent_ object. The request failed and the error we saw is this:
+
+```
+error:0909006C:PEM routines:get_name:no start line
+```
+
+The issue was that, we took the **incorrect PEM** file from the mail. It did not contain proper header and footer.
+
+In ideal case, the certificate when opened should contain the proper header and footer. If we open the certificate file using a text editor, we should see a proper header and footer like below:
+
+```
+-----BEGIN CERTIFICATE-----
+MIIG9jCCBd6gAwIBAgIQEQOjsh7xKPOteKIB7X4PNTANBgkqhkiG9w0BAQsFADCB
+lTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G
+A1UEBxMHU2FsZm9yZDEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMT0wOwYDVQQD
+EzRTZWN0aWdvIFJTQSBPcmdhbml6YXRpb24gVmFsaWRhdGlvbiBTZWN1cmUgU2Vy
+dmVyIENBMB4XDTIyMDYyNzAwMDAwMFoXDTIzMDYyNzIzNTk1OVowajELMAkGA1UE
+BhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExKzApBgNVBAoTIlBldGNvIEFuaW1h
+bCBTdXBwbGllcyBTdG9yZXMsIEluYy4xGTAXBgNVBAMTEGFlbXBlcmYucGV0Yy5j
+b20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDBCmtN4OtJKsz6oDkP
+leXyg3xvS670HV223BBcwoRXiVnhEimolPRPuR+8V5PzjXGhVh2UXvg0/WQvZe3+
+bcb4pyNYC84jspwdaiL62PNAAQPhIZnQytxgJMzd7gD3OpFYapbTVCHqV9/fdGsZ
+-----END CERTIFICATE-----
+```
+
+In my case, the proper header(`-----BEGIN CERTIFICATE-----`) and footer(`-----END CERTIFICATE-----`) were missing. When I used the file with correct header and footer, the axios request worked.

@@ -1,0 +1,25 @@
+---
+title: "TypeScript Type For useReducer() action"
+date: 2023-03-02
+slug: typescript-type-for-usereducer-action
+description: "The TypeScript type of the action parameter in the useReducer hook depends on the type of the reducer function that you are using."
+tags: ["typescript"]
+---
+
+The TypeScript type of the `action` parameter in the `useReducer` hook depends on the type of the `reducer` function that you are using.
+
+In general, the `action` parameter can have any type that is compatible with the action types that the `reducer` function expects. For example, if your `reducer` function expects actions of type `{ type: string, payload: any }`, then the `action` parameter in `useReducer` should have that same type or a subtype of it.
+
+Here's an example of how you could define a `Reducer` type that takes a specific action type:
+
+```typescript
+type MyActionType = { type: string; payload: any };
+
+type MyStateType = {
+  /* ... */
+};
+
+type MyReducerType = (state: MyStateType, action: MyActionType) => MyStateType;
+```
+
+In this example, `MyActionType` represents the shape of the actions that your reducer expects, `MyStateType` represents the shape of your state, and `MyReducerType` is the type of the reducer function that you will pass to `useReducer`.

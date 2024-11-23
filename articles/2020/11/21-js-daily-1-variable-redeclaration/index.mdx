@@ -1,0 +1,27 @@
+---
+title: JS Daily 1 - Variable Redeclaration
+date: 2020-11-21
+slug: js-daily-1-variable-redeclaration
+decription: Learn how let variables work with variable redeclaration. let variables cannot be redeclared.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+var a = 6;
+let a = 8;
+console.log(a);
+```
+
+<Divider />
+
+`let` was introduced in ES6 and is used to declare variables in JavaScript. If a variable with the same name is already declared in the same scope, `let` throws an error. Here second line throws below error:
+
+```
+Uncaught SyntaxError: Identifier 'a' has already been declared
+```
+
+This behaviour is explained <a href="https://tc39.es/ecma262/#sec-let-and-const-declarations-static-semantics-early-errors" rel="nofollow" target="_blank">here</a> in ECMAScript.

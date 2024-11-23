@@ -1,0 +1,29 @@
+---
+title: Setup React Query Dev Tools
+date: 2021-07-29
+slug: setup-react-query-dev-tools
+description: React Query Dev Tools helps in debugging. It can show us the different queries and their state.
+tags: ["reactQuery"]
+---
+
+import Image from "../../../../src/components/image";
+import imageReactQueryDevTools from "./images/react-query-dev-tools.png";
+
+React Query Dev Tools helps in debugging. It can show us the different queries and their state. In order to use React Query Dev Tools, first we need to import it.
+
+```javascript
+import { ReactQueryDevtools } from "react-query/devtools";
+```
+
+Next we can directly put the `<ReactQueryDevtools />` inside `QueryClientProvider` to make it working.
+
+```javascript
+<QueryClientProvider client={queryClient}>
+  <GitUsers />
+  <ReactQueryDevtools />
+</QueryClientProvider>
+```
+
+Adding the Dev Tools in the root enables it. After doing all these, if we navigate to our project in browser, we can see the floating React Query icon. Clicking that opens up the debugger.
+
+<Image src={imageReactQueryDevTools} alt="React Query Dev Tools" />

@@ -1,0 +1,46 @@
+---
+title: "SOLVED: Does not use passive listeners to improve scrolling performance"
+date: 2022-06-29
+slug: solved-does-not-use-passive-listeners-to-improve-scrolling-performance
+description: "Passive event listeners are an emerging web standard to boost scroll performance. Developers can use it to inform browsers to go ahead with scrolling without waiting for the event listener to finish."
+tags: ["javascript"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+Modern browsers have event listeners to listen for `touchstart`, `touchmove` and so on. These are related to **scrolling events**. Here is an example that logs `hi` in console when the touch starts.
+
+```javascript
+document.addEventListener("touchstart", function (e) {
+  console.log("hi");
+});
+```
+
+We can prevent the default scrolling behavior inside the event listener using `e.preventDefault()` like shown below.
+
+```javascript
+document.addEventListener("touchstart", function (e) {
+  console.log("hi");
+  e.preventDefault();
+});
+```
+
+Because of this reason, browsers wait for the event listener logic to finish. Then only they actually scroll the page. That will cause an unnecessary bad user experience. If the developer can inform the browser before hand that, there is no code in my listener that prevents scrolling, that will be a big help for browsers.
+
+`passive` flag helps developers to do that. Here is how we apply the passive flag.
+
+```javascript
+document.addEventListener(
+  "touchstart",
+  function (e) {
+    console.log("hi");
+    e.preventDefault();
+  },
+  { passive: true } // highlight-line
+);
+```
+
+In the above code, even if there is a `preventDefault()` line, it does not have an impact because will go ahead with the scrolling by seeing the `passive` flag.
+
+You can find the browser support of passive flag usage here in this <Olink link="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#browser_compatibility">
+MDN page</Olink>.

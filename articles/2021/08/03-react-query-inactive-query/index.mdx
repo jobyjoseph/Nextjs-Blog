@@ -1,0 +1,50 @@
+---
+title: What Is The Difference Between Stale State and Inactive State in React Query
+date: 2021-08-03
+slug: react-query-what-is-inactive-query-state
+description: When working with Queries in React Query, we can see the state of Query is sometimes stale or inactive. Other than these 2, there are fresh and fetching status also.
+tags: ["reactQuery"]
+---
+
+When working with Queries in React Query, we can see the state of Query is sometimes `stale` or `inactive`. Other than these 2, there are `fresh` and `fetching` status also. But since stale and inactive have somewhat same meaning, we are trying to understand the difference between them.
+
+To understand the difference, we have a component `<GitUsers />` that fetches git users and show them. The code inside the component looks like this:
+
+```javascript
+function GitUsers() {
+  const queryUsers = useQuery("gitUsers", () => {
+    // fetch git users
+  });
+
+
+  return queryUsers.isLoading ? (
+    "Loading..."
+  ) : queryUsers.isError ? (
+    queryUsers.error.message
+  ) : (
+    // Code that shows all users
+  );
+}
+```
+
+When we use this component, automatically `queryUsers` fetches users. By default, React Query marks the response as `stale` after fetching is over. What does that mean? If React Query is a manager sitting in our page, according to him the response data is stale or not fresh now. So whenever `GitUsers` is rendered he will do another fetch and bring latest data. In other words, a status of `stale` makes react query to make another network call to bring latest data.
+
+Till now, we assumed `GitUsers` is directly used without any conditions. What if `GitUsers` is rendered conditionally like:
+
+```javascript
+const [show, setShow] = useState(true);
+//...
+{
+  show && <GitUsers />;
+}
+```
+
+Now, since the initial value of `show` is true, it renders Git users. That means, React Query made a network call to fetch git users. After that, due to some toggle functionality, the value of `show` turned `false`. That results in not showing `<GitUsers />`. React Query now understands that the earlier fetched data is not being used and turns its status as `inactive`.
+
+Wait! Wait! Wait!. The data is already `stale` and outdated. Now what is the significance of `inactive`.
+
+Here, we need to talk about caching. React Query caches the response of each query for around 5 mins in memory. So earlier we took the list of Github users and React Query has now saved the response in an in-memory cache. The status `inactive` has only one meaning: There is some data in cache which is not being used by any components. And that indirectly points out to the developer if we are wasting memory by storing lot of inactive queries.
+
+As soon as the value of `show` in above example is turned `true`, the list of users instantly comes up. That instantaneous behaviour is due to the cache. If the cache was cleared, the users needs to wait for some time to complete the network call and later see the list of users.
+
+Summary is `stale` status is used by React query to make a decision to make a fresh network call or not. `inactive` status shows the usage of cached data.

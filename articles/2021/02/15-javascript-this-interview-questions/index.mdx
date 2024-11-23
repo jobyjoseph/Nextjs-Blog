@@ -1,0 +1,51 @@
+---
+title: JavaScript Invocation Context(this) Interview Questions
+date: 2021-02-15
+slug: javascript-this-interview-questions
+description: Get more familiar with JavaScript invocation related interview questions.
+tags: ["javascript"]
+---
+
+** Question: **
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const numbers = {
+  numberA: 5,
+  numberB: 10,
+
+  sum: function() {
+    console.log(this === numbers);
+
+    function calculate() {
+      console.log(this === numbers);
+      return this.numberA + this.numberB;
+    }
+
+    return calculate();
+  }
+};
+
+console.log(numbers.sum());
+```
+
+** Answer: **
+
+Line 1 defines an object `numbers`. Line 17 invokes a method `sum()` of the object. We can see the dot(`.`) operator to call the `sum()` method. That tells that `sum()` is called in the context of the object `numbers`.
+
+Once the execution enters into `sum()`, it reaches the first `console.log` statement(Line 6). There `this` points to the context `numbers` because as we said earlier, `sum()` is invoked in `numbers` context. So Line 6 outputs `true`.
+
+In Line 8, there is a function definition for `calculate()`. And calculate is invoked in line 13. Even though `calculate` function is written inside `sum()`, according to JavaScript engine, it is simply a named function stored in memory. In Line 13, we call `calculate()` as a normal function. So `calculate()` is invoked in global context, ie `window` in non-strict mode.
+
+When calling `calculate()` in line 13, execution reaches line 9. There `this` points to `window`. Therefore in line 9, `console.log` prints false, since `window` is not equal to `numbers`.
+
+In line 10, since `this` points to `window`, `window.numberA` and `window.numberB` are `undefined`. So `calculate()` returns `NaN` because adding two `undefined` results in `NaN`. This `NaN` is then printed by line 17.
+
+Finally in the console we see:
+
+```
+true
+false
+NaN
+```

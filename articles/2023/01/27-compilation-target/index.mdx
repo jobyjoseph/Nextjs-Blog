@@ -1,0 +1,60 @@
+---
+title: "Compile TypeScript to ES6 Code"
+date: 2023-01-27
+slug: compile-typescript-es6-code
+description: "When we do `tsc --init` to initialize a TypeScript project, it generates a `tsconfig.json` file. We can see a JSON object with `compilerOptions` property. We can generate ES6 output by setting `target` to `ES6` or `ES2015`."
+tags: ["typescript"]
+---
+
+When we do `tsc --init` to initialize a TypeScript project, it generates a `tsconfig.json` file. We can see a JSON object with `compilerOptions` property. We can generate ES6 output by setting `target` to `ES6` or `ES2015`.
+
+```json
+{
+  "compilerOptions": {
+    //...
+    "target": "ES6"
+  }
+}
+```
+
+If our TypeScript code is:
+
+```typescript
+let a = 10;
+
+const obj = {
+  name: 10,
+};
+
+const response = {
+  ...obj,
+  age: 23,
+};
+```
+
+When we target to `ES6`, the output will be:
+
+```javascript
+"use strict";
+let a = 10;
+const obj = {
+  name: 10,
+};
+const response = Object.assign(Object.assign({}, obj), { age: 23 });
+```
+
+As you can see, the `let` is retained because `let` is available in ES6. Whereas object spread operator was release in ES2018. Therefore object spread operator is converted to ES5 way.
+
+If the target is set to ES2018, the output will be:
+
+```javascript
+"use strict";
+let a = 10;
+const obj = {
+  name: 10,
+};
+const response = {
+  ...obj,
+  age: 23,
+};
+```

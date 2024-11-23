@@ -1,0 +1,37 @@
+---
+title: "Change Enum Number Sequence in TypeScript"
+date: 2023-01-12
+slug: change-enum-number-sequence-typescript
+description: "TypeScript has an enum type. The sequence of numbering starts from zero by default. We can change the number sequencing in TypeScript."
+tags: ["typescript"]
+---
+
+TypeScript has an enum type. The sequence of numbering starts from zero by default. We can change the number sequencing in TypeScript.
+
+## Default Sequence
+
+Here is an `enum` type:
+
+```typescript
+enum Role {
+  ADMIN,
+  READ_ONLY,
+  AUTHOR,
+}
+```
+
+Here `ADMIN` gets `0`, `READ_ONLY` gets `1` and `AUTHOR` gets `2`.
+
+What if we want `ADMIN` to have `1`, `READ_ONLY` to have `2` and `AUTHOR` to have `5`?
+
+We can do like below:
+
+```typescript
+enum Role {
+  ADMIN = 1,
+  READ_ONLY,
+  AUTHOR = 5,
+}
+```
+
+In the above example `READ_ONLY` gets number `2` by auto increment from previous one.

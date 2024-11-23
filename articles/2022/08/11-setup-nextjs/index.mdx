@@ -1,0 +1,33 @@
+---
+title: "Setup Next.js"
+date: 2022-08-26
+slug: setup-nextjs
+description: "Next.js can be setup in any computer that runs on MacOS, Windows and Linux. We also need Node.js version 12.22.0 or higher to setup Next.js"
+tags: ["nextjs"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+In order to setup Next.js in a computer, we need MacOS, Windows or Linux installed in the machine. Also, we need Node.js to be installed.
+
+If Node.js is installed, we can setup Next.js using below command.
+
+```
+npx create-next-app@latest
+```
+
+`npx` is a NPM package executor. We can both download and run a package using `npx` command. `npx` is automatically available if your NPM version in your machine is v5.2.0 or higher.
+
+Another package manager is <Olink link="https://yarnpkg.com/">yarn</Olink>. Using the `yarn` global command also, we can setup Next.js using:
+
+```
+yarn create next-app
+```
+
+If you are using <Olink link="https://pnpm.io/">pnpm</Olink>, you can setup Next.js using:
+
+```
+pnpm create next-app
+```
+
+The setup process is interactive. Follow the instructions and you will get a project that has Next.js setup in it.

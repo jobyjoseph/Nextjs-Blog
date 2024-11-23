@@ -1,0 +1,205 @@
+---
+title: React Render Props Interview Questions
+date: 2021-02-23
+slug: react-render-props-interview-questions
+decription: Prepare for react interview questions by learing Render-Props pattern, its advantage and ensure code reusability.
+tags: ["react"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+What is _Render Props_ technique in React?
+
+**Answer:**
+
+Render Props refers to a technique for sharing code between React components using a prop whose value is a function.
+
+<Divider />
+
+** Question: **
+
+What is the advantage of Render Props?
+
+** Answer: **
+
+Main advantage is code reusability. For eg: There is a mega-menu component created by some third party developer. The component renders menu items and sub-menu items in the following html format.
+
+```html
+<ul class="menu">
+  <li>
+    Menu Item 1
+    <ul class="sub-menu">
+      <li>Sub menu 1</li>
+      <li>Sub menu 2</li>
+    </ul>
+  </li>
+</ul>
+```
+
+If the user wants to add some content below each sub-menu, he / she needs to edit the library code. Using Render props the developer of the library can give the flexibility to the user to add custom content below the sub-menu.
+
+<Divider />
+
+**Question: **
+
+Do you know any libraries that uses Render props technique?
+
+**Answer: **
+
+Yes. _React-Router_, _Downshift_ and _Formik_ are using Render props.
+
+<Divider />
+
+**Question:**
+
+Here we have two components `<GithubSearchCount />` and `<GithubSearchResult />`. Both components perform Github user search. `<GithubSearchCount />` shows the number of search result, where as `<GithubSearchResult />` shows the search results as a list.
+
+```javascript
+/****** GithubSearchCount ******/
+import React, { Component } from "react";
+
+export class GithubSearchCount extends Component {
+  state = {
+    result: [],
+  };
+
+  componentDidMount() {
+    fetch("https://api.github.com/search/users?q=joby")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.setState((prevState) => {
+          return {
+            result: data,
+          };
+        });
+      });
+  }
+
+  render() {
+    return <h1>Total search count: {this.state.result?.total_count}</h1>;
+  }
+}
+
+export default GithubSearchCount;
+```
+
+```javascript
+/****** GithubSearchResult ******/
+import React, { Component } from "react";
+
+export class GithubSearchResult extends Component {
+  state = {
+    result: [],
+  };
+
+  componentDidMount() {
+    fetch("https://api.github.com/search/users?q=joby")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.setState((prevState) => {
+          return {
+            result: data,
+          };
+        });
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.state.result?.items?.map((item) => (
+            <li>{item.login}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default GithubSearchResult;
+```
+
+In both components we are rewriting the code to fetch Github API. How can we use Render props pattern to reuse the API fetch code?
+
+**Answer:**
+
+First thing to do is take the redundant code to a new React component, say `<GithubSearch />`. Then the decision on what to render in `<GithubSearch/>` needs to be taken dynamically based on the props passed.
+
+_GithubSearch.js_
+
+```javascript
+import React, { Component } from "react";
+
+export class GithubSearch extends Component {
+  state = {
+    result: [],
+  };
+
+  componentDidMount() {
+    fetch("https://api.github.com/search/users?q=joby")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.setState((prevState) => {
+          return {
+            result: data,
+          };
+        });
+      });
+  }
+
+  render() {
+    return <>{this.props.render(this.state.result)}</>;
+  }
+}
+
+export default GithubSearch;
+```
+
+Next we prepare `<GithubSearchResult />` and `<GithubSearchCount />` to receive the search results from the props.
+
+Here is the updated GithubSearchCount component.
+
+```javascript
+export class GithubSearchCount extends Component {
+  render() {
+    return <h1>Total search count: {this.props.result?.total_count}</h1>;
+  }
+}
+```
+
+Here is the updated GithubSearchResult component.
+
+```javascript
+export class GithubSearchResult extends Component {
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.props.result?.items?.map((item) => (
+            <li>{item.login}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+```
+
+Finally, we use the `GithubSearch` component like this:
+
+```javascript
+<GithubSearch
+  render={(result) => <GithubSearchCount result={result} />}
+/>
+<GithubSearch
+  render={(result) => <GithubSearchResult result={result} />}
+/>
+```
+
+We are passing the content to be rendered as props in the above snippet. Thats why we call it Render props pattern.

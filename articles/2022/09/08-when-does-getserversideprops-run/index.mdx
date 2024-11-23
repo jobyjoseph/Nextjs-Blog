@@ -1,0 +1,84 @@
+---
+title: "getServerSideProps() in Next.js"
+date: 2022-09-09
+slug: getserversideprops-nextjs
+description: "getServerSideProps() function runs only in server. If a page contains this function, that page is always rendered from the server."
+tags: ["nextjs"]
+---
+
+import Image from "../../../../src/components/image";
+import imgViewSource from "./images/view-source.png";
+import imgClientSide from "./images/client-side.png";
+
+`getServerSideProps()` function is always rendered on the **server side**. The function never runs on the browser. So it is safe to use sensitive data inside `getServerSideProps()`.
+
+```javascript
+export async function getServerSideProps(context) {
+  const credentials = "some secret";
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
+```
+
+Even though we can use secure data inside `getServerSideProps()`, we should not place any secure data in the returned `props` object.
+
+## Rendering Techniques
+
+Say, we have a page, `/ssr` which contains `getServerSideProps()` function. Therefore this page is always server side rendered. Here is the code for the page:
+
+```javascript
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      fruit: "Apple",
+    },
+  };
+}
+
+export default function SSR({ fruit }) {
+  return <h1>Hello {fruit}</h1>;
+}
+```
+
+Now, this url `/ssr` can be visited in two ways:
+
+1. By directly visiting `example.com/ssr` directly(Server Side Rendering)
+2. By clicking a Next.js Link or Router in some other page(Client Side Rendering)
+
+### Server Side Rendering
+
+In Server Side Rendering, Next.js will construct the full page in server. That means, `getServerSideProps()` will pass the `props` to `SSR` component in the server itself. The `{fruit}` placeholder will be replaced by the value `"Apple"` in the server itself. Finally the full HTML is created and send back to browser.
+
+If a page is server side rendered, you can see the full source code when we view the page's source.
+
+<Image src={imgViewSource} alt="View Source" style={{ maxWidth: "500px" }} />
+
+### Client Side Rendering
+
+When we navigate to `/ssr` page by clicking a Next.js link, client side rendering occurs. That means, Next.js will do client side routing to `/ssr` and loads the `SSR` component first. When I say, `SSR` component, I mean only the code shown below:
+
+```javascript
+export default function SSR({ fruit }) {
+  return <h1>Hello {fruit}</h1>;
+}
+```
+
+If you observe the browser network tab, as soon as you click the Next.js link, you can see a call made to `ssr.js`. That is the component loading part which I mentioned.
+
+Once the component is loaded, Next.js bundle will request for the page data by making another request to `ssr.json`. When server receives this request, it runs the `getServerSideProps()` function and returns the `props` object as the JSON response.
+
+Later Next.js hydrates or fills the `SSR` component with the data received in the client side. This is how client side rendering works.
+
+In order to test the client side rendering part, I added a Next link in home page. Then I clicked on the link to watch the network tab.
+
+<Image src={imgClientSide} alt="Client side rendering" />
+
+Here is the response of `ssr.json` file:
+
+```json
+{ "pageProps": { "fruit": "Apple" }, "__N_SSP": true }
+```
+
+> `getServerSideProps()` can only be exported from a page. If we define it another file and import in a page, there will not be any error. But the page simply dont work. Next.js identifies a page for server side rendering by watching for `getServerSideProps()`.

@@ -1,0 +1,43 @@
+---
+title: "Explanation for Each child in a list should have a unique key prop in React"
+date: 2022-08-04
+slug: explanation-each-child-list-unique-key-react
+description: "When we are trying to render an array of components without a key attribute, React throws a warning to have a unique key"
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+You have an array of React components. You are trying to render it using a loop. While running the application, everything looks good. But in the browser console you see this error:
+
+```
+VM9:85 Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `App`. See https://reactjs.org/link/warning-keys for more information.
+```
+
+> This error message appears only when we use development version of React file. We will not see this error in production.
+
+## How to solve this error
+
+The `key` issue can be solved by adding a `key` attribute to each Array components. Here is an example that renders 3 components from an array.
+
+```javascript
+[<Student key="1" />, <Address key="2" />, <PIN key="3" />];
+```
+
+This is how we need to add the `key` to remove the warning.
+
+## Why React needs the key
+
+In simple terms, let me see how to put this. Observe the array below with 3 components.
+
+```javascript
+[<Student />, <Address />, <PIN />];
+```
+
+React can render above component. No issue. But if we swap the `Address` and `PIN` component, React needs to re-render the entire array. If the `key` attribute is there, React will keep a record of that. Then it can swap `Address` and `PIN` without re-rendering `Student` component.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

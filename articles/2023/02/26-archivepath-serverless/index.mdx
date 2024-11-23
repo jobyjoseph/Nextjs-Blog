@@ -1,0 +1,28 @@
+---
+title: "utils.isArchivePath() From @serverless/core Framework"
+date: 2023-02-26
+slug: utils-isarchivepath-from-serverless-core-framework
+description: "utils.isArchivePath is a method provided by the @serverless/core library, which is a popular Node.js-based framework for building serverless applications."
+tags: ["web"]
+---
+
+`utils.isArchivePath()` is a method provided by the `@serverless/core` library, which is a popular Node.js-based framework for building serverless applications.
+
+This method is used to determine whether a given file path represents a compressed archive file, such as a ZIP or TAR file. It takes a file path as input and returns a boolean value indicating whether the file is a valid archive file.
+
+Here's an example of how to use `utils.isArchivePath()`:
+
+```javascript
+const { utils } = require("@serverless/core");
+
+const filePath = "/path/to/archive.zip";
+const isArchive = utils.isArchivePath(filePath);
+
+if (isArchive) {
+  // Do something with the archive file
+} else {
+  // Handle the case where the file is not an archive
+}
+```
+
+Note that `utils.isArchivePath()` is specific to the `@serverless/core` library and is not a built-in method in Node.js or any other programming language or framework. It is designed to be used in conjunction with the `@serverless/core` framework to help build serverless applications.

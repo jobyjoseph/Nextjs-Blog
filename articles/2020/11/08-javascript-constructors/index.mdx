@@ -1,0 +1,20 @@
+---
+title: Constructors in JavaScript
+date: 2020-11-08
+slug: javascript-constructors
+decription: Till ES5 classes and its instance objects were created using constructor functions. Now from ES6 everybody is more comfortable with class keyword.
+tags: ["javascript"]
+---
+
+A function in JavaScript that is written to initialize newly created objects is called a **constructor**.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+```
+
+## Constructor Function vs Normal Function
+
+Does JavaScript in its core keep any difference between a normal function and a constructor function? NO. Both are functions according to JavaScript. The difference comes on how we use the function. It is like, I have a pen. When I use it to write on a paper, the "pen" is used as a pen. If I use the "pen" to beat someone, it is used a stick. So the object is same, but it worked in different manner based on how we used it.

@@ -1,0 +1,17 @@
+---
+title: Run NPM Packages Without Installing Globally
+date: 2021-07-20
+slug: run-npm-packages-without-installing-globally
+description: We can use an npm package globally by using npx command.
+tags: ["nextjs"]
+---
+
+I was starting with a Next.js project. In order to create a project structure we have a NPM package `create-next-app`.
+
+In order to use `create-next-app` command, we now don't have to install it globally. Instead we can use `npx` command.
+
+```
+npx create-next-app
+```
+
+Using `npx` can also avoid permission related issues when running global packages.

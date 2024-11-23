@@ -1,0 +1,43 @@
+---
+title: "Why we Use JSX in React Project"
+date: 2022-08-10
+slug: why-we-use-jsx-react-project
+description: "JSX enables us to write React components using HTML kind of syntax."
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+JSX enables us to write React components using a syntax similar to HTML.
+
+Here is a React component created without JSX:
+
+```javascript
+const Pet = (props) => {
+  return React.createElement("div", {}, [
+    React.createElement("h1", {}, props.name),
+    React.createElement("h2", {}, props.animal),
+    React.createElement("h2", {}, props.breed),
+  ]);
+};
+```
+
+Here is the same component written using JSX:
+
+```javascript
+const Pet = (props) => {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <h2>{props.animal}</h2>
+      <h2>{props.breed}</h2>
+    </div>
+  );
+};
+```
+
+JSX adds the readability of the code.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

@@ -1,0 +1,17 @@
+---
+title: "SOLVED: Next.js Serverless NoSuchDistribution: The specified distribution does not exist."
+date: 2022-01-15
+slug: nextjs-serverless-no-such-distribution
+description: "When trying to deploy a Next.js application to AWS Lamda using Serverless framework, you might face NoSuchDistribution: The specified distribution does not exist error. Here is the solution."
+tags: ["nextjs"]
+---
+
+When using Next.js Serverless Component to deploy a Next.js application to AWS Lambda, a Cloudfront distribution is automatically created. If by any chance, we delete the Cloudfront distribution directly from AWS console, the next time when we try to deploy to AWS, an error is thrown as below.
+
+```
+NoSuchDistribution: The specified distribution does not exist.
+```
+
+This is happening because, when we deploy our application, the Serverless framework creates two new folders in our project folder. They are `.serverless` and `.serverless_next`.
+
+Inside `.serverless` folder, Serverless is storing the name of earlier created cloudfront distribution id. What we need to do is to delete both these folders and try again. It should work.

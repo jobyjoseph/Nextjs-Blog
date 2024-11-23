@@ -1,0 +1,22 @@
+---
+title: "What is ArrayBuffer in JavaScript?"
+date: 2022-12-04
+slug: what-is-arraybuffer-in-javascript
+description: ArrayBuffer in JavaScript is a pure byte array.
+tags: ["javascript"]
+---
+
+ArrayBuffer in JavaScript is a **pure byte array**, where each elements are stored in **contigous** memory locations. The old array, `new Array()` behaves like an array, but in the core it does not store elements in contigous memory.
+
+```javascript
+const a = new ArrayBuffer(6);
+console.log(a);
+```
+
+For the code above the output will be:
+
+```javascript
+ArrayBuffer { [Uint8Contents]: <00 00 00 00 00 00>, byteLength: 6 }
+```
+
+The `00 00 00 00 00 00` are the 6 contigous memory locations. Each memory location is treated as an `Uint8` data.

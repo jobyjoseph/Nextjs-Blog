@@ -1,0 +1,34 @@
+---
+title: "Emmet Shorcut in Visual Studio Code to Insert HTML5 Boilerplate"
+date: 2022-07-09
+slug: emmet-shortcut-visual-studio-code-insert-html5-boilerplate
+description: "We can use Emmet shortcut in Visual Studio Code IDE to insert HTML5 starter code. It comes with Visual Studio out of the box."
+tags: ["web"]
+---
+
+import Image from "../../../../src/components/image";
+import imgExclamation from "./images/exclamation-emmet.png";
+import imgHTML5Emmet from "./images/html5-emmet.png";
+import imgGeneratedHTML from "./images/generated-html5.png";
+
+When starting a HTML5 document, it is quite boring to copy paste or type the basic structure of a HTML5 document. In most of the IDEs there are shortcuts to insert frequently used code snippets. Such shortcuts are called as **Emmets**.
+
+There is an Emmet for inserting HTML5 document in Visual Studio Code. They are `!` and `html:5`. Here are the steps to use this emmet.
+
+Create or open an empty html document. Then start typing `!` or `html:5`. Visual Studio Code recognizes it as an Emmet.
+
+Here is how we use emmet with `!`.
+
+<Image
+  src={imgExclamation}
+  style={{ maxWidth: "400px" }}
+  alt="Exclamation emmet for html 5"
+/>
+
+Here is how we use emmet with `html:5` short code.
+
+<Image src={imgHTML5Emmet} style={{ maxWidth: "400px" }} alt="HTML5 emmet" />
+
+Once we use the emmet by pressing _Enter_ key, this is how the generated HTML code looks like:
+
+<Image src={imgGeneratedHTML} alt="Generated HTML5 code using Emmet" />

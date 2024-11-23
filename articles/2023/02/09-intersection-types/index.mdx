@@ -1,0 +1,44 @@
+---
+title: "Intersection Types in TypeScript"
+date: 2023-02-09
+slug: intersection-types-typescript
+description: ""
+tags: ["typescript"]
+---
+
+Intersection types allow us to combine other types.
+
+Say, we have an interface for `Person`:
+
+```typescript
+interface Person {
+  name: string;
+  gender: string;
+}
+```
+
+There is also an another interface for `Farmer`:
+
+```typescript
+interface Farmer {
+  crop: string;
+}
+```
+
+Now, for some reasons we need a new interface that contains the properties of both `Person` and `Farmer`. One option is to list out all properties again as shown below:
+
+```typescript
+interface PersonFarmer {
+  name: string;
+  gender: string;
+  crop: string;
+}
+```
+
+Or, we can use intersection operator like below:
+
+```typescript
+type PersonFarmer = Person & Farmer;
+```
+
+Note that we need to use `type` when we use intersection operator. Instead of `type`, if we need to use `interface` for `PersonFarmer`, then we can consider extending `Person` and `Farmer`.

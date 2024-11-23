@@ -1,0 +1,69 @@
+---
+title: JavaScript Functions Interview Questions
+date: 2020-11-14
+slug: javascript-functions-interview-questions
+decription: Functions in JavaScript is one key area in all JavaScript interviews. Practice different questions to make your interview easy.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+import Image from "../../../../src/components/image";
+import imageFnConsole from "./images/printing-fn-console.png";
+
+** Question: **
+
+How are functions stored in memory by JavaScript? Here we have a function `sum()`.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+How `sum()` function is stored in memory?
+
+** Answer: **
+
+JavaScript allocates a memory block, just like a memory is allocated for a variable. The definition of the function is then stored inside the variable. That is why if we print the value of `sum` in console, it prints out the full source code of the function.
+
+```javascript
+console.log(sum);
+```
+
+Here is the console output:
+
+<Image
+  src={imageFnConsole}
+  style={{ maxWidth: "200px", display: "block", margin: "auto" }}
+  alt="Printing function in console"
+/>
+
+<Divider />
+
+** Question: **
+
+Does a function always return a value?
+
+** Answer: **
+
+Yes. If there is a `return` statement, that value is returned. If there is no `return` statement, the function implicitly returns `undefined`.
+
+Here is a function that explicitly returns a number.
+
+```javascript
+function f() {
+  return 7;
+}
+const result = f();
+console.log(result); // 7
+```
+
+Here is a function that does not have `return` statement.
+
+```javascript
+function f() {
+  var a = 7;
+}
+const result = f();
+console.log(result); // undefined
+```

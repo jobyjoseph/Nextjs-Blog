@@ -1,0 +1,27 @@
+---
+title: "Type Aliases or Custom Type in TypeScript"
+date: 2023-01-16
+slug: type-aliases-custom-type-typescript
+description: "Type Aliases or custom types help us to create a single short type for a union of types."
+tags: ["typescript"]
+---
+
+If we have a union type like below:
+
+```typescript
+let a: number | string;
+let b: number | string;
+```
+
+It is difficult to repeat `number | string` every time. **Type aliases** makes this easy.
+
+```typescript
+type numstr = number | string;
+```
+
+After declaring our custom type, we can use it as below:
+
+```typescript
+let a: numstr;
+let b: numstr;
+```

@@ -1,0 +1,47 @@
+---
+title: JS Daily 2 - this in Arrow Function
+date: 2020-11-22
+slug: js-daily-2-arrow-function-this
+decription: Learn how this keyword works inside arrow functions in JavaScript
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj = {
+    a : 10,
+    b : () => {
+        console.log(this.a);
+    }
+}
+
+obj.b();
+```
+
+<Divider />
+
+Arrow function does not have its own `this`. Arrow functions establish `this` based on the scope the Arrow function is **defined within**(not invoked). Here the arrow function is defined in global context. Therefore, `this` points to `window` object in browsers.
+
+Since we have not set a property `a` for `window` object, line 4 prints `undefined` in console.
+
+Just for fun, can you find out the output of below code?
+
+```javascript
+function fun() {
+  const obj = {
+    a: 10,
+    b: () => {
+      console.log(this.a);
+    },
+  };
+  return obj;
+}
+
+const obj = fun.apply({ a: 20 });
+obj.b();
+```
+
+> Note: `this` is based on where the arrow function is defined, NOT invoked.

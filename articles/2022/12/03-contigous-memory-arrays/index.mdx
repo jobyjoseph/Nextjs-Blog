@@ -1,0 +1,19 @@
+---
+title: "Are Elements of JavaScript Array Stored in Contigous Memory Locations?"
+date: 2022-12-03
+slug: are-elements-of-javascript-array-stored-contigous-memory-locations
+description: Is JavaScript storing Array elements in Contigous memories? No
+tags: ["javascript"]
+---
+
+We have learned that Array is a data structure that stores its elements in contiogous memory locations. Look the code below:
+
+```javascript
+const arr = ["Apple", "Banana", "Orange"];
+```
+
+Are these 3 elements stored in contigous memories? No. Even though JavaScript arrays perform lot of operations just like arrays, in the core it is just another key-value object. Why?
+
+In JavaScript, if an array contains 6 elements, these 6 elements can be of any data type. Due to that, it is not possible for compiler to decide a set of contigous memories for an array.
+
+If we really need to work with a contigous memories, go for _ArrayBuffer_. Search for ArrayBuffer in JavaScript to know more.

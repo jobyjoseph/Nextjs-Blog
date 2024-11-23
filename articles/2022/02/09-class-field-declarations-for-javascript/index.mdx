@@ -1,0 +1,186 @@
+---
+title: "JavaScript Class Field Declarations"
+date: 2022-02-12
+slug: javascript-class-field-declarations
+description: "Class Field Declarations feature is in Stage 4 of TC39 process. It is expected to be launched in the year 2022."
+tags: ["javascript"]
+---
+
+Class Field Declarations feature is in **Stage 4** of TC39 process. It is expected to be launched in the year 2022. This proposal was authored by [Daniel Ehrenberg](https://github.com/littledan). [Kevin Gibbons](https://github.com/bakkot) is the champion for this proposal.
+
+## Field Declarations
+
+In ES2015 we can declare classes using `class` keyword. Here is a simple class for counter.
+
+```javascript
+class Counter {
+  constructor() {
+    this.count = 0;
+  }
+
+  incrementCount() {
+    this.count++;
+    console.log(this.count);
+  }
+}
+```
+
+`count` is used to keep track of the count. Each time, `incrementCount()` is called, the value of `count` is incremented by 1.
+
+```javascript
+const counter1 = new Counter();
+counter1.incrementCount();
+counter1.incrementCount();
+```
+
+Above code prints `1` and `2` in the console.
+
+```
+1
+2
+```
+
+**Field Declarations** helps to declare the fields(`count`) immediately under `Counter` and improve code readability. Above class can be modified using field declarations as shown below.
+
+```javascript
+class Counter {
+  count = 0; // highlight-line
+
+  incrementCount() {
+    this.count++;
+    console.log(this.count);
+  }
+}
+```
+
+The output will be same, but the code is now **more readable**. In the above example, we have initialized the value of `count`. We can also just declare a variable without initialization.
+
+```javascript
+class Counter {
+  count; // highlight-line
+
+  print() {
+    console.log(this.count);
+  }
+}
+
+const counter = new Counter();
+counter.print(); // undefined
+```
+
+## Private Fields
+
+By default, any fields in a class are **public**. For example, consider below code.
+
+```javascript
+class Counter {
+  count = 0;
+
+  increment() {
+    this.count++;
+    console.log(this.count);
+  }
+}
+```
+
+Here `count` is a field declared to keep track of the count. Each invocation of `increment()` updates the count value and prints it. What if someone updates the `count` value outside of `increment()` method?
+
+```javascript
+const counter = new Counter();
+counter.increment(); // 1
+counter.count = 5;
+counter.increment(); // 6
+counter.increment(); // 7
+```
+
+Since the `count` field is updated to 5, last 2 `increment()` methods print 6 and 7. How can we keep the `count` field **private**?. Only `increment()` method should update the value of `count`. We can set `count` as private by adding `#` before the field.
+
+```javascript
+class Counter {
+  #count = 0;
+
+  increment() {
+    this.#count++;
+    console.log(this.#count);
+  }
+}
+```
+
+Now let us see how previous invocation works. The output of each line is shown as comment.
+
+```javascript
+const counter = new Counter();
+counter.increment(); // 1
+counter.count = 5;
+counter.increment(); // 2
+counter.increment(); // 3
+```
+
+We can see that `counter.count = 5` does not throw any error. But there is **no effect**. The `count` field is udpated only through `increment()` method.
+
+By making private fields, ECMAScript classes provides better **encapsulation**. There is no chance of accidental updation of internal fields.
+
+### Dynamic Private Fields
+
+Dynamic creation of private fields are not allowed. If we want to use any private fields, we need to declare it first on top of the class.
+
+Here is a class that has one field(`count1`) declared on top. If we call `setCount()` method, two more fields, `count2` and `count3` are added to the instance object.
+
+```javascript
+class Counter {
+  count1 = 0;
+
+  setCount() {
+    this.count2 = 0;
+    this.count3 = 0;
+  }
+}
+
+const counter = new Counter();
+console.log(Object.keys(counter).length); // 1
+counter.setCount();
+console.log(Object.keys(counter).length); // 3
+```
+
+As we can see, before `setCount()` invocation, there was only one field. After the invocation, the field count is 3.
+
+Now, let us convert all the fields as **private**.
+
+```javascript
+class Counter {
+  #count1 = 0;
+
+  setCount() {
+    this.#count2 = 0;
+    this.#count3 = 0;
+  }
+}
+```
+
+When `setCount()` is invoked, `this.#count2` throws following error.
+
+```
+Uncaught SyntaxError: Private field '#count2' must be declared in an enclosing class
+```
+
+This says that, we can create public fields dynamically, but not private fields.
+
+## Implementations
+
+If you want to try this feature, it is available in following software versions at the time of writing.
+
+- Babel 7.0+
+- Node 12
+- Chrome/V8
+  - Public fields from Chrome 72
+  - Private fields from Chrome 74
+- Firefox / SpiderMonkey
+  - Public fields from Firefox 69
+  - Public static fields from Firefox 75
+- Safari/JSC
+  - Public instance fields are enabled in Safari 14
+  - Public static fields are enabled in Safari Technology Preview 117
+  - Private fields are enabled in Safari Technology Preview 117
+- Moddable XS
+- QuickJS
+- TypeScript 3.8

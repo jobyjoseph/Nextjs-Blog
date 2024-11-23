@@ -1,0 +1,48 @@
+---
+title: "Array Data Structure"
+date: 2022-03-23
+slug: array-data-structure
+description: "An **array** is a collection of similar items stored in **contigous memory locations**. We discuss here about arrays in the context of JavaScript language."
+tags: ["algorithms"]
+---
+
+An **array** is a collection of similar items stored in **contigous memory locations**. We discuss here about arrays in the context of JavaScript language.
+
+
+## Create an Array
+
+In JavaScript, an array of 10 elements can be created using:
+
+```javascript
+const arr = new Array(10);
+```
+
+## Read Array Element
+
+Each element in an array has an index starting from **0**. An array element can be obtained using its index. Therefore, 5th element of the array can be accessed using:
+
+```javascript
+console.log(arr[4]); // 5th element is in 4th index
+```
+
+## Read All Elements
+
+We can use a `for` loop to iterate through an array.
+
+```javascript
+const arr = ["Apple", "Orange", "Banana"];
+
+for (let i = 0; i < arr.length; i++) {
+  console.log(arr[i]);
+}
+```
+
+We can also use array `forEach()` method to iterate through an array.
+
+```javascript
+const arr = ["Apple", "Orange", "Banana"];
+
+arr.forEach(function (item) {
+  console.log(item);
+});
+```

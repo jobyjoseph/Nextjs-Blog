@@ -1,0 +1,130 @@
+---
+title: React Query Hello World Code
+date: 2021-09-14
+slug: react-query-hello-world-code
+description: One can start trying out React Query with a simple Query. Query in React Query is used to fetch data from a promise and updates the state. Queries are customizable using their configuration object.
+tags: ["reactQuery"]
+---
+
+In this section, we are going to write our first React Query code. Before starting with code, we need to install `react-query` in our project using:
+
+```
+yarn add react-query
+```
+
+Next, we can go to our code editor. We need to have an environment where we can write React components and execute them. I have setup a project using `create-react-app`.
+
+## useQuery Hook
+
+As part of this getting started code, we will be using `useQuery` hook from React Query. `useQuery` hook is used to create query objects.
+
+To do that, first, create a React component in `App.js` file.
+
+```javascript
+function Gitusers() {}
+```
+
+In this example, the query object will be retrieving Github users using Github API. That is why I have given the name as `Gitusers`.
+
+Inside the component, we make use of `useQuery` hook to get the user details. For that, first we need to import `useQuery` from `react-query`.
+
+```javascript
+// highlight-start
+import { useQuery } from "react-query";
+// highlight-end
+
+function Gitusers() {
+  // highlight-start
+  const gitUsers = useQuery("gitusers", async () => {
+    const { data } = await axios.get(
+      "https://api.github.com/search/users?q=react"
+    );
+    return data;
+  });
+  // highlight-end
+}
+```
+
+The `gitUsers` const variable is now a query object. We can retrieve the server state of Github users from `gitUsers` object. Later, we will see how we make different decisions based on the state values.
+
+We use `axios` to make the API request. Please make sure to install and include `axios` package.
+
+Before moving further, let me show you the different building blocks we used.
+
+First, the `useQuery` hooks accepts a string `"gitusers"` as first argument. This unique key is used by React Query to identify the promise it is connected.
+
+The promise I mentioned is the one returned by `axios.get()`. Query object automatically re-render `Gitusers` component based on the AJAX request states.
+
+## Using Query Object
+
+Now we have the query object `gitUsers` which listens to the Github API request. Let us design a component that is returned by `Gitusers` component.
+
+```javascript
+function Gitusers() {
+  // ...
+  return (
+    <>
+      {gitUsers.isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div>Total result count: {gitUsers.data?.total_count}</div>
+      )}
+    </>
+  );
+}
+```
+
+Basically what is happening here is, the query object `gitUsers` has some helper attributes like `isLoading`. We can make use of these flags to inform the users what is happening right now.
+
+## Using Component
+
+Now our `Gitusers` component is ready to be used. We use it in `App` component.
+
+```javascript
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Gitusers />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
+```
+
+The `Gitusers` component is wrapped inside `QueryClientProvider`. The provider needs a `client` attribute which contains a QueryClient object. You can see how the QueryClient object is created and the full code below:
+
+```javascript
+import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import axios from "axios";
+
+const queryClient = new QueryClient();
+
+function Gitusers() {
+  const gitUsers = useQuery("gitusers", async () => {
+    const { data } = await axios.get(
+      "https://api.github.com/search/users?q=react"
+    );
+    return data;
+  });
+  return (
+    <>
+      {gitUsers.isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div>Total result count: {gitUsers.data?.total_count}</div>
+      )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Gitusers />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
+```

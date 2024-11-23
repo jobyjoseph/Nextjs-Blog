@@ -1,0 +1,120 @@
+---
+title: Hello World App Using React Without JSX
+date: 2021-04-11
+slug: react-hello-world-app-without-jsx
+description: How to write a pure react application without JSX. This solution makes use of plain JavaScript to create React components.
+tags: ["react"]
+---
+
+React is a JavaScript library which can be easily added to any project. If you have worked with jQuery, you know how easy it is to add jQuery file reference in your web page and start using it. In similar manner, it is very easy to work with React also.
+
+We are going to create a single HTML file that creates a UI interface using React.
+
+## Project Setup
+
+Create a folder `hello-world-app`. Inside the folder, create an `index.html` file which is going to contain all our code. Fill the html file with following boilerplate code.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World React App</title>
+  </head>
+  <body></body>
+</html>
+```
+
+So far nothing special. Next we will add reference to React library.
+
+## React Library Reference
+
+In order for React library to run, we need to add reference to two JavaScript files. One is _react.js_ and other one is _react-dom.js_.
+
+In the `<head>` section add following two lines.
+
+```html
+<script
+  src="https://unpkg.com/react@16/umd/react.development.js"
+  crossorigin
+></script>
+<script
+  src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+  crossorigin
+></script>
+```
+
+The first file `react.development.js` contains code to create React components. You can visualize a component as portion of UI.
+
+The second file `react-dom.development.js` does the efficient work to render the component in the browser.
+
+## Creating First Component
+
+Ideally in a real project, we write component creation code in separate JavaScript file. Here we are going to write the first component code inside a `<script>` block.
+
+Just above the closing `</body>` tag, add the following code inside a `<script>` tag.
+
+```javascript
+const MyComponent = React.createElement("h1", null, "Hello World!");
+```
+
+Let us understand what happened here. When `react.development.js` file is added to our page, it adds a `React` object globally. `React` object contains a method `createElement()` which is used to create a component. Our code created a component which will render following html in browser when rendered.
+
+```html
+<h1>Hello World!</h1>
+```
+
+## Rendering in Browser
+
+In the previous section, we only create a component. But we did not render it in browser. In order to render the component, we need to first set a placeholder in our html page. For that, we are adding a `<div>` tag with id `myComponent` inside `<body>`.
+
+```html
+<body>
+  <div id="myComponent"></div>
+  ...
+</body>
+```
+
+Now we need to tell React to render the component inside the div we just created. As mentioned earlier, rendering job is done by `react-dom.development.js` file. When this file is added to a page, it creates a global object called `ReactDOM`. This object contains a `render()` method which places the component inside our div block.
+
+In our `<script>` block, after creating component, add following line.
+
+```javascript
+ReactDOM.render(MyComponent, document.getElementById("myComponent"));
+```
+
+The `render()` method accepts two arguments. First one is the component to be rendered and the second is the DOM node where the component needs to be placed.
+
+## Complete code
+
+Here is the final HTML file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World React App</title>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+  </head>
+  <body>
+    <div id="myComponent"></div>
+
+    <script>
+      const MyComponent = React.createElement("h1", null, "Hello World!");
+      ReactDOM.render(MyComponent, document.getElementById("myComponent"));
+    </script>
+  </body>
+</html>
+```
+
+This HTML file when opened in a browser displays a H1 tag with "Hello World!" text.

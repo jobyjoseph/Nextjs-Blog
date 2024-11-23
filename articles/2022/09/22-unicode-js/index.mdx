@@ -1,0 +1,74 @@
+---
+title: "Unicode Character Set"
+shortTitle: "Unicode Character Set"
+date: 2022-09-26
+slug: unicode-character-set
+description: "JavaScript supports Unicode character set. We can name identifiers using unicodes. We can also use unicodes in strings and comments."
+tags: ["javascript"]
+type: "tutorial"
+topic: "javascript"
+section: "lexical-structure"
+sortorder: 11
+---
+
+JavaScript supports **Unicode character set**. We can name identifiers using unicodes. We can also use unicodes in strings and comments.
+
+## Unicode in Identifiers
+
+Names of variables, constants or functions are examples of identifiers. We normally give meaningful identifier names in English. Since, JavaScript supports unicode, we can even name variables in non-english language like Japanese.
+
+```javascript
+let フルーツ = "Apple";
+console.log(フルーツ); // 'Apple'
+```
+
+In the above code `フルーツ` stands for fruit in Japanese.
+
+## Unicode in Strings and Comments
+
+We can represent almost all languages in the world using unicode. Let us try to print a string literal that contains a non-english language.
+
+Here is an example that prints a text in Malayalam language.
+
+```
+let place = "കോട്ടയം";
+console.log(place); // 'കോട്ടയം'
+```
+
+## Unicode Escape Sequences
+
+Some computer hardware and software cannot display, input, or correctly process the full set of Unicode characters. For example, if we are using an English keyboard, we cannot input `é`. In that case, we can use unicode escape sequence to print the `é`. The escape sequence for `é` is `\u00E9`.
+
+```javascript
+console.log("\u00E9"); // 'é'
+```
+
+In ES6, escape sequence with curly brackets(Eg: `\u{1F600}`) were introduced. It can support more range than the older four character format(`\u00E9`).
+
+Here is an example of new ES6 syntax that prints a smiley.
+
+```javascript
+console.log("\u{1F600}"); // '😀'
+```
+
+## Unicode Normalization
+
+When it comes to some characters like `é`, it can be represented in multiple ways in JavaScript.
+
+```javascript
+console.log("\u00E9"); // 'é'
+console.log("e\u0301"); // 'é'
+```
+
+Even though it looks same for us, for JavaScript they are different. So what is the problem? One problem is, we can redeclare constants that looks like same names.
+
+```javascript
+const é = 10;
+const é = 20;
+console.log(é); // 10
+console.log(é); // 20
+```
+
+Are you finding the above code weird? Yes. You can copy the above code and try if it works.
+
+Inorder to avoid such ambiguities, we need to normalize coding either in the editor or using an external tool. JavaScript cannot do any normalization on its own.

@@ -1,0 +1,18 @@
+---
+title: "Disable Cloudfront Cache for Lambda@Edge"
+date: 2022-12-14
+slug: disable-cloudfront-cache-lambda-edge
+description: When Cloudfront serves content from Lamba@edge, it caches the response received from Lambda@edge. This article discusses on how to disable caching for Lambda@edge
+tags: ["aws"]
+---
+
+import Image from "../../../../src/components/image";
+import imgFunctionAssociation from "./images/function-association.png";
+
+When Cloudfront serves content from Lambda@edge, the response from Lambda@edge is cached. So, when Cloudfront receives a request again, it serves from cache.
+
+In some cases, you might want to disable caching for Lambda@edge. You want all requests to invoke the Lambda@edge function. For that, you need to customize the Cloudfront **Behavior** that is attched to Lambda@edge function.
+
+<Image src={imgFunctionAssociation} alt="Function association" />
+
+In the image above the Lamba@edge functions are associated with **Origin request** and **Origin response**. That will cache the output. Instead, attach the same function to **Viewer request** and **Viewer response**. That will make sure that for all viewer requests, the Lambda@edge function is invoked.

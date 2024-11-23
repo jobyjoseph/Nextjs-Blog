@@ -1,0 +1,34 @@
+---
+title: JS Daily 21 - Tagged Template Literal
+date: 2020-12-11
+slug: js-daily-21-tagged-template-literal
+decription: Tagged template literals are used to create strings in JavaScript. It helps easily to use placeholder variables in strings
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const formatString = (strings, ...values) => {
+  return strings.join(",") + values.join(",");
+}
+
+const name = "Backbencher";
+const age = 2;
+
+const result = formatString `${name} is ${age} years old`;
+
+console.log(result);
+```
+
+<Divider />
+
+Output is `", is , years oldBackbencher,2"`
+
+This is an example of Tagged Template literal. Here the template literal string is sliced and passed to the tagged function(`formatString`).
+
+At first the string is sliced like `|${name}| is |${age}| years old`. Then all the string literals are grouped to one array(`["", " is ", " years old"]`). The values are picked and send to the function as second argument, third argument and so on. We gather all the arguments except first, using `...values`. So now `values` contains an array of 2 elements.
+
+The return value of the `formatString()` call, is assigned to `result`.

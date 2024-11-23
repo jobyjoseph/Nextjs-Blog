@@ -1,0 +1,27 @@
+---
+title: JS Daily 4 - Truthy Empty Objects
+date: 2020-11-24
+slug: js-daily-4-truthy-empty-object
+decription: An empty object is not a falsy value. It is a truthy value in JavaScript.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+if({}) {
+  console.log("I am true");
+} else {
+  console.log("I am false");
+}
+```
+
+<Divider />
+
+Output will be **I am true**.
+
+Any object in JavaScript, when converted to a boolean value, results in `true`. It can even be an empty object, as shown in the question.
+
+> Since Array is also a type of object, empty array(`[]`) also converts to `true` in boolean.

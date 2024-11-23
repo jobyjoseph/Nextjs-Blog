@@ -1,0 +1,33 @@
+---
+title: "Performance Improvement Using Named Imports"
+date: 2022-08-06
+slug: performance-improvement-using-named-imports
+description: "When we import an entire package, just to use one method from it, that is not suggested. Always import the method we require in our code using named imports."
+tags: ["web"]
+---
+
+import { Link } from "gatsby";
+
+In a JavaScript or Node.js project, we can `import` modules using different ways. Here are two examples which we discuss today.
+
+```javascript
+// Default import
+import Lodash from "lodash";
+Lodash.capitalize("hello");
+
+// Named import
+import { capitalize } from "lodash";
+capitalize("hello");
+```
+
+Lodash is just an example used to demonstrate the performance. We all know that lodash contains several utility methods.
+
+Both the types of `import` works. But the performance of both techniques vary based on the bundler we use. Different bundlers use the different ways for **tree shaking**.
+
+> Tree shaking is the process taken by bundlers to find out what all methods or modules need to be included in the output bundle.
+
+It is always advised to use **named imports**. It makes sure that only the required modules are loaded to the output bundle.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

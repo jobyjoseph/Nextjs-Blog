@@ -1,0 +1,40 @@
+---
+title: "Using Interfaces with Classes in TypeScript"
+date: 2023-02-03
+slug: using-interfaces-with-classes-typescript
+description: "Interfaces defines the structure of an object. Here is a structure of a `Car` object using interface."
+tags: ["typescript"]
+---
+
+Interfaces defines the structure of an object. Here is a structure of a `Car` object using interface.
+
+```typescript
+interface Car {
+  model: string;
+  year: number;
+
+  show(message: string): void;
+}
+```
+
+Later we can create a class that **implements** the `Car` interface.
+
+```typescript
+class BMW implements Car {
+  model: string;
+  year: number;
+
+  constructor(m: string, y: number) {
+    this.model = m;
+    this.year = y;
+  }
+
+  show(message: string) {
+    console.log(message);
+  }
+}
+```
+
+The keyword rightly tells `implements` because it is mandatory to implement all properties and methods listed in the interface.
+
+It is ok to add more properties and methods to the class.

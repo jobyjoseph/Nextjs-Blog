@@ -1,0 +1,28 @@
+---
+title: "How to View CSP Violations in CloudFlare"
+date: 2022-11-25
+slug: how-to-view-csp-violations-cloudflare
+description: Cloudflare can implement and track CSP violations using Page shield. This article explains how to view the CSP violations recorded.
+tags: ["web"]
+---
+
+import Image from "../../../../src/components/image";
+import imgCSPCloudflare from "./images/csp-cloudflare.png";
+
+When Page Shield is enabled in Cloudflare, CloudFlare automatically adds `Content-Security-Policy-Report-Only` header to all the pages.
+
+```
+content-security-policy-report-only: script-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/...
+```
+
+Basically it means that if there is any CSP violation occurrence, it is reported to CloudFlare. And in CloudFlare, we can see the report.
+
+<Image src={imgCSPCloudflare} alt="CSP Cloudflare" />
+
+In order to view the report:
+
+- Login to cloudflare
+- Go to **Security** menu
+- Under that, click on **Page Shield**
+
+There you can see all the scripts and the violations made by them.

@@ -1,0 +1,65 @@
+---
+title: "Hosting Static React Website in AWS S3"
+date: 2022-04-18
+slug: hosting-static-react-website-aws-s3
+description: "We have the html and bundle files after Webpack build. We learn how to host the build files in AWS S3 to get a public url to see the site."
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+import Olink from "../../../../src/components/olink";
+import Image from "../../../../src/components/image";
+import imgDistFolder from "./images/dist-folder.png";
+import imgBucketPolicy from "./images/bucket-policy.png";
+import imgPublicAccess from "./images/public-access.png";
+import imgStaticWebsiteHosting from "./images/static-website-hosting.png";
+
+As part of <Link to="/articles/tambola-game-development-part-1">Tambola game development</Link>, I had to host my development work in AWS S3. It gave me a shareable public url for the dev site. I am sharing the main steps involved in seeing my React site online.
+
+## Build Files
+
+I have created a hello world React application in my laptop. The webpack bundler has created the build files to be hosted in S3. Right now, my distribution folder(`/dist`) looks like this:
+
+<Image src={imgDistFolder} alt="Dist folder" style={{ maxWidth: "200px" }} />
+
+If we run the `index.html`, we can see the running application.
+
+## AWS Setup
+
+I created an AWS S3 bucket with name `dev-tambola`. Then, I uploaded entire contents of `/dist` folder to the bucket.
+
+Next step was to enable **Static Webiste Hosting** for our bucket. It can be done from _Properties_ tab of the bucket.
+
+<Image
+  src={imgStaticWebsiteHosting}
+  alt="Static Website Hosting"
+  style={{ maxWidth: "500px" }}
+/>
+
+After enabling website hosting, I received a url. Using this url we can access our site later. In my case, the S3 url was:
+
+<Olink link="http://dev-tambola.s3-website-us-west-1.amazonaws.com/">
+  http://dev-tambola.s3-website-us-west-1.amazonaws.com/
+</Olink>
+
+I was not done yet. If I tried to take the url at that time, I saw _Access Denied_ error.
+
+Next, under _Permissions_ tab, I enabled **Public Access** of the bucket.
+
+<Image
+  src={imgPublicAccess}
+  alt="Public access"
+  style={{ maxWidth: "500px" }}
+/>
+
+After that, the bucket policy was updated to accept public requests.
+
+<Image
+  src={imgBucketPolicy}
+  alt="Bucket policy"
+  style={{ maxWidth: "500px" }}
+/>
+
+> In the above policy `dev-tambola` should be replaced with your bucket name.
+
+Now when I took the S3 url, we can see the React site. Here, the entire approach was manual and time consuming. We need to automize this process. Since access related issues of our S3 bucket is resolved, next we need to only find a way to place our updated React code in the bucket. Then automatically, the S3 url will serve updated content.

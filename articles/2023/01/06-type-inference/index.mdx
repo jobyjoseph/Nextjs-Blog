@@ -1,0 +1,29 @@
+---
+title: "Type Inference in TypeScript"
+date: 2023-01-06
+slug: type-inference-typescript
+description: "TypeScript can automatically infer the type with the help of value assigned."
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgTypeInference from "./images/type-inference.png";
+
+In TypeScript, we can explicitly define the type of a variable as shown below:
+
+```typescript
+let age: number = 5;
+```
+
+But in the above case, even without the explicity `number` type, TypeScript can infer the type by the value assigned, which is `5`.
+
+Observe the code below.
+
+```typescript
+let age = 5;
+age = "Five";
+```
+
+The second line throws an error because TypeScript already infered the type of `age` as `number`.
+
+<Image src={imgTypeInference} alt="Type inference" />

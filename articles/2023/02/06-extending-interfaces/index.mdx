@@ -1,0 +1,53 @@
+---
+title: "Extending Interfaces in TypeScript"
+date: 2023-02-06
+slug: extending-interfaces-typescript
+description: ""
+tags: ["typescript"]
+---
+
+We can implement inheritance in interfaces.
+
+Say we have an interface for `Person`:
+
+```typescript
+interface Person {
+  name: string;
+}
+```
+
+Also, we have another interface for `Teacher`:
+
+```typescript
+interface Teacher {
+  subject: string;
+}
+```
+
+Now if we have a class `Master` that needs to implement both `Person` and `Teacher`, we can do like this:
+
+```typescript
+class Master implements Person, Teacher {
+  name;
+  subject;
+}
+```
+
+Above way is one technique.
+
+There is another way. We know that a `Teacher` interface always needs to have a `name` also. Therefore, we can extend `Teacher` from `Person`.
+
+```typescript
+interface Teacher extends Person {
+  subject: string;
+}
+```
+
+Once `Teacher` extends `Person`, we need to implement only `Teacher`.
+
+```typescript
+class Master implements Teacher {
+  name;
+  subject;
+}
+```

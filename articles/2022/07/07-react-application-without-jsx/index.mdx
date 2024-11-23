@@ -1,0 +1,57 @@
+---
+title: "Writing React Application Without JSX or Webpack"
+date: 2022-07-19
+slug: writing-react-application-without-jsx-webpack
+description: "We can write a react application without JSX or Webpack. We can refer to React and React-DOM library to use the same"
+tags: ["react"]
+---
+
+import { Link } from "gatsby";
+
+We all might have started to try React either using _Create React App_ or directly jumped into a React project where all the setup is already done. There are JSX, Webpack, Babel and lot of other tools in the project.
+
+If you started web development before 2010 or in that range, you might think about React as little complex in the initial days. That is because there were no **build** step in frontend years ago. Life was all about including a jQuery script and ta da!
+
+Now the question is, can we create a React component in a simple HTML file? Just like we used jQuery. Yes we can.
+
+## CDN
+
+We need to first add React and React-DOM files from CDN, just like we do for other libraries like Bootstrap or jQuery.
+
+```html
+<script
+  crossorigin
+  src="https://unpkg.com/react@18/umd/react.development.js"
+></script>
+<script
+  crossorigin
+  src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+></script>
+```
+
+Keep the reference to the bottom of `body` tag.
+
+## HTML markup
+
+Add a div block with any id, say `root`. This `div` block is going to be the container of our React component.
+
+```html
+<div id="root"></div>
+```
+
+## React Component
+
+JSX was introduced to give a better syntax for developers to create React component. Even though it is tough, it is possible to create a component using plain JavaScript.
+
+```javascript
+const MyComponent = React.createElement("h1", null, "Hello World!");
+ReactDOM.render(MyComponent, document.getElementById("root"));
+```
+
+In the first line we created a React component. In the second line we placed it inside our div.
+
+You will not do this in any of your projects. But it is still a good thing to know that it is possible.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

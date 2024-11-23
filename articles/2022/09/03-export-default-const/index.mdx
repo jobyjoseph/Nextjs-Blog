@@ -1,0 +1,62 @@
+---
+title: "Why Export Default Syntax is Not Allowed With Const"
+date: 2022-09-02
+slug: why-export-default-syntax-is-not-allowed-with-const
+description: "Const is a keyword used to declare variables in JavaScript. Even though const variables can be exported, it does not allow default export along with variable declaration."
+tags: ["javascript"]
+---
+
+`const` keyword is used to declare variables in JavaScript.
+
+```javascript
+const a = 10;
+```
+
+We can declare multiple constants at the same time.
+
+```javascript
+const a = 10,
+  b = 20;
+```
+
+We can export constants using `export` keyword.
+
+```javascript
+export const a = 10,
+  b = 20;
+```
+
+But, JavaScript does not support `export` with `default` along with `const`. For example, below code is invalid.
+
+```javascript
+export default const a = 10, b = 20;
+```
+
+It is because we cannot identify which is the default out of `a` and `b` at the time of `import`.
+
+Therefore, in case of constants we need to do the declaration and exporting in two different steps.
+
+```javascript
+const a = 10,
+  b = 20;
+
+export default a;
+```
+
+Due to this reason, if you try to export a function expression as default, it will not work. Below code does NOT work.
+
+```javascript
+export default const sum = (a, b) => {
+    return a + b;
+}
+```
+
+If you do not like the `export default` to be on separate line, above code can be rewritten as:
+
+```javascript
+export default function sum(a, b) {
+  return a + b;
+}
+```
+
+Above code is valid because `export default` can be used along with **expressions**, **functions** and **classes**.

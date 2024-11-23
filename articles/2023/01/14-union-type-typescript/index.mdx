@@ -1,0 +1,28 @@
+---
+title: "Union Type in TypeScript"
+date: 2023-01-14
+slug: union-type-typescript
+description: "As the name suggests, union type helps variables to have more than one type."
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgInvalidAssignment from "./images/invalid-assignment.png";
+
+As the name suggests, **union** type helps variables to have more than one type. Here is a variable that can have either a `number` type or a `string` type or a `boolean` type.
+
+```typescript
+let a: number | string | boolean;
+```
+
+`|` is the union operator. All the assignments below are valid due to union operator.
+
+```typescript
+a = 10;
+a = "Apple";
+a = true;
+```
+
+But, if we try to assign an object literal to `a`, it throws error as shown below:
+
+<Image src={imgInvalidAssignment} alt="Invalid assignment to union type" />

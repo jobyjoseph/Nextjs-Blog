@@ -1,0 +1,49 @@
+---
+title: "Interface in TypeScript"
+date: 2023-02-02
+slug: interface-in-typescript
+description: "An interface describes the structure of an object. We create an interface using `interface` keyword."
+tags: ["typescript"]
+---
+
+An **interface** describes the structure of an **object**. We create an interface using `interface` keyword. `interface` keyword exists only in TypeScript, not in vanilla JavaScript.
+
+Let us define the structure of a car object using interface.
+
+```typescript
+interface Car {
+  model: string;
+  year: number;
+}
+```
+
+The interface contains the name of the properties present in the object and also the type of each properties.
+
+We can also add details about methods present in the object. Say, we have a method `show()` in the `car` object. The method accepts a parameter, `message` which is a string. Also, the method returns nothing. Here is how we give the details of the method in our existing interface.
+
+```typescript
+interface Car {
+  model: string;
+  year: number;
+
+  show(message: string): void;
+}
+```
+
+Now we have an interface. The advantage now is that, when we declare a variable, say `car1`, we can set the type of `car1` as `Car`. That makes `car1` to accept only an object that follows the `Car` interface structure.
+
+```typescript
+let car1: Car;
+```
+
+At a later point, when we assign an object to `car1`, it should follow all the structure of `Car` interface as shown below:
+
+```typescript
+car1 = {
+  model: "BMW",
+  year: 2023,
+  show: (message) => {
+    console.log(message);
+  },
+};
+```

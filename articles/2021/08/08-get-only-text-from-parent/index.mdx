@@ -1,0 +1,29 @@
+---
+title: How To Get Only Text Node From Parent Using Node.js and Cheerio
+date: 2021-08-08
+slug: get-only-text-node-parent-cheerio-nodejs
+description: If a html node contains both children and direct text, we can extract only the text by adding a filter that check for type equal to text.
+tags: ["nodejs"]
+---
+
+Here is our HTML. The parent element has a child element(s) and immediate text nodes.
+
+```html
+<div>
+  <span>$</span>
+  999
+</div>
+```
+
+Inside `div`, we have an inner element(`span`) and also a text node(`999`). We need to extract only the text 999.
+
+Using `cheerio`, we can do it like this:
+
+```javascript
+$("div")
+  .contents()
+  .filter(function () {
+    return this.type === "text";
+  })
+  .text();
+```

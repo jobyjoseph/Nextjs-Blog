@@ -1,0 +1,103 @@
+---
+title: Next.js Interview Questions - Link
+date: 2021-03-22
+slug: nextjs-interview-questions-links-redirect
+description: Here is a set of Next.js interview questions that cover links and redirect.
+tags: ["nextjs"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+What is `Link` component in Next.js? How is it used?
+
+**Answer:**
+
+`Link` component is used to do **client-side routing**. In order to use `Link` component, first we need to import it from `next/link`.
+
+```javascript
+import Link from "next/link";
+
+//...
+
+<Link href="/">
+  <a>Home</a>
+</Link>;
+```
+
+`href` attribute accepts the path of the target page. If we need to do server side routing or link to external url, use html anchor(`<a/>`) tag.
+
+<Divider />
+
+**Question:**
+
+In my `pages` folder, there is a file at `products/[slug].jsx`. It handles the product details page of my ecommerce website. How can we link to this dynamic page from _category_ page?
+
+**Answer:**
+
+In the _Category_ page, lets assume we get the products list under the category from an API response. We can then loop through the response and dynamically create `Link` component.
+
+```javascript
+foreach(product in products) {
+  <Link href={"/product/" + product.slug}>
+    <a>{product.name}</a>
+  </Link>
+}
+```
+
+<Divider />
+
+**Question:**
+
+I am trying to link a custom React component(`<MyButton>`) to another page.
+
+```javascript
+const MyButton = () => <button>My Button</button>;
+
+function index() {
+  return (
+    <div>
+      <Link href="/about">
+        <MyButton />
+      </Link>
+    </div>
+  );
+}
+```
+
+But on clicking the button, it is not navigating to `/about` page. Why?
+
+**Answer:**
+
+If we are using `Link` component around custom React component, the navigation will not work. We can take 2 approach to make this working.
+
+First approach is to wrap `<MyButton/>` inside anchor tag:
+
+```javascript
+<Link href="/about">
+  <a>
+    <MyButton />
+  </a>
+</Link>
+```
+
+Second approach is to wrap `button` tag inside anchor tag. In that case, we need to use `passHref` to pass the target link to React component. Here is the full updated code.
+
+```javascript
+const MyButton = ({ href }) => (
+  <a href={href}>
+    <button>My Button</button>
+  </a>
+);
+
+function index() {
+  return (
+    <div>
+      <Link href="/about" passHref>
+        <MyButton />
+      </Link>
+    </div>
+  );
+}
+```

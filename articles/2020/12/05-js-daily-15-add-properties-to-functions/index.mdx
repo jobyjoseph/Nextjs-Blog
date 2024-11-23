@@ -1,0 +1,43 @@
+---
+title: JS Daily 15 - Add Properties to Function
+date: 2020-12-05
+slug: js-daily-15-add-properties-to-functions
+decription: Learn what happens when we attach a method directly to a function object.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function Car(name, color) {
+  this.name = name;
+  this.color = color;
+}
+
+Car.showName = function() {
+  console.log(this.name);
+}
+
+const myCar = new Car("BMW", "Black");
+myCar.showName();
+```
+
+<Divider />
+
+The output is an error, specifically a **TypeError**. It looks like this:
+
+```
+TypeError: myCar.showName is not a function
+```
+
+Functions in JavaScript are also objects. That is why, functions have properties like `name` and methods like `call()` and `apply()`. Just like the built-in properties and methods, we can add new properties or methods to a function. That is what we did in the above code.
+
+Now, when we attach a method directly to a function as in line 6, it is just for that function. It will not be available to instance objects like `myCar`. If we want a method to be available for instance objects, we need to attach that to the function prototype.
+
+```javascript
+Car.prototype.showName = function () {
+  // ...
+};
+```

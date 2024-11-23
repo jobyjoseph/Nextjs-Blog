@@ -1,0 +1,29 @@
+---
+title: "How to Deploy Next.js Application in AWS?"
+date: 2023-02-17
+slug: how-to-deploy-nextjs-application-aws
+description: "We can deploy Next.js application either to EC2 or Elastic Beanstalk"
+tags: ["nextjs"]
+---
+
+To deploy a Next.js application on AWS, you can follow these general steps:
+
+Build the Next.js application for production by running the command `npm run build`.
+
+Set up an **EC2** instance or **Elastic Beanstalk** environment to run your application. EC2 provides you with more control over your infrastructure, while Elastic Beanstalk offers a more managed solution with less configuration.
+
+Install Node.js on your EC2 instance or Elastic Beanstalk environment.
+
+Copy the Next.js application files to your EC2 instance or Elastic Beanstalk environment using a **file transfer protocol (FTP)** or a **secure copy (SCP)** tool.
+
+Install the necessary dependencies for your Next.js application on the EC2 instance or Elastic Beanstalk environment by running the command `npm install`.
+
+Configure your Next.js application to run as a service using a process manager like **pm2**.
+
+Set up a **reverse proxy** like Nginx or Apache to route traffic from your EC2 instance or Elastic Beanstalk environment to your Next.js application.
+
+Optionally, configure a domain name for your application using **Amazon Route 53** or another DNS provider.
+
+Once your application is up and running, you can use AWS Load Balancers to distribute traffic across multiple instances of your application, increase reliability, and scale as needed.
+
+These are the general steps for deploying a Next.js application on AWS. The exact details will depend on your specific setup and requirements.

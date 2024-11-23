@@ -1,0 +1,23 @@
+---
+title: "Watch Mode in TypeScript"
+date: 2023-01-24
+slug: watch-mode-typescript
+description: "When working with a single TypeScript file, we repeatedly compile the file using `tsc` command. We can use watch mode to automatically compile the file on change."
+tags: ["typescript"]
+---
+
+When working with a single TypeScript file, we repeatedly compile the file using `tsc` command. We can use watch mode to automatically compile the file on change.
+
+Here is how you can use watch mode:
+
+```typescript
+tsc app.ts --watch
+```
+
+You can also use shorter flag:
+
+```typescript
+tsc app.ts -w
+```
+
+In watch mode, even if there is a TypeScript error, it is logged in the terminal. Correcting the error will again recompile the output JavaScript file.

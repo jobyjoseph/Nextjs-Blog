@@ -1,0 +1,25 @@
+---
+title: Destructuring JavaScript Objects with TypeScript Types
+date: 2021-06-18
+slug: destructuring-objects-with-typescript-types
+description: How to destructure objects with typescript types
+tags: ["typescript"]
+---
+
+Today in my project, I had to destructure an object.
+
+```javascript
+const { facets, products } = response;
+```
+
+I wanted to give types to `facets` and `products`. Being a beginner in TypeScript, I first guessed and wrote like this:
+
+```typescript
+const { facets: any, products: any } = response;
+```
+
+What happens above is, the value of `facets` attribute from `response` is taken and assigned to `any`. The correct way to do it is:
+
+```typescript
+const { facets, products }: { facets: any; products: any } = category;
+```

@@ -1,0 +1,48 @@
+---
+title: "Converting JSX to JavaScript"
+date: 2022-08-10
+slug: converting-jsx-to-javascript
+description: "JSX is a syntactical sugar for React developers to easily create components. We use transpilers like Babel to convert JSX to JavaScript"
+tags: ["react"]
+---
+
+import Olink from "../../../../src/components/olink";
+import { Link } from "gatsby";
+
+JSX is a syntactical sugar for React developers to easily create components. We use transpilers like Babel to convert JSX to JavaScript.
+
+Here we have a JSX snippet:
+
+```html
+<div>
+  <h1>Hello JSX</h1>
+  <h2 label="screen">Sub heading</h2>
+</div>
+```
+
+When Babel converts above code to JavaScript, it makes use of `React.createElement()`. This method accepts 3 parameters.
+
+1. Name of component
+2. Attributes of the component
+3. Children of the component
+
+Here is how the JavaScript output of above code looks like:
+
+```javascript
+React.createElement("div", {}, [
+  React.createElement("h1", {}, "Hello JSX"),
+  React.createElement(
+    "h2",
+    {
+      label: "screen",
+    },
+    "Sub heading"
+  ),
+]);
+```
+
+You can try this JSX to JavaScript conversion online <Olink link="https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.21&spec=false&loose=false&code_lz=Q&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.18.12&externalPlugins=&assumptions=%7B%7D">here</Olink>.
+
+<Link to="/articles/react-interview-questions">
+  Click here for all React interview questions
+</Link>

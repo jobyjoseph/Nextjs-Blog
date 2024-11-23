@@ -1,0 +1,29 @@
+---
+title: Show Loading Indicator For React Query API Call
+date: 2021-07-27
+slug: react-query-show-loading-indicator-ajax-call
+description: We use useQuery hook in react-query to fetch data from an API. The query object returned by useQuery hook has helper properties to find out the status of API request.
+tags: ["reactQuery"]
+---
+
+We use `useQuery` hook in `react-query` to fetch data from an API. The query object returned by `useQuery` hook has helper properties to find out the status of API request.
+
+Here is an example of fetching user data from Github.
+
+```javascript
+const queryUsers = useQuery("gitUsers", () =>
+  fetch("https://api.github.com/search/users?q=joby").then((res) => res.json())
+);
+```
+
+`queryUsers` object now contains a property `status` which returns `"loading"`, `"error"`, or `"success"` based on the state of request.
+
+`queryUsers` also has helper properties to check the state like:
+
+```javascript
+console.log(queryUsers.isLoading);
+console.log(queryUsers.isError);
+console.log(queryUsers.isSuccess);
+```
+
+Based on the value of these flags, we can show loading indicator in our React component.

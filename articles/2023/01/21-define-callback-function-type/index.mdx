@@ -1,0 +1,28 @@
+---
+title: "Define Callback Function Type in TypeScript"
+date: 2023-01-21
+slug: define-callback-function-typescript
+description: "Functions accept callback function as argument. Using TypeScript we can define the type of that function"
+tags: ["typescript"]
+---
+
+Functions accept callback function as argument. Using TypeScript we can define the type of that function.
+
+Here is a function that accepts another function as callback:
+
+```typescript
+function parent(callback) {
+  //....
+  callback(message, statusCode);
+}
+```
+
+As shown in above code, our assumption is that, `message` is a string and `statusCode` is a number. So our callback function accepts a string and a number and returns nothing.
+
+Here is how we can define the type using TypeScript:
+
+```typescript
+function parent(callback: (a: number, b: string) => void) {
+  //...
+}
+```

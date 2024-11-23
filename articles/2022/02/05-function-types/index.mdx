@@ -1,0 +1,53 @@
+---
+title: "Define Function Argument and Return Types in TypeScript"
+date: 2022-02-05
+slug: typescript-function-argument-return-types
+description: "TypeScript can set types for function arguments and return types. Typed functions help us to catch errors early and show the section of code that is causing the error."
+tags: ["typescript"]
+---
+
+Types of TypeScript variables can be explicitly set using annotations. Here is a TypeScript variable that is of `string` type.
+
+```typescript
+let name: string;
+```
+
+Using the same annotation syntax, we can define the types of function **arguments** and **return value**. Here is a function that adds two numbers.
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+```
+
+Above function can also be used to concatenate 2 strings. To avoid that, we can specify `number` type for the function's arguments and return value. This is how we do that in TypeScript.
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Above code says that function `add()` accepts only 2 numbers as arguments and return a number value. If we do not specify any types, by default the argument and return type will be `any`.
+
+In the above typed function, we try to invoke the function with invalid arguments, eg: `add(3, "a")`, TypeScript will throw below error.
+
+```
+error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+We can catch errors early and at the place of function definition, if we properly set the argument and return types.
+
+### Forcing a return value
+
+When we define a return type for a function, TypeScript makes sure that a value of proper type is **always returned**.
+
+```typescript
+function foo(): number {}
+```
+
+Above function `foo()` should return a `number` value. But it is clear that `foo()` is not returning any value. Therefore, TypeScript will throw below error.
+
+```
+error TS2355: A function whose declared type is neither 'void' nor 'any' must return a value.
+```

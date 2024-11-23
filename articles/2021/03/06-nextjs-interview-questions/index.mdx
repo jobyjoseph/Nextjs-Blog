@@ -1,0 +1,73 @@
+---
+title: Next.js Interview Questions
+date: 2021-03-27
+slug: nextjs-interview-questions
+description: Prepare for your next Next.js interview with the help of these interview questions.
+tags: ["nextjs"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+**Question:**
+
+How can we implement Social Login in Next.js?
+
+**Answer:**
+
+The recommended way is to use `next-auth` package. It supports many authentication services like Google, Github, Facebook and so on.
+
+<Divider />
+
+**Question:**
+
+What are the steps involved in setting up `next-auth`?
+
+**Answer:**
+
+First we need to obtain client id and client secret from the service which we are going to use. Then create a catch all file `[...nextauth].js` under `pages/api/auth`. This file handles the server side functionality of authentication.
+
+```javascript
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
+
+export default NextAuth({
+  // Configure one or more authentication providers
+  providers: [
+    Providers.GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+    // ...add more providers here
+  ],
+
+  // A database is optional, but required to persist accounts in a database
+  database: process.env.DATABASE_URL,
+});
+```
+
+In the client side we can then check for logged in status and do appropriate logic like below:
+
+```javascript
+import { signIn, signOut, useSession } from "next-auth/client";
+
+export default function Page() {
+  const [session, loading] = useSession();
+
+  return (
+    <>
+      {!session && (
+        <>
+          Not signed in <br />
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
+      {session && (
+        <>
+          Signed in as {session.user.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      )}
+    </>
+  );
+}
+```

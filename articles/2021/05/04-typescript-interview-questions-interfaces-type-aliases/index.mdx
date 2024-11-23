@@ -1,0 +1,144 @@
+---
+title: TypeScript Interview Questions Part 4 - Interfaces, Type Aliases
+date: 2021-05-30
+slug: typescript-interview-questions-interfaces-type-aliases
+description: Typescript interview questions on interfaces and type aliases.
+tags: ["typescript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+What are Type Aliases?
+
+** Answer: **
+
+Type Aliases allow us to give a type a name. Here is an example of how a type alias is created.
+
+```typescript
+type stringOrNumber = string | number;
+
+let pincode: stringOrNumber;
+```
+
+`stringOrNumber` is a type alias. It can be used with any variables that can contain either a string value or number value.
+
+<Divider />
+
+**Question:**
+
+Here we have an interface `Person`.
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+```
+
+We need to create a new interface `Teacher` that has 3 properties, `name`, `age` and `subject`. How to approach this issue?
+
+**Answer:**
+
+`Teacher` is a more specific version of `Person`. So, we can do this by extending `Person` interface.
+
+```typescript
+interface Teacher extends Person {
+  subject: string;
+}
+```
+
+And later, we can use `Teacher` type while creating an object.
+
+```typescript
+const obj: Teacher = {
+  name: "John",
+  age: 23,
+  subject: "Science",
+};
+```
+
+<Divider />
+
+** Question: **
+
+Here is a TypeScript code that creates a custom type.
+
+```typescript
+type stringOrNumber = string | number;
+```
+
+Can we rewrite above line using `interface`?
+
+** Answer: **
+
+Interfaces can deal with JavaScript objects and its sub types. They cannot work with primitive data types. Therefore, we cannot convert this code using `interface`.
+
+<Divider />
+
+**Question:**
+
+Here is a function written in TypeScript.
+
+```typescript
+function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Please write down the interface for the above function.
+
+**Answer:**
+
+Here is the interface for the `sum()` function:
+
+```typescript
+interface sum {
+  (a: number, b: number): number;
+}
+```
+
+<Divider />
+
+** Question: **
+
+We have a TypeScript file with only type definitions like below.
+
+```typescript
+interface sum {
+  (a: number, b: number): number;
+}
+
+interface show {
+  (message: string): void;
+}
+```
+
+Please write down the JavaScript code that is produced after TypeScript compilation.
+
+** Answer: **
+
+TypeScript performs static type checking. The interfaces and types in the TypeScript code is used by `tsc` compiler for static type checking. The output JavaScript file does not contain any type information. Therefore, in this case, the output JavaScript file will not contain any code.
+
+<Divider />
+
+** Question: **
+
+We have a function type definition here created using `interface`.
+
+```typescript
+interface show {
+  (message: string): void;
+}
+```
+
+Write the same definition using `type` keyword.
+
+** Answer: **
+
+Here is the type definition created using `type` keyword.
+
+```typescript
+type show = (message: string) => void;
+```

@@ -1,0 +1,21 @@
+---
+title: "Exclude Particular File Type From Prettier Auto Formatting"
+date: 2022-08-02
+slug: exclude-particular-file-type-from-prettier-auto-formatting
+description: "Sometimes prettier auto formatting might result unwanted output. In that case we can tell prettier to stop formatting based on file types"
+tags: ["web"]
+---
+
+import { Link } from "gatsby";
+
+I am using Visual Studio Code to write this blog. I created a custom component to be used in <Link to="/articles/react-interview-questions">React Interview Questions</Link> page. A problem which I faced was when using a markdown syntax inside a JSX component, the markdown is not getting rendered.
+
+For that the solution is to put an extra line after and before the JSX component tags. But, Prettier automatically removes the extra line on saving the file. Then I looked for ways to prevent auto formatting only for `.mdx` files.
+
+The solution is very easy. I had to add a `.prettierignore` file in my Gatsby project root. Then I added below content in that file.
+
+```
+*.mdx
+```
+
+The prettier plugin in Visual Studio Code respects that and will prevent auto formatting of `.mdx` files.

@@ -1,0 +1,25 @@
+---
+title: "noImplicitAny Option in TypeScript"
+date: 2023-02-01
+slug: noimplicitany-option-typescript
+description: "`noImplicitAny` is an option under `compilerOptions` in `tsconfig.json`."
+tags: ["typescript"]
+---
+
+import Image from "../../../../src/components/image";
+import imgFunction from "./images/function.png";
+import imgFunctionError from "./images/function-error.png";
+
+`noImplicitAny` is an option under `compilerOptions` in `tsconfig.json`.
+
+In order to understand the meaning of `noImplicitAny` option, consider the following TypeScript code. I have taken screenshot from VS Code to show the highlighted red error.
+
+<Image src={imgFunction} alt="Function" style={{ maxWidth: "500px" }} />
+
+The type of `message` is not specified. That will give `any` type to `message`. The error is because `noImplicitAny` value is `true`. Here is the error displayed by TypeScript:
+
+<Image src={imgFunctionError} alt="Function" style={{ maxWidth: "600px" }} />
+
+When we set `noImplicitAny` to `false`, TypeScript will allow implicit `any` type.
+
+> When I tried in VS code, it did not remove the error. But tsc compiler respects this option.

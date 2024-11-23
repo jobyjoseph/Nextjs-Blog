@@ -1,0 +1,24 @@
+---
+title: JS Daily 12 - Default Return Value of a Function
+date: 2020-12-02
+slug: js-daily-12-default-return-value-function
+decription: Default return value in a function is undefined
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+function sum(a, b) {
+  const result = a + b;
+}
+console.log(sum(2, 4));
+```
+
+<Divider />
+
+Output is `undefined`.
+
+If a function does not return a value explicitly, `undefined` is returned. Here, even though we found the sum, we did not return the `result`. Therefore, the default `undefined` is returned by `sum()`.

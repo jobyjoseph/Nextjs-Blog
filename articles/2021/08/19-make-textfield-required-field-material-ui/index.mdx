@@ -1,0 +1,21 @@
+---
+title: Make Material UI TextField As Required Field
+date: 2021-08-19
+slug: make-material-ui-textfield-as-required-field
+description: Material UI TextField supports different attributes. We can pass required attribute to mark a component as required.
+tags: ["materialUI"]
+---
+
+We can use `TextField` component in Material UI to show input textbox.
+
+```javascript
+import TextField from "@material-ui/core/TextField";
+```
+
+When using the `TextField` component, we can pass the `required` attribute to mark the component as required.
+
+```javascript
+<TextField required id="shop-name" label="Shop Name" variant="outlined" />
+```
+
+Having `required` attribute prevents the form to be submitted if the field is empty.

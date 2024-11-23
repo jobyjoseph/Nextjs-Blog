@@ -1,0 +1,22 @@
+---
+title: How To Get Content of First Child Using Node.js and Cheerio
+date: 2021-08-06
+slug: get-content-first-child-cheerio-nodejs
+description: We can obtain the content from first child in cheerio using first().text().
+tags: ["nodejs"]
+---
+
+When crawling a web page, we obtained below data.
+
+```html
+<div id="productDetails">
+  <span>MacBook Air 13"</span>
+  <span>$999</span>
+</div>
+```
+
+Using `cheerio`, we need to take the content of **first** span. Here is how:
+
+```javascript
+$("#productDetails span").first().text();
+```

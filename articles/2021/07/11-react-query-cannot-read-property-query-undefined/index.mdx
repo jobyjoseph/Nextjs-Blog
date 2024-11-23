@@ -1,0 +1,28 @@
+---
+title: "SOLVED: TypeError: Cannot read property 'queries' of undefined"
+date: 2021-07-30
+slug: react-query-cannot-read-property-query-undefined
+description: I faced this issue TypeError Cannot read property queries of undefined. As per the tutorial, they are importing ReactQueryDevtools from react-query-devtools package.
+tags: ["reactQuery"]
+---
+
+I am learning how to use React Query Dev Tools. When followed the tutorial, I faced this issue `TypeError: Cannot read property 'queries' of undefined`. As per the tutorial, they are importing `ReactQueryDevtools` from `react-query-devtools` package.
+
+```javascript
+import { ReactQueryDevtools } from "react-query-devtools";
+```
+
+If we are working with React Query v3, we need to import from different package.
+
+```javascript
+import { ReactQueryDevtools } from "react-query/devtools";
+```
+
+and then add `<ReactQueryDevtools />` immediately under `QueryClientProvider`.
+
+```javascript
+<QueryClientProvider client={queryClient}>
+  <GitUsers />
+  <ReactQueryDevtools />
+</QueryClientProvider>
+```

@@ -1,0 +1,292 @@
+---
+title: React Refs Interview Questions
+date: 2021-01-19
+slug: react-refs-interview-questions
+decription: Refs in React give reference to React components. Learn different things about refs and prepare for React interview.
+tags: ["react"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+** Question: **
+
+What is the purpose of Refs in React?
+
+** Answer: **
+
+Refs helps to obtain the DOM node or React Element node. For eg: if we need to select all text in a `textarea`, first step is to obtain the textarea object node. That can be done using Refs.
+
+<Divider />
+
+** Question: **
+
+Here is a React Component that renders a textbox and a button.
+
+```javascript
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <input type="text" />
+        <button>Click Me!</button>
+      </div>
+    );
+  }
+}
+```
+
+When the button is clicked, the textbox should get the focus. How can we do that using Refs?
+
+** Answer: **
+
+First we need to create a ref object. For that we add a constructor to the `App` class and use `React.createRef` to create a ref object.
+
+```javascript
+constructor(props) {
+  super(props);
+  this.myRef = React.createRef();
+}
+```
+
+Next we need to connect `this.myRef` with the textbox. For that add `ref` attribute to `input` element.
+
+```html
+<input type="text" ref="{this.myRef}" />
+```
+
+Now we need to have an event handler function for the button which gets the textbox object. The textbox node can be obtained from `current` property of `myRef` object.
+
+```javascript
+clickHandler = () => {
+  const textBox = this.myRef.current;
+  textBox.focus();
+};
+```
+
+After that, we need to bind the event handler function to the click event of the button. Here is the final code.
+
+```javascript
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+
+  clickHandler = () => {
+    const textBox = this.myRef.current;
+    textBox.focus();
+  };
+
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.myRef} />
+        <button onClick={this.clickHandler}>Click Me!</button>
+      </div>
+    );
+  }
+}
+```
+
+<Divider />
+
+**Question:**
+
+Here we have a class component `App`. It contains a textbox and a button. When the button is clicked, the textbox gets focus using refs.
+
+```javascript
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+
+  clickHandler = () => {
+    const textBox = this.myRef.current;
+    textBox.focus();
+  };
+
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.myRef} />
+        <button onClick={this.clickHandler}>Click Me!</button>
+      </div>
+    );
+  }
+}
+```
+
+Convert the `App` component to a functional component and implement the same functionality.
+
+**Answer:**
+
+As the first step, we create a functional `App` component that renders same html.
+
+```javascript
+function App() {
+  return (
+    <div>
+      <input type="text" />
+      <button>Click Me!</button>
+    </div>
+  );
+}
+```
+
+To implement refs in functional component we need to use `useRef()` hook. `useRef()` hook creates a ref object.
+
+```javascript
+function App() {
+  const myRef = React.useRef(null); //highlight-line
+  return (
+    //...
+}
+```
+
+Now attach the `myRef` object to the textbox using `ref` attribute.
+
+```html
+<input type="text" ref="{myRef}" />
+```
+
+After attaching the ref to textbox, we can get the textbox node from `myRef.current`. Next steps are straight forward. Create a click event handler for the button and call `focus()` method of the textbox. Here is the final functional component.
+
+```javascript
+function App() {
+  const myRef = React.useRef(null);
+
+  clickHandler = () => {
+    myRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input type="text" ref={myRef} />
+      <button onClick={clickHandler}>Click Me!</button>
+    </div>
+  );
+}
+```
+
+<Divider />
+
+**Question:**
+
+Here we have a component that contains one `div` block and one button. When the button is clicked, we hide the div block.
+
+```javascript
+function App() {
+  const myRef = React.useRef(null);
+
+  clickHandler = () => {
+    myRef.current.style.display = "none";
+  };
+
+  return (
+    <div>
+      <div ref={myRef}>Backbenchers are awesome</div>
+      <button onClick={clickHandler}>Hide Me!</button>
+    </div>
+  );
+}
+```
+
+How can we improve this code?
+
+**Answer:**
+
+The functionality implemented can be achieved using declarative syntax of React. Above example can be done without refs. We can keep a state variable to hide the div block.
+
+```javascript
+function App() {
+  const [visible, setVisibility] = React.useState(true);
+
+  clickHandler = () => {
+    setVisibility(false);
+  };
+
+  return (
+    <div>
+      {visible ? <div>Backbenchers are awesome</div> : null}
+      <button onClick={clickHandler}>Hide Me!</button>
+    </div>
+  );
+}
+```
+
+Using the state approach is more efficient in rendering the component.
+
+<Divider />
+
+**Question:**
+
+We have two components: `<TextInput />` and `<App />`. `TextInput` renders a textbox.
+
+```javascript
+const TextInput = () => (
+  <div>
+    <input type="text" />
+  </div>
+);
+```
+
+`App` component consumes `TextInput`.
+
+```javascript
+const App = () => {
+  return (
+    <div>
+      <TextInput />
+      <TextInput />
+      <button>Button 1</button>
+      <button>Button 2</button>
+    </div>
+  );
+};
+```
+
+When Button 1 is clicked, first textbox should get focus and when second button is clicked, second textbox should get focus. How can we do that?
+
+**Answer:**
+
+There are two approaches. First is by using `forwardRef`.
+
+Here a parent component `App` needs to set focus on a DOM node(`input`) which is inside a child component(`TextInput`). So `App` needs to create a ref object and tell `TextInput` to forward it to `input`.
+
+First step is to create a ref object in `<App />` and pass it to `<TextInput/>`.
+
+```javascript
+const App = () => {
+  const inputRef1 = React.useRef(null);
+  const inputRef2 = React.useRef(null);
+
+  return (
+    <div>
+      <TextInput ref={inputRef1} />
+      <TextInput ref={inputRef2} />
+      <button>Button 1</button>
+      <button>Button 2</button>
+    </div>
+  );
+};
+```
+
+Next, update `<TextInput/>` to receive the ref and apply it to input textbox.
+
+```javascript
+const TextInput = React.forwardRef((props, ref) => (
+  <div>
+    <input type="text" ref={ref} />
+  </div>
+));
+```
+
+Now we know that `inputRef1` is pointing to first textbox and `inputRef2` to second textbox. We then have to add a click event to both buttons to trigger focus.
+
+```html
+<button onClick={() => inputRef1.current.focus()}>Button 1</button>
+<button onClick={() => inputRef2.current.focus()}>Button 2</button>
+```
+
+In the second approach, we don't have to use `forwardRef`. We can go with Callback Ref approach. In this case `<App />` component should be a class component.

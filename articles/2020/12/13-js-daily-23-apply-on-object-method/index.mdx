@@ -1,0 +1,27 @@
+---
+title: JS Daily 23 - Function Apply() Method on Objects
+date: 2020-12-13
+slug: js-daily-23-apply-on-object-method
+decription: Apply method of a function is to set an object value explicitly for that function.
+tags: ["javascript"]
+---
+
+import Divider from "../../../../src/components/divider";
+
+What is the output of following code?
+
+```javascript{numberLines: true}
+const obj = {
+  a : function(){
+    console.log(this.b);
+  }
+}
+
+obj.a.apply({b : 10});
+```
+
+<Divider />
+
+The output is `10`.
+
+`apply()` is a method of function object. Even though `a` is called in the context of `obj`, the invocation context is overridden by `apply()` method. Therefore, when `obj.a()` is invoked, `this` has the value of `{b : 10}` which is set by `apply()` method. That is why `10` is printed in the console.

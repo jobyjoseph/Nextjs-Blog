@@ -1,0 +1,206 @@
+---
+title: "useEffect() React Hook"
+date: 2022-04-10
+slug: useeffect-react-hook
+description: "useEffect() hook brings different life-cycle methods to functional component."
+tags: ["react"]
+---
+
+import Olink from "../../../../src/components/olink";
+
+`useEffect()` hook brings different life-cycle methods to a **functional component**. This hook performs side-effects in functional component. If you did not get any idea, do not worry. You can understand in detail by reading below sections.
+
+## Import useEffect
+
+`useEffect()` hook comes as part of `react` package from React **v16.8**. In order to use `useEffect()` in our code, first step is to import it from React package.
+
+```javascript
+import { useEffect } from "react";
+```
+
+## useEffect() Arguments
+
+`useEffect()` hook accepts two arguments, a **callback function** and an **array**.
+
+```javascript
+useEffect(() => {
+  console.log("Callback function");
+}, []);
+```
+
+The callback function passed to `useEffect()` is invoked as a side-effect on change of any state variables.
+
+What all state variables we need to track, that information is passed to the second array argument.
+
+## No Dependency Array
+
+We learned that `useEffect()` accepts two arguments. In that, second argument is called the **dependency array**. What if we are not passing the second argument?
+
+```javascript
+useEffect(() => {
+  console.log("Oh! Side-effect is triggered.");
+});
+```
+
+Here, since `useEffect()` does not have any dependency array to check against, it will invoke the callback function on component load and on every state change.
+
+Here is a code which you can try:
+
+```javascript
+import { useEffect, useState } from "react";
+
+export default function () {
+  const [random, setRandom] = useState();
+
+  //highlight-start
+  useEffect(() => {
+    console.log("Oh! Side-effect is triggered.");
+  });
+  //highlight-end
+  const buttonClickHander = () => {
+    setRandom(Math.random());
+  };
+
+  return <button onClick={buttonClickHander}>Click Me!</button>;
+}
+```
+
+Above code updates the value of `random` state variable on each button click. The `"Oh! Side-effect is triggered."` message is printed in the console on the component load and on every button click. You can try above code online at <Olink link="https://codesandbox.io/s/react-hooks-idcwej?file=/src/useEffect/noDependencyArray.js">CodeSandbox</Olink>.
+
+## Empty Dependency Array
+
+Here, we are passing the second dependency array argument as an empty array(`[]`). That is the way of telling React that, there are no state variables to watch for. Therefore, in this case, the `useEffect()` callback function will run only once when the component loads.
+
+```javascript
+useEffect(() => {
+  console.log("Loaded on component load");
+}, []);
+```
+
+Above code is equivalent to `componentDidMount()` lifecycle method in **class components**.
+
+You can play with `useEffect()` hook with empty dependency array in <Olink link="https://codesandbox.io/s/react-hooks-idcwej?file=/src/useEffect/emptyDependencyArray.js">CodeSandbox</Olink>.
+
+## Selective Dependency Array
+
+Say, we have two state variables in our component. And, we want `useEffect()` hook to invoke the callback function, only when **one of the state variable changes**. In this case, we need to pass only that state variable name to the dependency array.
+
+```javascript
+const [color, setColor] = useState();
+const [age, setAge] = useState();
+
+useEffect(() => {
+  console.log("Color changed!");
+}, [color]);
+```
+
+Here is the full component code which changes the `color` and `age` values through a button click.
+
+```javascript
+import React, { useEffect, useState } from "react";
+
+export default function () {
+  const [color, setColor] = useState();
+  const [age, setAge] = useState();
+
+  useEffect(() => {
+    console.log("Color changed!");
+  }, [color]);
+
+  const colorClickHander = () => {
+    setColor(Math.random());
+  };
+
+  const ageClickHander = () => {
+    setAge(Math.random());
+  };
+
+  return (
+    <div>
+      <button onClick={colorClickHander}>Change Color</button>
+      <button onClick={ageClickHander}>Change Age</button>
+    </div>
+  );
+}
+```
+
+Since we are tracking only the `color` variable, changing the value of `age` does not have any side effect.
+
+When the above component loads, it prints the `"Color changed!"` message once. Later, we can see the message logged again only when the value of `color` changes.
+
+## Async Callback Function
+
+What if we need to use `await` inside `useEffect()` callback function? Here is how the code we wish to write:
+
+```javascript
+useEffect(async () => {
+  console.log("hi");
+  // do something with await
+}, []);
+```
+
+> Before trying `async` in your code, ensure that `@babel/plugin-transform-runtime` is installed and configured in `.babelrc` file.
+
+Using `async` directly in the callback function is NOT allowed by React. It throws a very detailed error along with a solution approach.
+
+```
+Warning: useEffect must not return anything besides a function, which is used for clean-up.
+
+It looks like you wrote useEffect(async () => ...) or returned a Promise. Instead, write the async function inside your effect and call it immediately
+```
+
+As suggested in the error message, we can go for an IIFE inside the effect to achieve our goal:
+
+```javascript
+useEffect(() => {
+  // highlight-start
+  (async () => {
+    console.log("hi");
+  })();
+  // highlight-end
+}, []);
+```
+
+## Callback Returning a Function
+
+In class components, there is a lifecycle method called `ComponentDidUnmount()`. The method is fired when a component is **removed** from the DOM. Usually, some logic like clearing a timer is executed inside this lifecycle method. Now the question is, how can we bring that lifecycle method to a functional component?
+
+As we just learned, `useEffect()` accepts a callback function and a dependency array. Usually the callback function returns `undefined`. Instead, we are going to **return a function** now:
+
+```javascript
+useEffect(() => {
+  return () => {
+    console.log("The returned function");
+  };
+}, []);
+```
+
+This returned function is invoked when the component is removed from the DOM.
+
+In order to test this, we need to write a logic in the parent Component to hide this component based on some condition.
+
+```javascript
+const App = () => {
+  const [showComponent, setShowComponent] = useState(true);
+
+  return (
+    <div>
+      {showComponent && <MyComponent />}
+      <br />
+      <button
+        onClick={() => {
+          setShowComponent(false);
+        }}
+      >
+        Hide
+      </button>
+    </div>
+  );
+};
+```
+
+As we can see, in the parent component, we are hiding our component when the button is clicked. So, when user clicks on the button, we can see `"The returned function"` in the browser console.
+
+Some of the cases that might need componentDidUnmount are clearing timers, unsubscribe RxJS events or websocket events, detach event handlers.
+
+You can see the working code online at <Olink link="https://codesandbox.io/s/react-hooks-idcwej?file=/src/useEffect/componentDidUnmount.js">CodeSandbox</Olink>.

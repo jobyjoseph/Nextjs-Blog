@@ -1,0 +1,29 @@
+---
+title: How To Prevent Automatic API Refetching in React Query
+date: 2021-08-01
+slug: prevent-automatic-api-refetching-react-query
+description: Sometimes, due to some reasons like API rate limit, we need to stop this automatic refetching. For that we can use refetchOnWindowFocus flag.
+tags: ["reactQuery"]
+---
+
+Query in React Query is used to resolve a promise. When a page gets focus, automatically the query will refetch data to keep response up to date. That is how Queries work by default.
+
+Sometimes, due to some reasons like API rate limit, we need to stop this automatic refetching. For that we can use `refetchOnWindowFocus` flag.
+
+Query constructor function accepts a third argument for setting options. If we pass the value of `refetchOnWindowFocus` as `false`, React Query will not refetch automatically.
+
+Here is an example:
+
+```javascript
+const queryUsers = useQuery(
+  "gitUsers",
+  () => {
+    return fetch("https://api.github.com/search/users?q=joby").then((res) =>
+      res.json()
+    );
+  },
+  {
+    refetchOnWindowFocus: false,
+  }
+);
+```

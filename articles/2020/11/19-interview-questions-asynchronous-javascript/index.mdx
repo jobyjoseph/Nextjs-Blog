@@ -1,0 +1,29 @@
+---
+title: JavaScript Interview Questions - Asynchronous JavaScript
+date: 2020-11-19
+slug: interview-questions-asynchronous-javascript
+decription: Prepare for JavaScript interviews with questions related to asynchronous JavaScript
+tags: ["javascript"]
+---
+
+** Question: **
+
+What is the output of following code? Also, please provide explanation for your answer.
+
+```javascript
+setTimeout(() => console.log("First"), 0);
+console.log("Second");
+```
+
+** Answer: **
+
+In the console, first `"Second"` will be printed, then `"First"`.
+
+```
+"Second"
+"First"
+```
+
+`setTimeout` works asynchronously. Even though the delay is 0 millisecond, in line 1, only the `setTimeout()` invocation is happening. That does not execute the callback function passed to `setTimeout`.
+
+Then in the second line `"Second"` is printed. After that, the call stack is free to execute the callback function. So it executes and prints `"First"` in console.
