@@ -3,7 +3,7 @@ import markdownIt from "markdown-it";
 import { getAllPosts, getPostBySlug } from "../../lib/posts";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
